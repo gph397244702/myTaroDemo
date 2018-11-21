@@ -1,8 +1,9 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
-import { AtTabs, AtTabsPane,AtTabBar,AtList, AtListItem,AtInput  } from 'taro-ui'
+import { View, Button, Text, ScrollView,Image } from '@tarojs/components'
+import {  AtListItem,AtInput  } from 'taro-ui'
 import { connect } from '@tarojs/redux'
+import Img from '../../../pic/productImg/123.jpg'
 
 import { add, minus, asyncAdd } from '../../../actions/counter'
 
@@ -62,270 +63,53 @@ class Index extends Taro.Component {
   componentDidShow () { }
 
   componentDidHide () { }
-  
- 
-  //点击标签栏出发的事件
+  constructor(props) {
 
- 
-  handleClicks (value) {
-    this.setState({
-      current: value
-    })
+    super(props);
+    this.state = {
+	  tabList:[{id:'product1',name:'商品1',src:Img},{id:'product2',name:'商品2',src:Img},{id:'product3',name:'商品3',src:Img},{id:'product4',name:'商品4',src:Img}]
+    };
   }
-  
+ 
+  //点击标签栏进入详情页面
+
+  navigateTo(url) {
+    Taro.navigateTo({url:url})
+  }
  
   
   render () {
-	const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
 	return (
-	 <view>
-	  <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClicks.bind(this)}>
-        <AtTabsPane current={this.state.current} index={0} >
-          <View style='padding: 284px -1px;background-color: #FAFBFC;text-align: center;' >
-			<table style="width:374px;">
-				<thead>
-				<tr style="height:65px;">
-					<th >新闻内容</th>
-					<th >日期</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				</tbody>
-			</table>
-		  
-		  
-		  </View>
-        </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={1}>
-          <View style='padding: 284px -1px;background-color: #FAFBFC;text-align: center;'><table style="width:374px;">
-				<thead>
-				<tr style="height:65px;">
-					<th >新闻内容</th>
-					<th >日期</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				</tbody>
-			</table></View>
-        </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={2}>
-          <View style='padding: 284px -1px;background-color: #FAFBFC;text-align: center;'><table style="width:374px;">
-				<thead>
-				<tr style="height:65px;">
-					<th >新闻内容</th>
-					<th >日期</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				<tr style="height:35px;">
-					<td >新闻新闻新闻新闻新闻新闻</td>
-					<td >20181011</td>
-				</tr>
-				</tbody>
-			</table></View>
-        </AtTabsPane>
-      </AtTabs>
-	  </view>
+		<ScrollView className='container'
+          scrollY
+          scrollWithAnimation
+          scrollTop='0'
+          lowerThreshold='10'
+          upperThreshold='10'
+          style='height:658px'
+          onScrolltoupper={this.updateList}
+          onScrolltolower={this.appendNextPageList}
+        >
+          
+          <View className='shop_floor'>
+                {this.state.tabList.map((item, index) => {
+                  return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,'/pages/index/shop/ShopDetail')}>
+                    <View className='goods_img'>
+                      <Image className='goods_img_image' src={item.src} mode='widthFix' lazyLoad />
+                    </View>
+                    <View className='goods_info'>
+                      <Text className='goods_name' onClick={this.navigateTo.bind(this,'/pages/index/shop/ShopDetail')}>{item.name}</Text>
+           
+                    </View>
+                  </View>
+                })}
+              
+            
+          </View>
+        </ScrollView>
+	
+	
+	
 	  
     )
   }

@@ -1,12 +1,15 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Button, Text,Swiper, SwiperItem,Image  } from '@tarojs/components'
 import {AtSearchBar } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 
 import { add, minus, asyncAdd } from '../../../actions/counter'
+import Img from '../../../pic/productImg/222.jpg'
+import Imgs from '../../../pic/productImg/333.jpg'
+import Imgss from '../../../pic/productImg/444.jpg'
 
-import './Search.scss'
+import './ShopDetail.scss'
 
 // #region 书写注意
 // 
@@ -42,30 +45,50 @@ interface Index {
 
 class Index extends Taro.Component {
 
-   constructor () {
-    super(...arguments)
-    this.state = {
-      value: ''
-    }
+
+
+	config: Config = {
+    navigationBarTitleText: '首页'
   }
-  onChange (value) {
-    this.setState({
-      value: value
-    })
+
+  componentWillReceiveProps (nextProps) {
+    console.log(this.props, nextProps)
+  }
+
+  componentWillUnmount () { }
+
+  componentDidShow () { }
+
+  componentDidHide () { }
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+	  imgUrls: [Img,Imgs,Imgss]
+    };
   }
   render () {
     return (
-      <AtSearchBar
-        value={this.state.value}
-        onChange={this.onChange.bind(this)}
-      />
-	  <View className='at-row at-row--wrap'>
-  <View className='at-col at-col-4'>A</View>
-  <View className='at-col at-col-4'>B</View>
-  <View className='at-col at-col-4'>C</View>
-  <View className='at-col at-col-4'>D</View>
-  <View className='at-col at-col-4'>E</View>
-</View>
+	<view >
+     <Swiper
+        className='activity'
+        indicatorColor='#999'
+        indicatorActiveColor='#333'
+		displayMultipleItems =3
+		autoplay='true' 
+		interval='1000' 
+		duration='500'
+		indicatorDots='true'
+        circular
+        >
+		{this.state.imgUrls.map((imgs,index) => {
+		  return  (<SwiperItem key={index}> 
+			 <Image  src={imgs} mode='widthFix'  width='355' height='475' />
+		  </SwiperItem>)
+		})}
+        
+      </Swiper>
+	  </view>
     )
   }
 }
