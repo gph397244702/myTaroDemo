@@ -69,12 +69,10 @@ class Index extends Taro.Component {
   }
   render () {
     return (
-	<view >
      <Swiper
         className='activity'
         indicatorColor='#999'
         indicatorActiveColor='#333'
-		displayMultipleItems =3
 		autoplay='true' 
 		interval='1000' 
 		duration='500'
@@ -83,12 +81,11 @@ class Index extends Taro.Component {
         >
 		{this.state.imgUrls.map((imgs,index) => {
 		  return  (<SwiperItem key={index}> 
-			 <Image  src={imgs} mode='widthFix'  width='355' height='475' />
+			 <Image  src={imgs} mode='widthFix'  width='355px' height='475px' />
 		  </SwiperItem>)
 		})}
         
       </Swiper>
-	  </view>
     )
   }
 }
