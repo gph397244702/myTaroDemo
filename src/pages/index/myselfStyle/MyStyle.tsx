@@ -1,15 +1,13 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text,ScrollView } from '@tarojs/components'
-import { AtTabs, AtTabsPane,AtTabBar,AtList, AtListItem,AtInput ,AtPagination } from 'taro-ui'
-import { connect } from '@tarojs/redux'
+import { AtTabs, AtTabsPane,AtPagination } from 'taro-ui'
 
-import { add, minus, asyncAdd } from '../../../actions/counter'
 
 import './myStyle.scss'
 
 // #region 书写注意
-// 
+//
 // 目前 typescript 版本还无法在装饰器模式下将 Props 注入到 Taro.Component 中的 props 属性
 // 需要显示声明 connect 的参数类型并通过 interface 的方式指定 Taro.Component 子类的 props
 // 这样才能完成类型检查和 IDE 的自动提示
@@ -98,27 +96,27 @@ class Index extends Taro.Component {
   componentDidShow () { }
 
   componentDidHide () { }
-  
- 
+
+
   //点击标签栏出发的事件
 
- 
+
   handleClicks (value) {
     this.setState({
       current: value
     })
   }
-  
- 
-  
+
+
+
   render () {
-      
+
 	const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
 	const contentList = [{content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},{content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'}]
 	return (
-	 
+
 	  <AtTabs current={this.state.current}   tabList={tabList} onClick={this.handleClicks.bind(this)}>
-      
+
 		<AtTabsPane  current={this.state.current} index={0} >
 		 <ScrollView className='scrollview'
 					  scrollY
@@ -128,7 +126,7 @@ class Index extends Taro.Component {
 					  lowerThreshold='20'
 					  upperThreshold='20'>
 		 <View style='background-color: #FAFBFC;text-align: center;height:736px;' >
-			  
+
 				{this.state.contentList.map((contentMap,index)=>{
 					return (<View className='at-row' style="background-color: rgb(47, 40, 76);">
 								<View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
@@ -137,15 +135,15 @@ class Index extends Taro.Component {
 							   <View className='at-col' style="background-color: lavender;">20181120</View>
 				</View>)
 				})}
-				
-				<AtPagination 
-					  icon 
-					  total='50' 
-					  pageSize='10' 
+
+				<AtPagination
+					  icon
+					  total='50'
+					  pageSize='10'
 					  current='1'
 					>
 					</AtPagination>
-					
+
 		  </View>
 		</ScrollView>
         </AtTabsPane>
@@ -158,7 +156,7 @@ class Index extends Taro.Component {
 					  lowerThreshold='20'
 					  upperThreshold='20'>
 		 <View style='background-color: #FAFBFC;text-align: center;height:auto;' >
-			  
+
 				{this.state.contentList.map((contentMap,index)=>{
 					return (<View className='at-row' style="background-color: rgb(47, 40, 76);">
 								<View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
@@ -185,7 +183,7 @@ class Index extends Taro.Component {
 					  lowerThreshold='20'
 					  upperThreshold='20'>
 		 <View style='background-color: #FAFBFC;text-align: center;height:auto;' >
-			  
+
 				{this.state.contentList.map((contentMap,index)=>{
 					return (<View className='at-row' style="background-color: rgb(47, 40, 76);">
 								<View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
@@ -202,11 +200,11 @@ class Index extends Taro.Component {
 				</View>
 		  </View>
 		</ScrollView>
-			
+
         </AtTabsPane>
-		
+
       </AtTabs>
-	  
+
     )
   }
 }

@@ -5,7 +5,7 @@ import { AtTabs, AtTabsPane,AtTabBar,AtList, AtListItem,AtInput,AtSwipeAction  }
 import { connect } from '@tarojs/redux'
 import  MyAtTabs from './myselfStyle/MyStyle'
 import  MySearch from './search/Search'
-import  MyRead from './read/Read'
+import  MyRead from './read/product'
 
 
 import { add, minus, asyncAdd } from '../../actions/counter'
@@ -13,7 +13,7 @@ import { add, minus, asyncAdd } from '../../actions/counter'
 import './index.scss'
 
 // #region 书写注意
-// 
+//
 // 目前 typescript 版本还无法在装饰器模式下将 Props 注入到 Taro.Component 中的 props 属性
 // 需要显示声明 connect 的参数类型并通过 interface 的方式指定 Taro.Component 子类的 props
 // 这样才能完成类型检查和 IDE 的自动提示
@@ -46,7 +46,7 @@ export default  class Index extends Taro.Component {
   componentDidShow () { }
 
   componentDidHide () { }
-  
+
   constructor(props) {
     super(props);
     this.state = {current: 0};
@@ -57,16 +57,16 @@ export default  class Index extends Taro.Component {
       current: e
     })
   }
- 
-  
+
+
   render () {
 	return (
 	 <View className=''>
-	 
-		 {this.state.current == 0 && <MyAtTabs></MyAtTabs>} 
+
+		 {this.state.current == 0 && <MyAtTabs></MyAtTabs>}
 		 {this.state.current == 1 && <MySearch></MySearch>}
 		 {this.state.current == 2 && <MyRead></MyRead>}
-		  
+
 		  <AtSwipeAction options={[
 				  {
 					text: '取消',
@@ -81,7 +81,7 @@ export default  class Index extends Taro.Component {
 					}
 				  }
 				]}>
-		  
+
 		</AtSwipeAction>
 		<AtTabBar
 		  fixed
@@ -92,14 +92,14 @@ export default  class Index extends Taro.Component {
 		  tabList={[
 			{ title: '新闻', iconType: 'bullet-list', text: 'new' },
 			{ title: '搜索', iconType: 'search' },
-			{ title: '阅读', iconType: 'book' }
+			{ title: '商品', iconType: 'shopping-cart' }
 		  ]}
 		  onClick={this.handleClick}
 		  current={this.state.current}
-		  
+
 		/>
 	  </View>
-	  
+
     )
   }
 }

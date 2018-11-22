@@ -1,16 +1,14 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text,Swiper, SwiperItem,Image  } from '@tarojs/components'
-import {AtSearchBar } from 'taro-ui'
-import { connect } from '@tarojs/redux'
+import { View, Button, Text,Swiper, SwiperItem,Image,ScrollView  } from '@tarojs/components'
 
-import { add, minus, asyncAdd } from '../../../actions/counter'
+
 import Img from '../../../pic/productImg/222.jpg'
 import Imgs from '../../../pic/productImg/333.jpg'
 import Imgss from '../../../pic/productImg/444.jpg'
 import MySwiperStyle from  '../mySwiper/MySwiper'
 
-import './ShopDetail.scss'
+import './ShopDetailScoll.scss'
 
 // #region 书写注意
 //
@@ -75,18 +73,44 @@ class Index extends Taro.Component {
       })
 
   }
+  appendNextPageList = () => {
+	   this.setState({
+       imgUrls:[]
+     })
+  }
+  updateList = () => {
+    this.setState({
+      imgUrls:[]
+    })
+  }
   render () {
 
     return (
       <View className="detail-page">
+
       <View className="image-box-wrap">
+
         <View className="images-box">
-             <MySwiperStyle banner={this.state.imgUrls} />
-               <View className="share-btn">
-                 <Button open-type="share" />
-               </View>
+          <view className='detailTitle'>商品详情</view>
+          <ScrollView className='scrollview'
+                      scrollY
+                      scrollWithAnimation
+                      scrollTop='0'
+                      lowerThreshold='10'
+                      upperThreshold='10'
+                      style='height: 580px;'
+                      onScrolltoupper={this.updateList}
+                      onScrolltolower={this.appendNextPageList}
+                      >
+          {this.state.imgUrls.map((imgs,index) => {
+            return (<Image  src={imgs} mode='widthFix' className='slide-image' />)
+          })}
+
+          </ScrollView>
         </View>
+
       </View>
+
 
     { /* 底部操作栏 */ }
     <View className="detail-bottom-btns">

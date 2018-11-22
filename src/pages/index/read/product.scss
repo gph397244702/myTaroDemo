@@ -54,11 +54,15 @@ page {
   display: flex;
   flex-direction: column;
   //height: 160px;
-  padding: 0 50px;
+  margin-top: -1.98rem!important;
   overflow: hidden;
 }
-
-
+.at-tabs__header{
+  background: #C43CA9;
+}
+.at-tabs__item--active{
+  color: #f0f5fd;
+}
 .goods_name {
   margin-top: 14px;
   font-size: 24px;

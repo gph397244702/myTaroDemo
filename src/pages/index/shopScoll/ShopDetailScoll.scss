@@ -16,7 +16,7 @@
   .images-box {
     box-sizing: border-box;
     padding: 0 25px;
-    height: 1052px;
+    height: 25.44267rem;
     position: relative;
     overflow: hidden;
     .share-btn {
@@ -48,7 +48,7 @@
 
   .detail-page {
     padding-bottom: 120px;
-    background-color: #4c5264;
+    background-color: #fff;
     .container {
       padding: 0 35px;
       padding-top: 20px;
@@ -119,4 +119,8 @@
         height: 60px;
       }
     }
+  }
+
+  .detailTitle{
+    line-height: 2.6;
   }

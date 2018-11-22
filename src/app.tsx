@@ -9,7 +9,11 @@ import configStore from './store'
 import './app.scss'
 
 const store = configStore()
-
+if (process.env.TARO_ENV === "weapp") {
+  require("taro-ui/dist/weapp/css/index.css")
+} else if (process.env.TARO_ENV === "h5") {
+  require("taro-ui/dist/h5/css/index.css")
+}
 class App extends Component {
 
   /**
@@ -22,7 +26,8 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/index/index',
-	  'pages/index/shop/ShopDetail'
+	  'pages/index/shop/ShopDetail',
+      'pages/index/shopScoll/ShopDetailScoll'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -33,7 +38,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-	
+
   }
 
   componentDidShow () {}
