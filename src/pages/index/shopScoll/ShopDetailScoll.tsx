@@ -63,7 +63,9 @@ class Index extends Taro.Component {
   constructor(props) {
     super(props);
     this.state = {
-	  imgUrls: [Img,Imgs,Imgss]
+      imgUrls: [Img],
+      imgUrlslist:[Img,Imgs,Imgss],
+      index:0
     };
   }
   goToPage = (e) => {
@@ -73,15 +75,58 @@ class Index extends Taro.Component {
       })
 
   }
-  appendNextPageList = () => {
-	   this.setState({
-       imgUrls:[]
-     })
+  appendNextPageList () {
+    console.log(123)
+
+    const imgs = this.state.imgUrls
+    console.log(imgs)
+    const imgUrlslists = this.state.imgUrlslist
+    const indexs = this.state.index +1
+    const lengths =  imgUrlslists.length
+    if (indexs == lengths) {return}
+    else{
+      Taro.showLoading({title: '加载中'})
+      //const ind =  indexs + 1
+      const imgsurl = imgUrlslists[indexs]
+      imgs.splice(0, 1)
+      imgs.push(imgsurl)
+      console.log(indexs)
+      Taro.hideLoading({title: '加载中'})
+      this.setState({
+        imgUrls:imgs
+      })
+      this.setState({
+        index:indexs
+      })
+    }
+
+    console.log(imgs)
   }
-  updateList = () => {
-    this.setState({
-      imgUrls:[]
-    })
+  updateList () {
+    console.log(321)
+
+    const imgs = this.state.imgUrls
+    console.log(imgs)
+    const imgUrlslists = this.state.imgUrlslist
+    const indexs = this.state.index
+    //const lengths =  imgUrlslists.length
+    if (indexs < 1) {return}
+    else{
+      Taro.showLoading({title: '加载中'})
+      const ind =  indexs -1
+      console.log(ind)
+      const imgsurl = imgUrlslists[ind]
+      imgs.splice(0, 1)
+      imgs.push(imgsurl)
+      console.log(imgsurl)
+      Taro.hideLoading({title: '加载中'})
+      this.setState({
+        imgUrls:imgs
+      })
+      this.setState({
+        index:ind
+      })
+    }
   }
   render () {
 
@@ -95,12 +140,11 @@ class Index extends Taro.Component {
           <ScrollView className='scrollview'
                       scrollY
                       scrollWithAnimation
-                      scrollTop='0'
-                      lowerThreshold='10'
-                      upperThreshold='10'
-                      style='height: 580px;'
-                      onScrolltoupper={this.updateList}
-                      onScrolltolower={this.appendNextPageList}
+                      lowerThreshold={0}
+                      upperThreshold={0}
+                      style='height: 420px;'
+                      onScrollToUpper={this.updateList.bind(this)}
+                      onScrollToLower={this.appendNextPageList.bind(this)}
                       >
           {this.state.imgUrls.map((imgs,index) => {
             return (<Image  src={imgs} mode='widthFix' className='slide-image' />)

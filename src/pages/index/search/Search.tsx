@@ -118,6 +118,7 @@ class Index extends Taro.Component {
         <view >
           <view className='historySearch'>
           历史
+          <Image  src={require('../../../pic/icon/delete.png')} alt="" className= 'deleteIcon'/>
           </view>
           {this.state.histags.map((item,index) => {
             return (<view className='content'>
@@ -131,9 +132,7 @@ class Index extends Taro.Component {
               </AtTag>
             </view>)
           })}
-          <view   onClick={this.delete.bind(this)} >
-          <Image  src={require('../../../pic/icon/delete.png')} alt="" className= 'deleteIcon'/>
-          </view>
+
 
         </view>
 

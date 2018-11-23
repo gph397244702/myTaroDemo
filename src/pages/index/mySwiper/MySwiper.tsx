@@ -34,9 +34,10 @@ import './MySwiper.scss'
         className='swiper'
         indicatorColor='#999'
         indicatorActiveColor='#333'
-        interval='5000'
+        interval='1500'
         duration='500'
         indicatorDots='true'
+        autoplay='true'
         circular
         >
 		{banner.map((imgs,index) => {

@@ -3,7 +3,10 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, ScrollView,Image } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import Img from '../../../pic/productImg/123.jpg'
-
+import {
+  UrlShopDetail,
+  UrlShopDeatilScoll
+} from '../../../constants/counter'
 import './product.scss'
 
 // #region 书写注意
@@ -64,7 +67,7 @@ class Index extends Taro.Component {
 
     super(props);
     this.state = {
-	  tabList:[{id:'product1',name:'商品1',src:Img},{id:'product2',name:'商品2',src:Img},{id:'product3',name:'商品3',src:Img},{id:'product4',name:'商品4',src:Img}]
+      tabList:[{id:'product1',name:'商品1',src:Img,url:UrlShopDetail},{id:'product2',name:'商品2',src:Img,url:UrlShopDeatilScoll},{id:'product3',name:'商品3',src:Img,url:UrlShopDeatilScoll},{id:'product4',name:'商品4',src:Img,url:UrlShopDeatilScoll}]
     };
   }
 
@@ -91,18 +94,18 @@ class Index extends Taro.Component {
           scrollTop={0}
           lowerThreshold={10}
           upperThreshold={10}
-          style='height:658px'
+          style='height:569px'
           onScrolltoupper={this.updateList}
           onScrolltolower={this.appendNextPageList}
         >
           <View className='shop_floor'>
                 {this.state.tabList.map((item, index) => {
-                  return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,'/pages/index/shopScoll/ShopDetailScoll')}>
+                  return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                     <View className='goods_img'>
                       <Image className='goods_img_image' src={item.src} mode='widthFix' lazyLoad />
                     </View>
                     <View className='goods_info'>
-                      <Text className='goods_name' onClick={this.navigateTo.bind(this,'/pages/index/shop/ShopDetailScoll')}>{item.name}</Text>
+                      <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
 
                     </View>
                   </View>
