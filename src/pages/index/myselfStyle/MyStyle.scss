@@ -20,3 +20,37 @@ overflow: hidden;
   text-align: center;
 }
 
+.sort-wrap{
+  height:90rpx;
+  background-color:#fff;
+}
+.sort-btn{
+  width:33.333%;
+  float:left;
+  text-align: center;
+  height:90rpx;
+  line-height:90rpx;
+  font-size: 28rpx;
+  color:#333;
+}
+
+.sort-btn Image {
+  width: 9px!important;
+  height: 18px!important;
+  //margin-left: 6px!important;
+
+}
+
+.titleImage > .taro-img{
+   width: 0.52533rem!important;
+    height: 1%!important;
+
+}
+.box{
+  display: inline-flex;
+  text-align: center;
+  width:100%;
+  .contentBox{width: 221%;line-height: 1.26133rem;}
+  .dateBox{width: 100%; line-height: 1.26133rem;}
+}
+

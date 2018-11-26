@@ -1,8 +1,10 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text,ScrollView } from '@tarojs/components'
+import { View, Button, Text,ScrollView ,Image} from '@tarojs/components'
 import { AtTabs, AtTabsPane,AtPagination,AtTag,AtInput  } from 'taro-ui'
 import  MyPage from '../myPage/MyPage'
+import Imageurl1 from '../../../pic/icon/up.png'
+import Imageurl2 from '../../../pic/icon/down.png'
 
 
 import './myStyle.scss'
@@ -61,37 +63,22 @@ class Index extends Taro.Component {
     this.state = {
       current: 0,
 	  contentList:[
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'}
+	  {content1 : '被内容撑开被内容撑开被内容撑开被被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181020'},
+	  {content1 : '被内容撑开被内容撑开被内容撑开撑开',content2 : '20180920'},
+	  {content1 : '被内容撑开被内容容撑开',content2 : '20180820'},
+	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20180720'},
+    {content1 : '被内容撑开被内容撑开被内容撑开被被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20171020'},
+    {content1 : '被内容撑开被内容撑开被内容撑开撑开',content2 : '20170920'},
+    {content1 : '被内容撑开被内容容撑开',content2 : '20170820'},
+    {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20170720'}
+
 	  ],
       pageSize:10,
-      currentPage:1
+      currentPage:1,
+      titleFlag:1,
+      dateFlag:1,
+      titleImage : Imageurl1,
+      dateImage :Imageurl1
     };
   }
   componentWillUnmount () { }
@@ -151,10 +138,115 @@ class Index extends Taro.Component {
     console.log(value)
   }
 
+  //标题排序
+  titleSort(){
+      const titleFlag = this.state.titleFlag
+     // const titleImage = this.state.titleImage
+   //console.log(titleFlag)
+    if(titleFlag == 1){
+
+      const titleImages  = Imageurl2
+      const titleFlag =2;
+      const list =  this.state.contentList
+      var compare = function (obj1, obj2) {
+        var val1 = obj1.content1;
+        var val2 = obj2.content1;
+        if (val1 < val2) {
+          return -1;
+        } else if (val1 > val2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+      const lists =  list.sort(compare)
+      console.log(list.sort(compare))
+     // console.log(titleImages)
+      //console.log(titleFlag)
+      this.setState({
+        titleImage:titleImages,
+        titleFlag:titleFlag,
+        contentList:lists
+      })
+    }else{
+      const titleImage  = Imageurl1
+      const titleFlag = 1
+      const list =  this.state.contentList
+      var compare = function (obj1, obj2) {
+        var val1 = obj1.content1;
+        var val2 = obj2.content1;
+        if (val1 > val2) {
+          return -1;
+        } else if (val1 < val2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+      const lists =  list.sort(compare)
+      this.setState({
+        titleImage:titleImage,
+        titleFlag:titleFlag,
+        contentList:lists
+      })
+    }
+  }
+  //日期排序
+  dateSort(){
+    const dateFlag = this.state.dateFlag
+    // const titleImage = this.state.titleImage
+    //console.log(titleFlag)
+    if(dateFlag == 1){
+      const dateImage  = Imageurl2
+      const dateFlag =2
+      const list =  this.state.contentList
+      var compare = function (obj1, obj2) {
+        var val1 = obj1.content2;
+        var val2 = obj2.content2;
+        if (val1 < val2) {
+          return -1;
+        } else if (val1 > val2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+      const lists =  list.sort(compare)
+      console.log(list.sort(compare))
+      // console.log(titleImages)
+      //console.log(titleFlag)
+      this.setState({
+        dateImage:dateImage,
+        dateFlag:dateFlag,
+        contentList:lists
+      })
+    }else{
+      const dateImage  = Imageurl1
+      const dateFlag = 1;
+      const list =  this.state.contentList
+      var compare = function (obj1, obj2) {
+        var val1 = obj1.content2;
+        var val2 = obj2.content2;
+        if (val1 > val2) {
+          return -1;
+        } else if (val1 < val2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+      const lists =  list.sort(compare)
+      this.setState({
+        dateImage:dateImage,
+        dateFlag:dateFlag,
+        contentList:lists
+      })
+    }
+  }
   render () {
 
 	const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
-	const contentList = [{content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},{content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'}]
+	const contentList = this.state.contentList
     const currentPage =  this.state.currentPage
     const pageSize =  this.state.pageSize
 	return (
@@ -170,13 +262,29 @@ class Index extends Taro.Component {
 					  lowerThreshold='20'
 					  upperThreshold='20'>
 		 <View style='background-color: #FAFBFC;text-align: center;height:736px;' >
-
+       <view class='sort-wrap'>
+         <view class='sort-btn'>
+           新闻
+         </view>
+         <view class='sort-btn' data-index="" onClick={this.titleSort.bind(this)}>
+           标题
+           <view className="titleImage">
+           <Image src={this.state.titleImage} ></Image>
+           </view>
+         </view>
+         <view class='sort-btn' data-index="" onClick={this.dateSort.bind(this)}>
+           日期
+           <view className="titleImage">
+           <Image src={this.state.dateImage}></Image>
+           </view>
+         </view>
+       </view>
 				{this.state.contentList.map((contentMap,index)=>{
-					return (<View className='at-row' style="background-color: rgb(47, 40, 76);">
-								<View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
+					return (<View className='box' >
+								<View className='contentBox' style="background-color: darkkhaki;">
 								{contentMap.content1}
 							  </View>
-							   <View className='at-col' style="background-color: lavender;">20181120</View>
+							   <View className='dateBox' style="background-color: lavender;">{contentMap.content2}</View>
 				</View>)
 				})}
 
@@ -200,14 +308,30 @@ class Index extends Taro.Component {
 					  lowerThreshold='20'
 					  upperThreshold='20'>
 		 <View style='background-color: #FAFBFC;text-align: center;height:auto;' >
-
+       <view className='sort-wrap'>
+         <view className='sort-btn'>
+           新闻
+         </view>
+         <view className='sort-btn' data-index="" onClick={this.titleSort.bind(this)}>
+           标题
+           <view className="titleImage">
+             <Image src={this.state.titleImage}></Image>
+           </view>
+         </view>
+         <view className='sort-btn' data-index="" onClick={this.dateSort.bind(this)}>
+           日期
+           <view className="titleImage">
+             <Image src={this.state.dateImage}></Image>
+           </view>
+         </view>
+       </view>
 				{this.state.contentList.map((contentMap,index)=>{
-					return (<View className='at-row' style="background-color: rgb(47, 40, 76);">
-								<View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
-								{contentMap.content1}
-							  </View>
-							   <View className='at-col' style="background-color: lavender;">20181120</View>
-				</View>)
+					return (<View className='box' >
+            <View className='contentBox' style="background-color: darkkhaki;">
+              {contentMap.content1}
+            </View>
+            <View className='dateBox' style="background-color: lavender;">{contentMap.content2}</View>
+          </View>)
 				})}
 			  <MyPage
           pageSize = {pageSize}
@@ -225,14 +349,30 @@ class Index extends Taro.Component {
 					  lowerThreshold='20'
 					  upperThreshold='20'>
 		 <View style='background-color: #FAFBFC;height:auto;' >
-
+       <view className='sort-wrap'>
+         <view className='sort-btn'>
+           新闻
+         </view>
+         <view className='sort-btn' data-index="" onClick={this.titleSort.bind(this)}>
+           标题
+           <view className="titleImage">
+             <Image src={this.state.titleImage}></Image>
+           </view>
+         </view>
+         <view className='sort-btn' data-index="" onClick={this.dateSort.bind(this)}>
+           日期
+           <view className="titleImage">
+             <Image src={this.state.dateImage}></Image>
+           </view>
+         </view>
+       </view>
 				{this.state.contentList.map((contentMap,index)=>{
-          return (<View className='at-row' style="background-color: rgb(47, 40, 76);text-align: center;">
-								<View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
-								{contentMap.content1}
-							  </View>
-							   <View className='at-col' style="background-color: lavender;">20181120</View>
-				</View>)
+          return (<View className='box' >
+            <View className='contentBox' style="background-color: darkkhaki;">
+              {contentMap.content1}
+            </View>
+            <View className='dateBox' style="background-color: lavender;">{contentMap.content2}</View>
+          </View>)
 				})}
 
 				<view className='pageBox'>
