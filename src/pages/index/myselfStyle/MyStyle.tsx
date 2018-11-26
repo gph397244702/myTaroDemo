@@ -1,7 +1,8 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text,ScrollView } from '@tarojs/components'
-import { AtTabs, AtTabsPane,AtPagination } from 'taro-ui'
+import { AtTabs, AtTabsPane,AtPagination,AtTag,AtInput  } from 'taro-ui'
+import  MyPage from '../myPage/MyPage'
 
 
 import './myStyle.scss'
@@ -88,7 +89,9 @@ class Index extends Taro.Component {
 	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
 	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},
 	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'}
-	  ]
+	  ],
+      pageSize:10,
+      currentPage:1
     };
   }
   componentWillUnmount () { }
@@ -107,12 +110,53 @@ class Index extends Taro.Component {
     })
   }
 
+  handleChange(value1){
+    this.setState({
+      currentPage: value1
+    })
+  }
 
+  //回到首页
+  pageleftOne(){
+    this.setState({
+      currentPage: 1
+    })
+  }
+  //回到上一页
+  pageleft(){
+   const currentPage =  this.state.currentPage
+    if(currentPage <=1) return
+    this.setState({
+      currentPage: currentPage-1
+    })
+  }
+  //进入下一页
+  pageRight(){
+    const currentPage =  this.state.currentPage
+    const pageSize =  this.state.pageSize
+    if(currentPage >=pageSize) return
+    this.setState({
+      currentPage: currentPage+1
+    })
+  }
+  //进入尾页
+  pageRightLast(){
+    const pageSize = this.state.pageSize
+    this.setState({
+      currentPage: pageSize
+    })
+  }
+  clickEnter(){
+    const value = this.state.currentPage
+    console.log(value)
+  }
 
   render () {
 
 	const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
 	const contentList = [{content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'},{content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181120'}]
+    const currentPage =  this.state.currentPage
+    const pageSize =  this.state.pageSize
 	return (
 
 	  <AtTabs current={this.state.current}   tabList={tabList} onClick={this.handleClicks.bind(this)}>
@@ -152,7 +196,7 @@ class Index extends Taro.Component {
 					  scrollY
 					  scrollWithAnimation
 					  scrollTop='0'
-					  style='height: 650px;'
+					  style='height: 530px;'
 					  lowerThreshold='20'
 					  upperThreshold='20'>
 		 <View style='background-color: #FAFBFC;text-align: center;height:auto;' >
@@ -165,12 +209,10 @@ class Index extends Taro.Component {
 							   <View className='at-col' style="background-color: lavender;">20181120</View>
 				</View>)
 				})}
-				<View className='at-row' style="background-color: rgb(47, 40, 76);">
-				  <View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
-					被内容撑开被内容撑开被内容撑开被内容撑开
-				  </View>
-				  <View className='at-col' style="background-color: lavender;">20181120</View>
-				</View>
+			  <MyPage
+          pageSize = {pageSize}
+          currentPage = {currentPage}
+        />
 		  </View>
 		</ScrollView>
         </AtTabsPane>
@@ -179,26 +221,125 @@ class Index extends Taro.Component {
 					  scrollY
 					  scrollWithAnimation
 					  scrollTop='0'
-					  style='height: 650px;'
+					  style='height: 554px;'
 					  lowerThreshold='20'
 					  upperThreshold='20'>
-		 <View style='background-color: #FAFBFC;text-align: center;height:auto;' >
+		 <View style='background-color: #FAFBFC;height:auto;' >
 
 				{this.state.contentList.map((contentMap,index)=>{
-					return (<View className='at-row' style="background-color: rgb(47, 40, 76);">
+          return (<View className='at-row' style="background-color: rgb(47, 40, 76);text-align: center;">
 								<View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
 								{contentMap.content1}
 							  </View>
 							   <View className='at-col' style="background-color: lavender;">20181120</View>
 				</View>)
 				})}
-				<View className='at-row' style="background-color: rgb(47, 40, 76);">
-				  <View className='at-col at-col-1 at-col--auto' style="background-color: darkkhaki;">
-					被内容撑开被内容撑开被内容撑开被内容撑开
-				  </View>
-				  <View className='at-col' style="background-color: lavender;">20181120</View>
-				</View>
+
+				<view className='pageBox'>
+          <view className = 'pageleftOne'>
+            {currentPage ==1 ?
+            <AtTag
+           name='<<'
+           type='primary'
+
+           active
+           onClick={this.pageleftOne.bind(this)}
+         >
+           {'<<'}
+         </AtTag> :
+              <AtTag
+              name='<<'
+              type='primary'
+
+              onClick={this.pageleftOne.bind(this)}
+              >
+              {'<<'}
+              </AtTag>}
+       </view>
+       <view className = 'pageleft'>
+         {currentPage == 1 ?
+           <AtTag
+             name='<'
+             type='primary'
+             active
+             onClick={this.pageleft.bind(this)}
+           >
+             {'<'}
+           </AtTag> :
+           <AtTag
+           name='<'
+           type='primary'
+           onClick={this.pageleft.bind(this)}
+           >
+           {'<'}
+           </AtTag>
+         }
+
+       </view >
+          <view onkeydown ={this.clickEnter.bind(this)}>
+          <AtInput
+            name='value2'
+            type='number'
+            placeholder='请输入数字'
+            value={this.state.currentPage}
+            onChange={this.handleChange.bind(this)}
+          />
+
+          </view>
+          <view >
+              <AtTag
+                name={this.state.pageSize}
+                type='primary'
+
+              >
+                {this.state.pageSize}
+              </AtTag>
+          </view>
+       <view className = 'pageRight'>
+         {currentPage == pageSize ?
+         <AtTag
+           name='>'
+           type='primary'
+
+           active
+           onClick={this.pageRight.bind(this)}
+         >
+           {'>'}
+         </AtTag>
+           :
+           <AtTag
+             name='>'
+             type='primary'
+
+
+             onClick={this.pageRight.bind(this)}
+           >
+             {'>'}
+           </AtTag>}
+       </view>
+       <view className = 'pageRightLast'>
+         {currentPage == pageSize ?
+         <AtTag
+           name='>>'
+           type='primary'
+            active
+
+           onClick={this.pageRightLast.bind(this)}
+         >
+           {'>>'}
+         </AtTag>:
+           <AtTag
+             name='>>'
+             type='primary'
+
+             onClick={this.pageRightLast.bind(this)}
+           >
+             {'>>'}
+           </AtTag>}
+       </view>
+        </view>
 		  </View>
+
 		</ScrollView>
 
         </AtTabsPane>

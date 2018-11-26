@@ -9,6 +9,7 @@ import Imgss from '../../../pic/productImg/444.jpg'
 import MySwiperStyle from  '../mySwiper/MySwiper'
 
 import './ShopDetailScoll.scss'
+import {add} from "../../../actions/counter";
 
 // #region 书写注意
 //
@@ -75,23 +76,56 @@ class Index extends Taro.Component {
       })
 
   }
-  appendNextPageList () {
-    console.log(123)
+  commitUtls(){
 
+  }
+  appendNextPageList () {
     const imgs = this.state.imgUrls
-    console.log(imgs)
+    //console.log(imgs)
     const imgUrlslists = this.state.imgUrlslist
     const indexs = this.state.index +1
     const lengths =  imgUrlslists.length
+    //console.log(indexs + "fdsfsdf" +lengths)
+
     if (indexs == lengths) {return}
     else{
       Taro.showLoading({title: '加载中'})
+      setTimeout(() => {
+        // Taro.hideLoading({title: '加载中'})
+        //const ind =  indexs + 1
+        const imgsurl = imgUrlslists[indexs]
+        //imgs.splice(0, 1)
+        imgs.push(imgsurl)
+        console.log(indexs)
+        this.setState({
+          imgUrls:imgs
+        })
+        this.setState({
+          index:indexs
+        })
+        Taro.hideLoading({title: '加载中'})
+      }, 2000)
+
+    }
+
+    /*const imgs = this.state.imgUrls
+    //console.log(imgs)
+    const imgUrlslists = this.state.imgUrlslist
+    const indexs = this.state.index +1
+    const lengths =  imgUrlslists.length
+    console.log(indexs + "fdsfsdf" +lengths)
+    if (indexs == lengths) {return}
+    else{
+      setTimeout(() => {
+        Taro.showLoading({title: '加载中'})
+        commitUtls
+      }, 2000)
+      Taro.hideLoading({title: '加载中'})
       //const ind =  indexs + 1
       const imgsurl = imgUrlslists[indexs]
-      imgs.splice(0, 1)
+      //imgs.splice(0, 1)
       imgs.push(imgsurl)
       console.log(indexs)
-      Taro.hideLoading({title: '加载中'})
       this.setState({
         imgUrls:imgs
       })
@@ -100,12 +134,11 @@ class Index extends Taro.Component {
       })
     }
 
-    console.log(imgs)
+    console.log(imgs)*/
   }
   updateList () {
     console.log(321)
-
-    const imgs = this.state.imgUrls
+    /*const imgs = this.state.imgUrls
     console.log(imgs)
     const imgUrlslists = this.state.imgUrlslist
     const indexs = this.state.index
@@ -126,7 +159,7 @@ class Index extends Taro.Component {
       this.setState({
         index:ind
       })
-    }
+    }*/
   }
   render () {
 
@@ -140,14 +173,14 @@ class Index extends Taro.Component {
           <ScrollView className='scrollview'
                       scrollY
                       scrollWithAnimation
-                      lowerThreshold={0}
-                      upperThreshold={0}
-                      style='height: 420px;'
-                      onScrollToUpper={this.updateList.bind(this)}
+                      lowerThreshold={10}
+                      //upperThreshold={0}
+                      style='height: 520px;'
+                      //onScrollToUpper={this.updateList.bind(this)}
                       onScrollToLower={this.appendNextPageList.bind(this)}
                       >
           {this.state.imgUrls.map((imgs,index) => {
-            return (<Image  src={imgs} mode='widthFix' className='slide-image' />)
+            return (<Image  src={imgs} mode='widthFix' className='slide-image'  />)
           })}
 
           </ScrollView>
