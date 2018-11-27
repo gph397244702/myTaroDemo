@@ -14,8 +14,6 @@ import './MyPage.scss'
 //
 // #endregion
 
-
-
 export default class  MyPage extends Component {
 
     /**
@@ -38,22 +36,17 @@ export default class  MyPage extends Component {
       currentPage:currentPage
     };
   }
-
   //点击标签栏出发的事件
-
-
   handleClicks (value) {
     this.setState({
       current: value
     })
   }
-
   handleChange(value1){
     this.setState({
       currentPage: value1
     })
   }
-
   //回到首页
   pageleftOne(){
     this.setState({
@@ -100,31 +93,24 @@ export default class  MyPage extends Component {
           currentPage:1
         })
       }
-
         else {
         console.log(value)
         alert("当前跳转到" + value + "页")
       }
 
     }
-
-
-    //console.log(event.keyCode)
-    //alert(value)
   }
 
   render () {
-
 	  const currentPage =  this.state.currentPage
     const pageSize =  this.state.pageSize
-	return (
+	  return (
 				<view className='pageBox'>
           <view className = 'pageleftOne'>
             {currentPage ==1 ?
             <AtTag
            name='<<'
            type='primary'
-
            active
            onClick={this.pageleftOne.bind(this)}
          >
@@ -133,7 +119,6 @@ export default class  MyPage extends Component {
               <AtTag
               name='<<'
               type='primary'
-
               onClick={this.pageleftOne.bind(this)}
               >
               {'<<'}
@@ -157,7 +142,6 @@ export default class  MyPage extends Component {
            {'<'}
            </AtTag>
          }
-
        </view >
           <view onkeydown ={this.clickEnter.bind(this)}>
           <AtInput
@@ -167,7 +151,6 @@ export default class  MyPage extends Component {
             value={this.state.currentPage}
             onChange={this.handleChange.bind(this)}
           />
-
           </view>
           <view >
               <AtTag
@@ -193,8 +176,6 @@ export default class  MyPage extends Component {
            <AtTag
              name='>'
              type='primary'
-
-
              onClick={this.pageRight.bind(this)}
            >
              {'>'}
@@ -206,7 +187,6 @@ export default class  MyPage extends Component {
            name='>>'
            type='primary'
             active
-
            onClick={this.pageRightLast.bind(this)}
          >
            {'>>'}
@@ -221,7 +201,6 @@ export default class  MyPage extends Component {
            </AtTag>}
        </view>
         </view>
-
     )
   }
 }

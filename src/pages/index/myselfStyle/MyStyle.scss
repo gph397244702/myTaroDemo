@@ -1,25 +1,4 @@
-.container{
-  height: 1500px;
-}
-.at-pagination{
-position: relative;
-margin: 0 0.85333rem;
-font-size: 0;
-overflow: hidden;
-}
 .pageBox{display: inline-flex;margin-left: 10%;}
-.at-input{padding: 0}
-.at-input__input {
-  width: 122px;
-  -webkit-flex: 1;
-  flex: 1;
-  display: inline-block;
-  font-size: 0.68267rem;
-  line-height: 1.8;
-  vertical-align: middle;
-  text-align: center;
-}
-
 .sort-wrap{
   height:90rpx;
   background-color:#fff;
@@ -33,18 +12,15 @@ overflow: hidden;
   font-size: 28rpx;
   color:#333;
 }
-
 .sort-btn Image {
   width: 9px!important;
   height: 18px!important;
   //margin-left: 6px!important;
 
 }
-
 .titleImage > .taro-img{
    width: 0.52533rem!important;
     height: 1%!important;
-
 }
 .box{
   display: inline-flex;

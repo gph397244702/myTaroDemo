@@ -1,14 +1,11 @@
 import '@tarojs/async-await'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { Provider } from '@tarojs/redux'
 
 import Index from './pages/index'
 
-import configStore from './store'
 
 import './app.scss'
 
-const store = configStore()
 if (process.env.TARO_ENV === "weapp") {
   require("taro-ui/dist/weapp/css/index.css")
 } else if (process.env.TARO_ENV === "h5") {
@@ -53,9 +50,7 @@ class App extends Component {
   // 请勿修改此函数
   render () {
     return (
-      <Provider store={store}>
         <Index />
-      </Provider>
     )
   }
 }

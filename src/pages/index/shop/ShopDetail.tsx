@@ -1,10 +1,6 @@
-import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text,Swiper, SwiperItem,Image  } from '@tarojs/components'
-import {AtSearchBar } from 'taro-ui'
-import { connect } from '@tarojs/redux'
+import Taro, { Config } from '@tarojs/taro'
+import { View, Button,Image  } from '@tarojs/components'
 
-import { add, minus, asyncAdd } from '../../../actions/counter'
 import Img from '../../../pic/productImg/222.jpg'
 import Imgs from '../../../pic/productImg/333.jpg'
 import Imgss from '../../../pic/productImg/444.jpg'
@@ -21,30 +17,7 @@ import './ShopDetail.scss'
 // ref: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/20796
 //
 // #endregion
-
-type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
-
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
-
-type PageOwnProps = {}
-
-type PageState = {}
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
-
-interface Index {
-  props: IProps;
-}
-
-class Index extends Taro.Component {
+export default  class ShopDetail extends Taro.Component {
 
 
 
@@ -69,11 +42,9 @@ class Index extends Taro.Component {
     };
   }
   goToPage = (e) => {
-
       Taro.navigateTo({
         url: e.currentTarget.dataset.url,
       })
-
   }
   render () {
 
@@ -109,12 +80,3 @@ class Index extends Taro.Component {
     )
   }
 }
-
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
-
-export default Index as ComponentClass<PageOwnProps, PageState>

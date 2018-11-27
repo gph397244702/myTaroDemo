@@ -19,30 +19,8 @@ import './product.scss'
 //
 // #endregion
 
-type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
 
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
-
-type PageOwnProps = {}
-
-type PageState = {}
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
-
-interface Index {
-  props: IProps;
-}
-
-class Index extends Taro.Component {
-
+export default class Index extends Taro.Component {
     /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -64,19 +42,16 @@ class Index extends Taro.Component {
 
   componentDidHide () { }
   constructor(props) {
-
     super(props);
     this.state = {
       tabList:[{id:'product1',name:'商品1',src:Img,url:UrlShopDetail},{id:'product2',name:'商品2',src:Img,url:UrlShopDeatilScoll},{id:'product3',name:'商品3',src:Img,url:UrlShopDeatilScoll},{id:'product4',name:'商品4',src:Img,url:UrlShopDeatilScoll}]
     };
   }
-
   //点击标签栏进入详情页面
 
   navigateTo(url) {
     Taro.navigateTo({url:url})
   }
-
   handleClicks (value) {
     this.setState({
       current: value
@@ -84,9 +59,9 @@ class Index extends Taro.Component {
   }
 
   render () {
-    const tabList = [{ title: '汽车' }, { title: '衣服' }, { title: '食品' }]
+    const tabflagList = [{ title: '汽车' }, { title: '衣服' }, { title: '食品' }]
 	return (
-    <AtTabs current={this.state.current}   tabList={tabList} onClick={this.handleClicks.bind(this)}>
+    <AtTabs current={this.state.current}   tabList={tabflagList} onClick={this.handleClicks.bind(this)}>
       <AtTabsPane  current={this.state.current} index={0} >
       <ScrollView className='container'
           scrollY
@@ -106,10 +81,8 @@ class Index extends Taro.Component {
                     </View>
                     <View className='goods_info'>
                       <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
-
                     </View>
                   </View>
-
                 })}
           </View>
         </ScrollView>
@@ -127,16 +100,14 @@ class Index extends Taro.Component {
         >
           <View className='shop_floor'>
             {this.state.tabList.map((item, index) => {
-              return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,'/pages/index/shopScoll/ShopDetailScoll')}>
+              return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                 <View className='goods_img'>
                   <Image className='goods_img_image' src={item.src} mode='widthFix' lazyLoad />
                 </View>
                 <View className='goods_info'>
-                  <Text className='goods_name' onClick={this.navigateTo.bind(this,'/pages/index/shop/ShopDetailScoll')}>{item.name}</Text>
-
+                  <Text className='goods_name' onClick={this.navigateTo.bind(this.navigateTo.bind(this,item.url)}>{item.name}</Text>
                 </View>
               </View>
-
             })}
           </View>
         </ScrollView>
@@ -154,32 +125,19 @@ class Index extends Taro.Component {
         >
           <View className='shop_floor'>
             {this.state.tabList.map((item, index) => {
-              return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,'/pages/index/shopScoll/ShopDetailScoll')}>
+              return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                 <View className='goods_img'>
                   <Image className='goods_img_image' src={item.src} mode='widthFix' lazyLoad />
                 </View>
                 <View className='goods_info'>
-                  <Text className='goods_name' onClick={this.navigateTo.bind(this,'/pages/index/shop/ShopDetailScoll')}>{item.name}</Text>
-
+                  <Text className='goods_name' onClick={this.navigateTo.bind(this.navigateTo.bind(this,item.url)}>{item.name}</Text>
                 </View>
               </View>
-
             })}
           </View>
         </ScrollView>
       </AtTabsPane>
     </AtTabs>
-
-
     )
   }
 }
-
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
-
-export default Index as ComponentClass<PageOwnProps, PageState>

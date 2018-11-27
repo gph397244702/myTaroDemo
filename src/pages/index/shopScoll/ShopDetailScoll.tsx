@@ -6,10 +6,8 @@ import { View, Button, Text,Swiper, SwiperItem,Image,ScrollView  } from '@tarojs
 import Img from '../../../pic/productImg/222.jpg'
 import Imgs from '../../../pic/productImg/333.jpg'
 import Imgss from '../../../pic/productImg/444.jpg'
-import MySwiperStyle from  '../mySwiper/MySwiper'
 
 import './ShopDetailScoll.scss'
-import {add} from "../../../actions/counter";
 
 // #region 书写注意
 //
@@ -21,29 +19,7 @@ import {add} from "../../../actions/counter";
 //
 // #endregion
 
-type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
-
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
-
-type PageOwnProps = {}
-
-type PageState = {}
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
-
-interface Index {
-  props: IProps;
-}
-
-class Index extends Taro.Component {
+export default  class ShopDetailScoll extends Taro.Component {
 
 
 
@@ -85,11 +61,12 @@ class Index extends Taro.Component {
     const imgUrlslists = this.state.imgUrlslist
     const indexs = this.state.index +1
     const lengths =  imgUrlslists.length
-    //console.log(indexs + "fdsfsdf" +lengths)
+    console.log(indexs + "fdsfsdf" +lengths)
 
     if (indexs == lengths) {return}
     else{
       Taro.showLoading({title: '加载中'})
+      //模拟2秒延迟
       setTimeout(() => {
         // Taro.hideLoading({title: '加载中'})
         //const ind =  indexs + 1
@@ -105,62 +82,9 @@ class Index extends Taro.Component {
         })
         Taro.hideLoading({title: '加载中'})
       }, 2000)
-
     }
-
-    /*const imgs = this.state.imgUrls
-    //console.log(imgs)
-    const imgUrlslists = this.state.imgUrlslist
-    const indexs = this.state.index +1
-    const lengths =  imgUrlslists.length
-    console.log(indexs + "fdsfsdf" +lengths)
-    if (indexs == lengths) {return}
-    else{
-      setTimeout(() => {
-        Taro.showLoading({title: '加载中'})
-        commitUtls
-      }, 2000)
-      Taro.hideLoading({title: '加载中'})
-      //const ind =  indexs + 1
-      const imgsurl = imgUrlslists[indexs]
-      //imgs.splice(0, 1)
-      imgs.push(imgsurl)
-      console.log(indexs)
-      this.setState({
-        imgUrls:imgs
-      })
-      this.setState({
-        index:indexs
-      })
-    }
-
-    console.log(imgs)*/
   }
-  updateList () {
-    console.log(321)
-    /*const imgs = this.state.imgUrls
-    console.log(imgs)
-    const imgUrlslists = this.state.imgUrlslist
-    const indexs = this.state.index
-    //const lengths =  imgUrlslists.length
-    if (indexs < 1) {return}
-    else{
-      Taro.showLoading({title: '加载中'})
-      const ind =  indexs -1
-      console.log(ind)
-      const imgsurl = imgUrlslists[ind]
-      imgs.splice(0, 1)
-      imgs.push(imgsurl)
-      console.log(imgsurl)
-      Taro.hideLoading({title: '加载中'})
-      this.setState({
-        imgUrls:imgs
-      })
-      this.setState({
-        index:ind
-      })
-    }*/
-  }
+
   render () {
 
     return (
@@ -174,20 +98,15 @@ class Index extends Taro.Component {
                       scrollY
                       scrollWithAnimation
                       lowerThreshold={10}
-                      //upperThreshold={0}
                       style='height: 520px;'
-                      //onScrollToUpper={this.updateList.bind(this)}
                       onScrollToLower={this.appendNextPageList.bind(this)}
                       >
           {this.state.imgUrls.map((imgs,index) => {
             return (<Image  src={imgs} mode='widthFix' className='slide-image'  />)
           })}
-
           </ScrollView>
         </View>
-
       </View>
-
 
     { /* 底部操作栏 */ }
     <View className="detail-bottom-btns">
@@ -210,12 +129,3 @@ class Index extends Taro.Component {
     )
   }
 }
-
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
-
-export default Index as ComponentClass<PageOwnProps, PageState>

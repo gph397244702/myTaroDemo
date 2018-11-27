@@ -5,7 +5,7 @@ import { AtTabs, AtTabsPane,AtTabBar,AtList, AtListItem,AtInput,AtSwipeAction  }
 import { connect } from '@tarojs/redux'
 import  MyAtTabs from './myselfStyle/MyStyle'
 import  MySearch from './search/Search'
-import  MyRead from './read/product'
+import  Product from './product/product'
 
 
 import { add, minus, asyncAdd } from '../../actions/counter'
@@ -65,7 +65,7 @@ export default  class Index extends Taro.Component {
 
 		 {this.state.current == 0 && <MyAtTabs></MyAtTabs>}
 		 {this.state.current == 1 && <MySearch></MySearch>}
-		 {this.state.current == 2 && <MyRead></MyRead>}
+		 {this.state.current == 2 && <Product></Product>}
 
 		  <AtSwipeAction options={[
 				  {

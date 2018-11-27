@@ -1,9 +1,6 @@
-import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { Image  } from '@tarojs/components'
 import { AtSearchBar,AtTag ,AtDivider } from 'taro-ui'
-
-
 import './Search.scss'
 
 // #region 书写注意
@@ -16,35 +13,13 @@ import './Search.scss'
 //
 // #endregion
 
-type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
-
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
-
-type PageOwnProps = {}
-
-type PageState = {}
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
-
-interface Index {
-  props: IProps;
-}
-
-class Index extends Taro.Component {
+export default  class Search extends Taro.Component {
 
    constructor () {
     super(...arguments)
     this.state = {
       value: '',
-      tags:['热血高校','火影','指环王','霍比特人','我的兄弟叫顺溜','海贼王','海贼王',],
+      tags:['热血高校','火影','指环王','霍比特人','我的兄弟叫顺溜','海贼王','海贼王'],
       histags:[]
     }
   }
@@ -132,20 +107,10 @@ class Index extends Taro.Component {
               </AtTag>
             </view>)
           })}
-
-
         </view>
-
       </view>
     )
   }
 }
 
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
 
-export default Index as ComponentClass<PageOwnProps, PageState>
