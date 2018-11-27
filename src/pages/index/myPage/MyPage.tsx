@@ -109,19 +109,19 @@ export default class  MyPage extends Component {
           <view className = 'pageleftOne'>
             {currentPage ==1 ?
             <AtTag
-           name='<<'
+           name='|<'
            type='primary'
            active
            onClick={this.pageleftOne.bind(this)}
          >
-           {'<<'}
+           {'|<'}
          </AtTag> :
               <AtTag
-              name='<<'
+              name='|<'
               type='primary'
               onClick={this.pageleftOne.bind(this)}
               >
-              {'<<'}
+              {'|<'}
               </AtTag>}
        </view>
        <view className = 'pageleft'>
@@ -184,20 +184,20 @@ export default class  MyPage extends Component {
        <view className = 'pageRightLast'>
          {currentPage == pageSize ?
          <AtTag
-           name='>>'
+           name='>|'
            type='primary'
             active
            onClick={this.pageRightLast.bind(this)}
          >
-           {'>>'}
+           {'>|'}
          </AtTag>:
            <AtTag
-             name='>>'
+             name='>|'
              type='primary'
 
              onClick={this.pageRightLast.bind(this)}
            >
-             {'>>'}
+             {'>|'}
            </AtTag>}
        </view>
         </view>

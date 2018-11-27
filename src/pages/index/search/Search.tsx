@@ -16,13 +16,28 @@ import './Search.scss'
 export default  class Search extends Taro.Component {
 
    constructor () {
-    super(...arguments)
-    this.state = {
+     let  histags = []
+     super(...arguments)
+     if(!window.localStorage){
+       console.log("浏览器支持localstorage")
+       return
+     }else{
+       const storage=window.localStorage;
+       //写入a字段
+       histags =storage["histags"]
+       console.log(histags)
+       //storage["histags"]=[]
+       histags = histags ? JSON.parse(histags):[]
+       console.log(histags)
+     }
+     this.state = {
       value: '',
       tags:['热血高校','火影','指环王','霍比特人','我的兄弟叫顺溜','海贼王','海贼王'],
-      histags:[]
+      histags:histags
     }
   }
+  componentWillMount() {
+}
   onChange (value) {
     this.setState({
       value: value
@@ -31,18 +46,52 @@ export default  class Search extends Taro.Component {
   onActionClick () {
     let histags  = this.state.histags
     const inputVal = this.state.value
-    console.log(this.state.value)
     if (inputVal == '') return
     else{
-      histags.push(inputVal)
+      //去重
+      let indexs =-1
+      histags.map((item,index)=>{
+        if(item.oldValue==inputVal){
+           indexs = index
+          console.log(indexs)
+         }else{
+           indexs = -1
+         }
+      })
+      //console.log(indexs)
+      indexs < 0 ? histags : histags.splice(indexs,1)
+      //console.log(inputVal)
+      const newValue = inputVal.length>3? inputVal.substring(0,3) + "...":inputVal
+      histags.unshift({oldValue:inputVal,newValue:newValue})
+    }
+    //console.log(histags)
+    if(!window.localStorage){
+      alert("浏览器不支持localstorage");
+      return ;
+    }else{
+      const storage=window.localStorage;
+      const histagss = histags
+      const length = histagss.length
+      length>12?histagss.splice(12):histagss
+      //写入a字段
+      storage["histags"] =JSON.stringify(histagss);
     }
     this.setState({
-      histags,
+      histags:histags,
       value:''
     })
   }
  delete(){
      //let histags  = this.state.histags;
+   let histags = []
+   if(!window.localStorage){
+     alert("浏览器不支持localstorage");
+     return ;
+   }else{
+     const storage=window.localStorage;
+     //写入a字段
+     storage["histags"] = [];
+   }
      this.setState({
        histags :[]
      })
@@ -91,19 +140,19 @@ export default  class Search extends Taro.Component {
         }
         <AtDivider height="50"/>
         <view >
-          <view className='historySearch'>
+          <view className='historySearch' onClick={this.delete.bind(this)}>
           历史
           <Image  src={require('../../../pic/icon/delete.png')} alt="" className= 'deleteIcon'/>
           </view>
           {this.state.histags.map((item,index) => {
             return (<view className='content'>
               <AtTag
-                name={item}
+                name={item.newValue}
                 type='primary'
                 circle
                 onClick={this.onClick.bind(this)}
               >
-                {item}
+                {item.newValue}
               </AtTag>
             </view>)
           })}

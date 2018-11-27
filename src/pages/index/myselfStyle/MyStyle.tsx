@@ -103,41 +103,6 @@ class Index extends Taro.Component {
     })
   }
 
-  //回到首页
-  pageleftOne(){
-    this.setState({
-      currentPage: 1
-    })
-  }
-  //回到上一页
-  pageleft(){
-   const currentPage =  this.state.currentPage
-    if(currentPage <=1) return
-    this.setState({
-      currentPage: currentPage-1
-    })
-  }
-  //进入下一页
-  pageRight(){
-    const currentPage =  this.state.currentPage
-    const pageSize =  this.state.pageSize
-    if(currentPage >=pageSize) return
-    this.setState({
-      currentPage: currentPage+1
-    })
-  }
-  //进入尾页
-  pageRightLast(){
-    const pageSize = this.state.pageSize
-    this.setState({
-      currentPage: pageSize
-    })
-  }
-  clickEnter(){
-    const value = this.state.currentPage
-    console.log(value)
-  }
-
   //标题排序
   titleSort(){
       const titleFlag = this.state.titleFlag
@@ -258,10 +223,10 @@ class Index extends Taro.Component {
 					  scrollY
 					  scrollWithAnimation
 					  scrollTop='0'
-					  style='height: 650px;'
+					  style='height: 530px'
 					  lowerThreshold='20'
 					  upperThreshold='20'>
-		 <View style='background-color: #FAFBFC;text-align: center;height:736px;' >
+		 <View style='background-color: #FAFBFC;text-align: center;height:100%'>
        <view class='sort-wrap'>
          <view class='sort-btn'>
            新闻
@@ -287,7 +252,6 @@ class Index extends Taro.Component {
 							   <View className='dateBox' style="background-color: lavender;">{contentMap.content2}</View>
 				</View>)
 				})}
-
 				<AtPagination
 					  icon
 					  total='50'
@@ -295,7 +259,6 @@ class Index extends Taro.Component {
 					  current='1'
 					>
 					</AtPagination>
-
 		  </View>
 		</ScrollView>
         </AtTabsPane>
@@ -374,116 +337,13 @@ class Index extends Taro.Component {
             <View className='dateBox' style="background-color: lavender;">{contentMap.content2}</View>
           </View>)
 				})}
-
-				<view className='pageBox'>
-          <view className = 'pageleftOne'>
-            {currentPage ==1 ?
-            <AtTag
-           name='<<'
-           type='primary'
-
-           active
-           onClick={this.pageleftOne.bind(this)}
-         >
-           {'<<'}
-         </AtTag> :
-              <AtTag
-              name='<<'
-              type='primary'
-
-              onClick={this.pageleftOne.bind(this)}
-              >
-              {'<<'}
-              </AtTag>}
-       </view>
-       <view className = 'pageleft'>
-         {currentPage == 1 ?
-           <AtTag
-             name='<'
-             type='primary'
-             active
-             onClick={this.pageleft.bind(this)}
-           >
-             {'<'}
-           </AtTag> :
-           <AtTag
-           name='<'
-           type='primary'
-           onClick={this.pageleft.bind(this)}
-           >
-           {'<'}
-           </AtTag>
-         }
-
-       </view >
-          <view onkeydown ={this.clickEnter.bind(this)}>
-          <AtInput
-            name='value2'
-            type='number'
-            placeholder='请输入数字'
-            value={this.state.currentPage}
-            onChange={this.handleChange.bind(this)}
-          />
-
-          </view>
-          <view >
-              <AtTag
-                name={this.state.pageSize}
-                type='primary'
-
-              >
-                {this.state.pageSize}
-              </AtTag>
-          </view>
-       <view className = 'pageRight'>
-         {currentPage == pageSize ?
-         <AtTag
-           name='>'
-           type='primary'
-
-           active
-           onClick={this.pageRight.bind(this)}
-         >
-           {'>'}
-         </AtTag>
-           :
-           <AtTag
-             name='>'
-             type='primary'
-
-
-             onClick={this.pageRight.bind(this)}
-           >
-             {'>'}
-           </AtTag>}
-       </view>
-       <view className = 'pageRightLast'>
-         {currentPage == pageSize ?
-         <AtTag
-           name='>>'
-           type='primary'
-            active
-
-           onClick={this.pageRightLast.bind(this)}
-         >
-           {'>>'}
-         </AtTag>:
-           <AtTag
-             name='>>'
-             type='primary'
-
-             onClick={this.pageRightLast.bind(this)}
-           >
-             {'>>'}
-           </AtTag>}
-       </view>
-        </view>
+       <MyPage
+         pageSize = {pageSize}
+         currentPage = {currentPage}
+       />
 		  </View>
-
 		</ScrollView>
-
         </AtTabsPane>
-
       </AtTabs>
 
     )

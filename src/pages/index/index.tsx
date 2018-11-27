@@ -67,22 +67,6 @@ export default  class Index extends Taro.Component {
 		 {this.state.current == 1 && <MySearch></MySearch>}
 		 {this.state.current == 2 && <Product></Product>}
 
-		  <AtSwipeAction options={[
-				  {
-					text: '取消',
-					style: {
-					  backgroundColor: '#6190E8'
-					}
-				  },
-				  {
-					text: '确认',
-					style: {
-					  backgroundColor: '#FF4949'
-					}
-				  }
-				]}>
-
-		</AtSwipeAction>
 		<AtTabBar
 		  fixed
 		  color="#909399"
