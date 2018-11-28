@@ -58,22 +58,30 @@ class Index extends Taro.Component {
     console.log(this.props, nextProps)
   }
   constructor(props) {
-
     super(props);
+    let contentList = []
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/upload',
+      data: {
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+        const rest =  res.data
+        console.log(rest)
+        contentList=rest.contentList
+        const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
+        //contentList)
+        this.setState({
+          contentList:contentList,
+          pageSize:pageSizes
+        })
+      })
     this.state = {
       current: 0,
-	  contentList:[
-	  {content1 : '被内容撑开被内容撑开被内容撑开被被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20181020'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开撑开',content2 : '20180920'},
-	  {content1 : '被内容撑开被内容容撑开',content2 : '20180820'},
-	  {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20180720'},
-    {content1 : '被内容撑开被内容撑开被内容撑开被被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20171020'},
-    {content1 : '被内容撑开被内容撑开被内容撑开撑开',content2 : '20170920'},
-    {content1 : '被内容撑开被内容容撑开',content2 : '20170820'},
-    {content1 : '被内容撑开被内容撑开被内容撑开被内容撑开',content2 : '20170720'}
-
-	  ],
-      pageSize:10,
+      contentList:[],
+      pageSize:[],
       currentPage:1,
       titleFlag:1,
       dateFlag:1,
@@ -107,7 +115,7 @@ class Index extends Taro.Component {
   titleSort(){
       const titleFlag = this.state.titleFlag
      // const titleImage = this.state.titleImage
-   //console.log(titleFlag)
+     //console.log(titleFlag)
     if(titleFlag == 1){
 
       const titleImages  = Imageurl2

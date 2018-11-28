@@ -21,4 +21,44 @@
   height: 100%!important;
   top: -0.97267rem;
 }
-
+.selectListNone{
+  position: absolute;
+  z-index: 1000;
+  background: #F7F7F7;
+  top: 9%;
+  width: 86%;
+  left: 2%;
+  display: none;
+  border-radius: 16px;
+  .active{
+    display: block;
+  }
+   div{
+    margin-left:10%;
+     font-size: 0.85733rem;
+     view{
+       margin-left:64%;
+     }
+  }
+}
+.selectListBlock{
+  position: absolute;
+  z-index: 1000;
+  background: #F7F7F7;
+  top: 9%;
+  width: 83%;
+  left: 2%;
+  .active{
+    display: block;
+  }
+  div{
+    margin-left:10%;
+    font-size: 0.85733rem;
+    view{
+      margin-left:64%;
+    }
+  }
+}
+.myStyle{
+  .at-search-bar__container{border-radius: 0PX;}
+}

@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { Image  } from '@tarojs/components'
-import { AtSearchBar,AtTag ,AtDivider } from 'taro-ui'
+import { AtSearchBar,AtTag ,AtDivider,AtList, AtListItem} from 'taro-ui'
 import './Search.scss'
 
 // #region 书写注意
@@ -17,7 +17,43 @@ export default  class Search extends Taro.Component {
 
    constructor () {
      let  histags = []
+     let tags = []
+     let searchStore = []
      super(...arguments)
+     //或者热搜
+     Taro.request({
+       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/search',
+       data: {
+       },
+       header: {
+         'content-type': 'application/json'
+       }
+     }).then(res => {
+       const rest =  res.data
+      // console.log(rest)
+       tags = rest.tags
+       //contentList)
+       this.setState({
+         tags:tags
+       })
+     })
+     //获取搜索下拉框数据
+     Taro.request({
+       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/searchStore',
+       data: {
+       },
+       header: {
+         'content-type': 'application/json'
+       }
+     }).then(res => {
+       const rest =  res.data
+       //console.log(rest)
+       searchStore = rest.searchStore
+       //contentList)
+       this.setState({
+         searchStore:searchStore
+       })
+     })
      if(!window.localStorage){
        console.log("浏览器支持localstorage")
        return
@@ -32,15 +68,31 @@ export default  class Search extends Taro.Component {
      }
      this.state = {
       value: '',
-      tags:['热血高校','火影','指环王','霍比特人','我的兄弟叫顺溜','海贼王','海贼王'],
-      histags:histags
+      tags:[],
+      searchStore:[],
+       newSearchStore:[],
+      histags:histags,
+       active:'selectListNone'
     }
   }
   componentWillMount() {
 }
   onChange (value) {
+    const searchStore =  this.state.searchStore
+    let newSearchStore = []
+    if(value==""){
+      newSearchStore = searchStore
+    }else{
+    searchStore.map((item,index)=>{
+      if(item.includes(value)) {
+        newSearchStore.push(item)
+      }
+    })
+    }
     this.setState({
-      value: value
+      active:"selectListBlock",
+      value: value,
+      newSearchStore:newSearchStore
     })
   }
   onActionClick () {
@@ -61,7 +113,7 @@ export default  class Search extends Taro.Component {
       //console.log(indexs)
       indexs < 0 ? histags : histags.splice(indexs,1)
       //console.log(inputVal)
-      const newValue = inputVal.length>3? inputVal.substring(0,3) + "...":inputVal
+      const newValue = inputVal.length>4? inputVal.substring(0,3) + "...":inputVal
       histags.unshift({oldValue:inputVal,newValue:newValue})
     }
     //console.log(histags)
@@ -77,10 +129,15 @@ export default  class Search extends Taro.Component {
       storage["histags"] =JSON.stringify(histagss);
     }
     this.setState({
+      active:"selectListNone",
       histags:histags,
       value:''
     })
   }
+  keyUp(){
+
+   }
+
  delete(){
      //let histags  = this.state.histags;
    let histags = []
@@ -96,20 +153,41 @@ export default  class Search extends Taro.Component {
        histags :[]
      })
  }
+  onClickQuery(name, test, e){
+    console.log(name)
+    console.log(test.item)
+    console.log(e)
+     const itemName = test.item
+     //console.log(itemName)
+    this.setState({
+      active:"selectListNone",
+      value:itemName
 
-  onClick(param){
+  })
+  }
+
+  onClicks(param){
     console.log(param.name)
   }
+  changeClick(){}
   render () {
      const falg = 'false'
     return (
-      <view>
+      <view className="myStyle">
+        <view onKeyUp={this.keyUp.bind(this)}>
       <AtSearchBar
         showActionButton
         value={this.state.value}
         onChange={this.onChange.bind(this)}
         onActionClick={this.onActionClick.bind(this)}
       />
+          <view id="cityList" className={this.state.active} onBlur={this.onBlurs}>
+            {this.state.newSearchStore.map((item,index)=>{
+              return( <div onClick={this.onClickQuery.bind(this,this.state,{item})}>{item}</div>)
+            })}
+          </view>
+        </view>
+
         <view className='hotSearch'>
           热搜
         </view>
@@ -119,22 +197,22 @@ export default  class Search extends Taro.Component {
             (
             <view className='content'>
             <AtTag
-              name={item}
+              name={item.tagsTitle}
               type='primary'
               circle
                active
-              onClick={this.onClick.bind(this)}
+              onClick={this.onClicks.bind(this)}
             >
-              {item}
+              {item.tagsTitle}
             </AtTag>
           </view>):(<view className='content'>
             <AtTag
-              name={item}
+              name={item.tagsTitle}
               type='primary'
               circle
-              onClick={this.onClick.bind(this)}
+              onClick={this.onClicks.bind(this)}
             >
-              {item}
+              {item.tagsTitle}
             </AtTag>
           </view>))
         }
@@ -150,7 +228,7 @@ export default  class Search extends Taro.Component {
                 name={item.newValue}
                 type='primary'
                 circle
-                onClick={this.onClick.bind(this)}
+                onClick={this.onClicks.bind(this)}
               >
                 {item.newValue}
               </AtTag>

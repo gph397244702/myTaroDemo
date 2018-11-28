@@ -7,9 +7,6 @@ import  MyAtTabs from './myselfStyle/MyStyle'
 import  MySearch from './search/Search'
 import  Product from './product/product'
 
-
-import { add, minus, asyncAdd } from '../../actions/counter'
-
 import './index.scss'
 
 // #region 书写注意

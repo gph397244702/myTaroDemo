@@ -43,8 +43,26 @@ export default class Index extends Taro.Component {
   componentDidHide () { }
   constructor(props) {
     super(props);
+    let tabList = []
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/query',
+      data: {
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      tabList=rest.tabList
+      console.log(tabList)
+      //const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
+      //contentList)
+      this.setState({
+        tabList:tabList
+      })
+    })
     this.state = {
-      tabList:[{id:'product1',name:'商品1',src:Img,url:UrlShopDetail},{id:'product2',name:'商品2',src:Img,url:UrlShopDeatilScoll},{id:'product3',name:'商品3',src:Img,url:UrlShopDeatilScoll},{id:'product4',name:'商品4',src:Img,url:UrlShopDeatilScoll}]
+      tabList:[]
     };
   }
   //点击标签栏进入详情页面
