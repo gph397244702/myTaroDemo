@@ -1,7 +1,7 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text,Swiper, SwiperItem,Image,ScrollView  } from '@tarojs/components'
-
+import { AtIcon } from 'taro-ui'
 
 import Img from '../../../pic/productImg/222.jpg'
 import Imgs from '../../../pic/productImg/333.jpg'
@@ -40,7 +40,7 @@ export default  class ShopDetailScoll extends Taro.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgUrls: [Img],
+      imgUrls: [Img,'',''],
       imgUrlslist:[Img,Imgs,Imgss],
       index:0
     };
@@ -61,18 +61,18 @@ export default  class ShopDetailScoll extends Taro.Component {
     const imgUrlslists = this.state.imgUrlslist
     const indexs = this.state.index +1
     const lengths =  imgUrlslists.length
-    console.log(indexs + "fdsfsdf" +lengths)
-
+    //console.log(indexs + "fdsfsdf" +lengths)
     if (indexs == lengths) {return}
     else{
       Taro.showLoading({title: '加载中'})
+
       //模拟2秒延迟
       setTimeout(() => {
         // Taro.hideLoading({title: '加载中'})
         //const ind =  indexs + 1
         const imgsurl = imgUrlslists[indexs]
         //imgs.splice(0, 1)
-        imgs.push(imgsurl)
+        imgs[indexs]=imgsurl
         console.log(indexs)
         this.setState({
           imgUrls:imgs
@@ -81,25 +81,28 @@ export default  class ShopDetailScoll extends Taro.Component {
           index:indexs
         })
         Taro.hideLoading({title: '加载中'})
-      }, 2000)
+      }, 1000)
     }
   }
-
+  navigateTo(url){
+    Taro.navigateTo({url:url})
+  }
   render () {
 
     return (
       <View className="detail-page">
 
       <View className="image-box-wrap">
-
+        <View className="atIconClass" onClick={this.navigateTo.bind(this,'/pages/index/index?current=2')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon> </View>
         <View className="images-box">
+
           <view className='detailTitle'>商品详情</view>
           <ScrollView className='scrollview'
                       scrollY
                       scrollWithAnimation
                       lowerThreshold={10}
-                      style='height: 520px;'
-                      onScrollToLower={this.appendNextPageList.bind(this)}
+                      style='height: 85vh;'
+                      onScroll={this.appendNextPageList.bind(this)}
                       >
           {this.state.imgUrls.map((imgs,index) => {
             return (<Image  src={imgs} mode='widthFix' className='slide-image'  />)
@@ -107,24 +110,6 @@ export default  class ShopDetailScoll extends Taro.Component {
           </ScrollView>
         </View>
       </View>
-
-    { /* 底部操作栏 */ }
-    <View className="detail-bottom-btns">
-      <View className="nav" data-url="/pages/index/index" onClick={this.goToPage}>
-        <Image className="nav-img" src={require('../../../pic/tab/home.png')} alt="" />
-        首页
-      </View>
-      <View className="nav" onClick={this.makePhoneCall}>
-        <Image className="nav-img" src={require('../../../pic/icon/customerservice.png')} alt="" />
-        客服
-      </View>
-      <View className="nav" data-url="/pages/cart/index" onClick={this.goToPage}>
-        <Image className="nav-img" src={require('../../../pic/tab/cart.png')} alt="" />
-        衣袋
-        <View className="zan-badge__count"></View>
-      </View>
-      <View className={'join join-disabled'} onClick={this.join}>加入衣袋</View>
-    </View>
     </View>
     )
   }

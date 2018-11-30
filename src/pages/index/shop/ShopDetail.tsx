@@ -1,10 +1,11 @@
-import Taro, { Config } from '@tarojs/taro'
-import { View, Button,Image  } from '@tarojs/components'
-
+import Taro, { Config} from '@tarojs/taro'
+import { View, Button,Image} from '@tarojs/components'
+import { AtIcon } from 'taro-ui'
 import Img from '../../../pic/productImg/222.jpg'
 import Imgs from '../../../pic/productImg/333.jpg'
 import Imgss from '../../../pic/productImg/444.jpg'
 import MySwiperStyle from  '../../../components/mySwiper/MySwiper'
+import { PRODUCTURL } from '../../../constants/counter'
 
 import './ShopDetail.scss'
 
@@ -37,46 +38,46 @@ export default  class ShopDetail extends Taro.Component {
 
   constructor(props) {
     super(props);
+    let imgs = []
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/productDetail',
+      data: {
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      imgs=rest.url
+      console.log(imgs)
+      //const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
+      //contentList)
+      this.setState({
+        imgUrls:imgs
+      })
+    })
     this.state = {
-	  imgUrls: [Img,Imgs,Imgss]
+	  imgUrls: []
     };
   }
-  goToPage = (e) => {
-      Taro.navigateTo({
-        url: e.currentTarget.dataset.url,
-      })
+  //点击标签栏进入商品页面
+  navigateTo(url) {
+	  console.log(url)
+    Taro.navigateTo({url:url})
   }
   render () {
-
     return (
       <View className="detail-page">
-      <View className="image-box-wrap">
-        <View className="images-box">
-             <MySwiperStyle banner={this.state.imgUrls} />
-               <View className="share-btn">
-                 <Button open-type="share" />
-               </View>
-        </View>
+         <View className="atIconClass" onClick={this.navigateTo.bind(this,'/pages/index/index?current=2')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon> </View>
+           <View className="image-box-wrap">
+                <View className="images-box">
+                   <MySwiperStyle banner={this.state.imgUrls} />
+                     <View className="share-btn">
+                       <Button open-type="share" />
+                     </View>
+                </View>
+          </View>
       </View>
-
-    { /* 底部操作栏 */ }
-    <View className="detail-bottom-btns">
-      <View className="nav" data-url="/pages/index/index" onClick={this.goToPage}>
-        <Image className="nav-img" src={require('../../../pic/tab/home.png')} alt="" />
-        首页
-      </View>
-      <View className="nav" onClick={this.makePhoneCall}>
-        <Image className="nav-img" src={require('../../../pic/icon/customerservice.png')} alt="" />
-        客服
-      </View>
-      <View className="nav" data-url="/pages/cart/index" onClick={this.goToPage}>
-        <Image className="nav-img" src={require('../../../pic/tab/cart.png')} alt="" />
-        衣袋
-        <View className="zan-badge__count"></View>
-      </View>
-      <View className={'join join-disabled'} onClick={this.join}>加入衣袋</View>
-    </View>
-    </View>
     )
   }
 }

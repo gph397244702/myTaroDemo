@@ -46,7 +46,9 @@ export default  class Index extends Taro.Component {
 
   constructor(props) {
     super(props);
-    this.state = {current: 0};
+    //console.log(props._$router.params.current==null)
+    const index =  props._$router.params.current==null?0:props._$router.params.current
+    this.state = {current: index};
   }
  // tab切换
   handleClick = (e) => {

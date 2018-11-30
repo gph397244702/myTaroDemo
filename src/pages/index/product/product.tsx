@@ -2,7 +2,6 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, ScrollView,Image } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import Img from '../../../pic/productImg/123.jpg'
 import './product.scss'
 
 // #region 书写注意
@@ -64,6 +63,7 @@ export default class Index extends Taro.Component {
   //点击标签栏进入详情页面
 
   navigateTo(url) {
+      console.log(url)
     Taro.navigateTo({url:url})
   }
   handleClicks (value) {
@@ -80,18 +80,13 @@ export default class Index extends Taro.Component {
       <ScrollView className='container'
           scrollY
           scrollWithAnimation
-          scrollTop={0}
-          lowerThreshold={10}
-          upperThreshold={10}
           style='height:569px'
-          onScrolltoupper={this.updateList}
-          onScrolltolower={this.appendNextPageList}
         >
           <View className='shop_floor'>
                 {this.state.tabList.map((item, index) => {
                   return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                     <View className='goods_img'>
-                      <Image className='goods_img_image' src={Img} mode='widthFix' />
+                      <Image className='goods_img_image' src={item.src} mode='widthFix' />
                     </View>
                     <View className='goods_info'>
                       <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
@@ -105,21 +100,16 @@ export default class Index extends Taro.Component {
         <ScrollView className='container'
                     scrollY
                     scrollWithAnimation
-                    scrollTop='0'
-                    lowerThreshold='10'
-                    upperThreshold='10'
                     style='height:658px'
-                    onScrolltoupper={this.updateList}
-                    onScrolltolower={this.appendNextPageList}
         >
           <View className='shop_floor'>
             {this.state.tabList.map((item, index) => {
               return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                 <View className='goods_img'>
-                  <Image className='goods_img_image' src={Img} mode='widthFix'  />
+                  <Image className='goods_img_image' src={item.src} mode='widthFix'  />
                 </View>
                 <View className='goods_info'>
-                  <Text className='goods_name' onClick={this.navigateTo.bind(this.navigateTo.bind(this,item.url)}>{item.name}</Text>
+                  <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
                 </View>
               </View>
             })}
@@ -130,21 +120,16 @@ export default class Index extends Taro.Component {
         <ScrollView className='container'
                     scrollY
                     scrollWithAnimation
-                    scrollTop='0'
-                    lowerThreshold='10'
-                    upperThreshold='10'
                     style='height:658px'
-                    onScrolltoupper={this.updateList}
-                    onScrolltolower={this.appendNextPageList}
         >
           <View className='shop_floor'>
             {this.state.tabList.map((item, index) => {
               return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                 <View className='goods_img'>
-                  <Image className='goods_img_image' src={Img} mode='widthFix' />
+                  <Image className='goods_img_image' src={item.src} mode='widthFix' />
                 </View>
                 <View className='goods_info'>
-                  <Text className='goods_name' onClick={this.navigateTo.bind(this.navigateTo.bind(this,item.url)}>{item.name}</Text>
+                  <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
                 </View>
               </View>
             })}

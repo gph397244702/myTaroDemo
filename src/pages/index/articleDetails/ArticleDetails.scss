@@ -1,0 +1,110 @@
+.whiteCircle{
+  width: 1.04rem;
+  height: 1.04rem;
+  text-align: center;
+  font-size: 0.256rem;
+  line-height: 1.428571429;
+  border-radius: 0.62rem;
+  margin-top: 1.04rem;
+  margin-left: 1.04rem;
+  float: left;
+  background-color: #f7f7f7;
+  border: 0.02133rem solid #d5d5d5;
+}
+.redCircle{
+  width: 1.04rem;
+  height: 1.04rem;
+  text-align: center;
+  font-size: 0.256rem;
+  line-height: 1.428571429;
+  border-radius: 0.62rem;
+  margin-top: 1.04rem;
+  margin-left: 1.04rem;
+  float: left;
+  background-color: #ccc;
+  border: 0.02133rem solid #d5d5d5;
+}
+.blackCircle{
+  width: 1.04rem;
+  height: 1.04rem;
+  text-align: center;
+  font-size: 0.256rem;
+  line-height: 1.428571429;
+  border-radius: 0.62rem;
+  margin-top: 1.04rem;
+  margin-left: 1.04rem;
+  float: left;
+  background-color: #eee684;
+  border: 0.02133rem solid #d5d5d5;
+}
+.subtractClass{
+  width: 2.34rem;
+  height: 1.24rem;
+  text-align: center;
+  font-size: 0.256rem;
+  line-height: 1.428571429;
+  border-radius: 0.62rem;
+  margin-top: 1.04rem;
+  margin-left: 3vh;
+  float: left;
+  background-color:  #f7f7f7;
+  border: 0.02133rem solid #d5d5d5;
+  .at-icon{line-height: 1.3!important;}
+}
+.addClass{
+  width: 2.34rem;
+  height: 1.24rem;
+  text-align: center;
+  font-size: 0.256rem;
+  line-height: 1.428571429;
+  border-radius: 0.62rem;
+  margin-top: 1.04rem;
+  margin-left: 1.04rem;
+  float: left;
+  background-color: #f7f7f7;
+  border: 0.02133rem solid #d5d5d5;
+  .at-icon{line-height: 1.3!important;}
+}
+.return{
+  width: 1.34rem;
+  height: 1.34rem;
+  text-align: center;
+  font-size: 0.256rem;
+  line-height: 1.428571429;
+  border-radius: 0.62rem;
+  margin-top: 1.04rem;
+  margin-left: 0.54rem;
+  float: left;
+}
+.articleContent{width: 100vw}
+.articleTitle{
+  font-color:black;
+  margin-left: 29vw;
+  width: 100%;
+}
+.recommend{
+  color: #666;
+  display: grid;
+  margin: 0.53333rem 0.64rem 0;
+}
+.recommendTitle{
+  font-size: 0.70133rem;
+  margin: 0.53333rem 0.64rem 0;
+}
+.recommendContent{
+  font-size: 0.56133rem;
+  margin: 0.33333rem 1.34rem 0;
+  text-decoration: underline;
+  color:#6190e8!important;
+}
+.white{
+
+}
+.green{
+  background: #ccc;
+
+}
+.yellow{
+  background: #eee684;
+
+}
