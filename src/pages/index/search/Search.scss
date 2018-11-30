@@ -33,29 +33,42 @@
   .active{
     display: block;
   }
-   div{
+  .searchBox{
     margin-left:10%;
-     font-size: 0.85733rem;
-     view{
-       margin-left:64%;
-     }
+    font-size: 0.85733rem;
+    width: 100%;
+    display: -webkit-box;
+    // display:in
+    .searchBoxLeft{
+      width:70%;
+    }
+    .searchBoxRight{
+      width:20%;
+      text-align:center;
+    }
   }
 }
 .selectListBlock{
   position: absolute;
   z-index: 1000;
   background: #F7F7F7;
-  top: 9%;
+  top: 10.3%;
   width: 83%;
   left: 2%;
   .active{
     display: block;
   }
-  div{
+  .searchBox{
     margin-left:10%;
     font-size: 0.85733rem;
-    view{
-      margin-left:64%;
+    width: 100%;
+    display: -webkit-box;
+    .searchBoxLeft{
+      width:70%;
+    }
+    .searchBoxRight{
+      width:20%;
+      text-align:center;
     }
   }
 }

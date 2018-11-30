@@ -4,13 +4,13 @@
   background-color:#fff;
 }
 .sort-btn{
-  width:33.333%;
+  width:49%;
   float:left;
   text-align: center;
-  height:90rpx;
-  line-height:90rpx;
+  //-height:90rpx;
   font-size: 28rpx;
   color:#333;
+  line-height: 34px;
 }
 .sort-btn Image {
   width: 9px!important;
@@ -21,6 +21,8 @@
 .titleImage > .taro-img{
    width: 0.52533rem!important;
     height: 1%!important;
+    overflow: hidden;
+   top: 0.41333rem;
 }
 .box{
   display: inline-flex;
@@ -28,5 +30,8 @@
   width:100%;
   .contentBox{width: 221%;line-height: 1.26133rem;}
   .dateBox{width: 100%; line-height: 1.26133rem;}
+}
+.sort-btn-min{
+  width:1%;height:38px;float: left;
 }
 

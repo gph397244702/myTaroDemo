@@ -2,7 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text,ScrollView ,Image} from '@tarojs/components'
 import { AtTabs, AtTabsPane,AtPagination,AtTag,AtInput  } from 'taro-ui'
-import  MyPage from '../myPage/MyPage'
+import  MyPage from '../../../components/myPage/MyPage'
 import Imageurl1 from '../../../pic/icon/up.png'
 import Imageurl2 from '../../../pic/icon/down.png'
 
@@ -54,9 +54,6 @@ class Index extends Taro.Component {
     navigationBarTitleText: '首页'
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
-  }
   constructor(props) {
     super(props);
     let contentList = []
@@ -89,25 +86,11 @@ class Index extends Taro.Component {
       dateImage :Imageurl1
     };
   }
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
 
   //点击标签栏出发的事件
-
-
   handleClicks (value) {
     this.setState({
       current: value
-    })
-  }
-
-  handleChange(value1){
-    this.setState({
-      currentPage: value1
     })
   }
 
@@ -229,16 +212,11 @@ class Index extends Taro.Component {
 		<AtTabsPane  current={this.state.current} index={0} >
 		 <ScrollView className='scrollview'
 					  scrollY
-					  scrollWithAnimation
 					  scrollTop='0'
-					  style='height: 530px'
-					  lowerThreshold='20'
-					  upperThreshold='20'>
-		 <View style='background-color: #FAFBFC;text-align: center;height:100%'>
+					  style="height:84vh">
+		 <View>
        <view class='sort-wrap'>
-         <view class='sort-btn'>
-           新闻
-         </view>
+         <view  style="width:1%;height:38px;float: left;"></view>
          <view class='sort-btn' data-index="" onClick={this.titleSort.bind(this)}>
            标题
            <view className="titleImage">
@@ -273,16 +251,11 @@ class Index extends Taro.Component {
         <AtTabsPane current={this.state.current} index={1}>
           <ScrollView className='scrollview'
 					  scrollY
-					  scrollWithAnimation
 					  scrollTop='0'
-					  style='height: 530px;'
-					  lowerThreshold='20'
-					  upperThreshold='20'>
+					  style='height: 84vh;'>
 		 <View style='background-color: #FAFBFC;text-align: center;height:auto;' >
        <view className='sort-wrap'>
-         <view className='sort-btn'>
-           新闻
-         </view>
+         <view style="width:1%;height:38px;float: left;"></view>
          <view className='sort-btn' data-index="" onClick={this.titleSort.bind(this)}>
            标题
            <view className="titleImage">
@@ -314,17 +287,12 @@ class Index extends Taro.Component {
         <AtTabsPane current={this.state.current} index={2}>
           <ScrollView className='scrollview'
 					  scrollY
-					  scrollWithAnimation
 					  scrollTop='0'
-					  style='height: 554px;'
-					  lowerThreshold='20'
-					  upperThreshold='20'>
+					  style='height: 84vh;'>
 		 <View style='background-color: #FAFBFC;height:auto;' >
        <view className='sort-wrap'>
-         <view className='sort-btn'>
-           新闻
-         </view>
-         <view className='sort-btn' data-index="" onClick={this.titleSort.bind(this)}>
+         <view style="width:1%;height:38px;float: left;"></view>
+            <view className='sort-btn' data-index="" onClick={this.titleSort.bind(this)}>
            标题
            <view className="titleImage">
              <Image src={this.state.titleImage}></Image>

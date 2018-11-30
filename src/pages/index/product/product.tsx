@@ -3,10 +3,6 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, ScrollView,Image } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import Img from '../../../pic/productImg/123.jpg'
-import {
-  UrlShopDetail,
-  UrlShopDeatilScoll
-} from '../../../constants/counter'
 import './product.scss'
 
 // #region 书写注意
@@ -95,7 +91,7 @@ export default class Index extends Taro.Component {
                 {this.state.tabList.map((item, index) => {
                   return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                     <View className='goods_img'>
-                      <Image className='goods_img_image' src={item.src} mode='widthFix' lazyLoad />
+                      <Image className='goods_img_image' src={Img} mode='widthFix' />
                     </View>
                     <View className='goods_info'>
                       <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
@@ -120,7 +116,7 @@ export default class Index extends Taro.Component {
             {this.state.tabList.map((item, index) => {
               return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                 <View className='goods_img'>
-                  <Image className='goods_img_image' src={item.src} mode='widthFix' lazyLoad />
+                  <Image className='goods_img_image' src={Img} mode='widthFix'  />
                 </View>
                 <View className='goods_info'>
                   <Text className='goods_name' onClick={this.navigateTo.bind(this.navigateTo.bind(this,item.url)}>{item.name}</Text>
@@ -145,7 +141,7 @@ export default class Index extends Taro.Component {
             {this.state.tabList.map((item, index) => {
               return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                 <View className='goods_img'>
-                  <Image className='goods_img_image' src={item.src} mode='widthFix' lazyLoad />
+                  <Image className='goods_img_image' src={Img} mode='widthFix' />
                 </View>
                 <View className='goods_info'>
                   <Text className='goods_name' onClick={this.navigateTo.bind(this.navigateTo.bind(this,item.url)}>{item.name}</Text>

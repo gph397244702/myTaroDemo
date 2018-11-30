@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
-import { Image  } from '@tarojs/components'
-import { AtSearchBar,AtTag ,AtDivider,AtList, AtListItem} from 'taro-ui'
+import { Image ,ScrollView } from '@tarojs/components'
+import { AtSearchBar,AtTag ,AtDivider,AtList,AtListItem,AtIcon} from 'taro-ui'
 import './Search.scss'
 
 // #region 书写注意
@@ -20,7 +20,7 @@ export default  class Search extends Taro.Component {
      let tags = []
      let searchStore = []
      super(...arguments)
-     //或者热搜
+     //获取热搜
      Taro.request({
        url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/search',
        data: {
@@ -67,11 +67,11 @@ export default  class Search extends Taro.Component {
        console.log(histags)
      }
      this.state = {
-      value: '',
-      tags:[],
-      searchStore:[],
+       value: '',
+       tags:[],
+       searchStore:[],
        newSearchStore:[],
-      histags:histags,
+       histags:histags,
        active:'selectListNone'
     }
   }
@@ -84,15 +84,28 @@ export default  class Search extends Taro.Component {
       newSearchStore = searchStore
     }else{
     searchStore.map((item,index)=>{
-      if(item.includes(value)) {
+      if(item.content.includes(value)) {
         newSearchStore.push(item)
       }
     })
     }
+    var compare = function (obj1, obj2) {
+      var val1 = obj1.hits;
+      var val2 = obj2.hits;
+      if (val1 > val2) {
+        return -1;
+      } else if (val1 < val2) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    const lists =newSearchStore.sort(compare)
+    console.log(lists)
     this.setState({
       active:"selectListBlock",
       value: value,
-      newSearchStore:newSearchStore
+      newSearchStore:lists
     })
   }
   onActionClick () {
@@ -110,13 +123,11 @@ export default  class Search extends Taro.Component {
            indexs = -1
          }
       })
-      //console.log(indexs)
       indexs < 0 ? histags : histags.splice(indexs,1)
       //console.log(inputVal)
       const newValue = inputVal.length>4? inputVal.substring(0,3) + "...":inputVal
       histags.unshift({oldValue:inputVal,newValue:newValue})
     }
-    //console.log(histags)
     if(!window.localStorage){
       alert("浏览器不支持localstorage");
       return ;
@@ -134,9 +145,6 @@ export default  class Search extends Taro.Component {
       value:''
     })
   }
-  keyUp(){
-
-   }
 
  delete(){
      //let histags  = this.state.histags;
@@ -154,10 +162,7 @@ export default  class Search extends Taro.Component {
      })
  }
   onClickQuery(name, test, e){
-    console.log(name)
-    console.log(test.item)
-    console.log(e)
-     const itemName = test.item
+     const itemName = test.item.content
      //console.log(itemName)
     this.setState({
       active:"selectListNone",
@@ -165,29 +170,85 @@ export default  class Search extends Taro.Component {
 
   })
   }
+  clickEnters(event){
+    const keyCode = event.keyCode
+    let inputVal = this.state.value
+    let histags  = this.state.histags
+    if(keyCode == "13") {
+      if (inputVal == '') return
+      else{
+        //去重
+        let indexs =-1
+        histags.map((item,index)=>{
+          if(item.oldValue==inputVal){
+            indexs = index
+            console.log(indexs)
+          }else{
+            indexs = -1
+          }
+        })
+        indexs < 0 ? histags : histags.splice(indexs,1)
+        //console.log(inputVal)
+        const newValue = inputVal.length>4? inputVal.substring(0,3) + "...":inputVal
+        histags.unshift({oldValue:inputVal,newValue:newValue})
+      }
+      if(!window.localStorage){
+        alert("浏览器不支持localstorage");
+        return ;
+      }else{
+        const storage=window.localStorage;
+        const histagss = histags
+        const length = histagss.length
+        length>12?histagss.splice(12):histagss
+        //写入a字段
+        storage["histags"] =JSON.stringify(histagss);
+      }
+      this.setState({
+        active:"selectListNone",
+        histags:histags,
+        value:inputVal
+      })
+    }
+}
+  onBlurs(name, test, e){
+      console.log(12312323123)
+   }
 
   onClicks(param){
     console.log(param.name)
   }
-  changeClick(){}
   render () {
      const falg = 'false'
     return (
       <view className="myStyle">
-        <view onKeyUp={this.keyUp.bind(this)}>
+        <view onkeydown ={this.clickEnters.bind(this)}>
       <AtSearchBar
         showActionButton
         value={this.state.value}
         onChange={this.onChange.bind(this)}
         onActionClick={this.onActionClick.bind(this)}
       />
-          <view id="cityList" className={this.state.active} onBlur={this.onBlurs}>
+          <view  className={this.state.active} onBlur={this.onBlurs.bind(this,this.state,'')}>
+            <ScrollView className='container'
+                        scrollY
+                        scrollWithAnimation
+                        scrollTop={0}
+                        lowerThreshold={10}
+                        upperThreshold={10}
+                        style='height:240px'
+            >
             {this.state.newSearchStore.map((item,index)=>{
-              return( <div onClick={this.onClickQuery.bind(this,this.state,{item})}>{item}</div>)
+              const  indexs = index
+              return  indexs < 3? ( <div className="searchBox" onClick={this.onClickQuery.bind(this,this.state,{item})}>
+                <div className="searchBoxLeft">{item.content}</div><div className="searchBoxRight" style="color:red">{item.hits}
+                  <AtIcon value='arrow-up' size='20' color='#F00'></AtIcon>
+                </div></div>):
+                (<div className="searchBox" onClick={this.onClickQuery.bind(this,this.state,{item})}>
+                  <div className="searchBoxLeft">{item.content}</div><div className="searchBoxRight">{item.hits}</div></div>)
             })}
+            </ScrollView>
           </view>
         </view>
-
         <view className='hotSearch'>
           热搜
         </view>
