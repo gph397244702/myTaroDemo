@@ -94,7 +94,7 @@ export default class  MyPage extends Component {
         })
       }
         else {
-        console.log(value)
+        //console.log(value)
         alert("当前跳转到" + value + "页")
       }
 

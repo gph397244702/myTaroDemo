@@ -78,7 +78,22 @@ export default  class Search extends Taro.Component {
   componentWillMount() {
 }
   onChange (value) {
-    const searchStore =  this.state.searchStore
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/searchStore',
+      data: {
+        SearchData:value,
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      const searchStore = rest.searchStore
+      this.setState({
+        searchStore:searchStore
+      })
+    })
+    let searchStore =  this.state.searchStore
     let newSearchStore = []
     if(value==""){
       newSearchStore = searchStore
@@ -167,7 +182,6 @@ export default  class Search extends Taro.Component {
     this.setState({
       active:"selectListNone",
       value:itemName
-
   })
   }
   clickEnters(event){
@@ -286,7 +300,7 @@ export default  class Search extends Taro.Component {
           {this.state.histags.map((item,index) => {
             return (<view className='content'>
               <AtTag
-                name={item.newValue}
+                name={item.oldValue}
                 type='primary'
                 circle
                 onClick={this.onClicks.bind(this)}

@@ -13,13 +13,15 @@ import './ArticleDetails.scss'
 //
 // #endregion
 
-export default  class Search extends Taro.Component {
+export default  class ArticleDetails extends Taro.Component {
 
-   constructor () {
-
-     super(...arguments)
+   constructor (props) {
+     super(props)
+     const currentTab =  props._$router.params.currentTab
+     //console.log(  props._$router.params.currentTab)
      //获取热搜
      this.state = {
+       currentTab:currentTab,
        color:"white",
        fontSize:0.59733,
        fontSizeStyle:"font-size: 0.6rem;"
@@ -28,7 +30,10 @@ export default  class Search extends Taro.Component {
 
   goBack(url) {
      //console.log(url)
-    Taro.navigateTo({url:url})
+    const currentTab =  this.state.currentTab
+    const currentTabs = url  + currentTab
+    //console.log("currentTabs   ===== " +currentTabs)
+    Taro.navigateTo({url:currentTabs})
   }
   onPrev(){}
   onNext(){}
@@ -75,7 +80,7 @@ export default  class Search extends Taro.Component {
     return (
       <div className={this.state.color}>
           <view className='articleStyle'>
-            <view className='return' onClick={this.goBack.bind(this,'/pages/index/index?current=0')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon></view>
+            <view className='return' onClick={this.goBack.bind(this,'/pages/index/index?current=0&currentTab=')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon></view>
             <view className='whiteCircle '  onClick={this.whiteCircle.bind(this)}></view>
             <view className='redCircle ' onClick={this.redCircle.bind(this)}></view>
             <view className='blackCircle ' onClick={this.blackCircle.bind(this)}></view>

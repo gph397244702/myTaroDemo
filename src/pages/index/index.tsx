@@ -47,8 +47,14 @@ export default  class Index extends Taro.Component {
   constructor(props) {
     super(props);
     //console.log(props._$router.params.current==null)
-    const index =  props._$router.params.current==null?0:props._$router.params.current
-    this.state = {current: index};
+    const current =  props._$router.params.current==null?0:props._$router.params.current
+    const currents = parseInt(current)
+    const currentTab =  props._$router.params.currentTab==null?0:props._$router.params.currentTab
+    //console.log("currentTab ==== " + currentTab)
+    this.state = {
+      current: currents,
+      currentTab:currentTab
+    }
   }
  // tab切换
   handleClick = (e) => {
@@ -62,7 +68,7 @@ export default  class Index extends Taro.Component {
 	return (
 	 <View className=''>
 
-		 {this.state.current == 0 && <MyAtTabs></MyAtTabs>}
+		 {this.state.current == 0 && <MyAtTabs>{this.state.currentTab}</MyAtTabs>}
 		 {this.state.current == 1 && <MySearch></MySearch>}
 		 {this.state.current == 2 && <Product></Product>}
 

@@ -54,11 +54,14 @@ class Index extends Taro.Component {
     config: Config = {
     navigationBarTitleText: '首页'
   }
-
   constructor(props) {
     super(props);
+    //console.log(this.props.children)
     let contentList = []
     let tabList = []
+    let currentTab = parseInt(this.props.children)
+    console.log(isNaN(currentTab))
+    //console.log("===========" + currentTab)
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/upload',
       data: {
@@ -79,12 +82,13 @@ class Index extends Taro.Component {
         this.setState({
           tabList:tabList,
           contentList:contentList,
-          pageSize:pageSizes
+          pageSize:pageSizes,
+          currentTab:currentTab
         })
       })
     this.state = {
       tabList:[],
-      current: 0,
+      currentTab: currentTab,
       contentList:[],
       pageSize:[],
       currentPage:1,
@@ -98,7 +102,7 @@ class Index extends Taro.Component {
   //点击标签栏出发的事件
   handleClicks (value) {
     this.setState({
-      current: value
+      currentTab: value
     })
   }
 
@@ -198,7 +202,7 @@ class Index extends Taro.Component {
       console.log(rest)
       const  contentList=rest.contentList
       const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
-      //contentList)
+      //contentList
       this.setState({
         contentList:contentList,
         pageSize:pageSizes
@@ -252,22 +256,25 @@ class Index extends Taro.Component {
     }
   }
   navigateTo(url) {
-    console.log(url)
-    Taro.navigateTo({url:"/pages/index/articleDetails/ArticleDetails"})
+    const currentTab =  this.state.currentTab
+    const urls = url + currentTab
+    //console.log(urls)
+    Taro.navigateTo({url:urls})
   }
   render () {
-
-	const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
-    console.log(tabList)
-    console.log(this.state.contentList.length)
+	//const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
+    //console.log(tabList)
+   //currentTab console.log(this.state.contentList.length)
 	//const contentList = this.state.contentList
     const currentPage =  this.state.currentPage
     const pageSize =  this.state.pageSize
+    const currentTab =  this.state.currentTab
+    console.log( currentTab)
 	return (
 
-	  <AtTabs current={this.state.current} scroll  tabList={this.state.tabList} onClick={this.handleClicks.bind(this)}>
+	  <AtTabs current={currentTab} scroll  tabList={this.state.tabList} onClick={this.handleClicks.bind(this)}>
       {this.state.contentList.map((contentList,index) => {
-        return ( <AtTabsPane  current={this.state.current} index={index}>
+        return ( <AtTabsPane  current={index} index={index}>
           <ScrollView className='scrollview'
                       scrollY
                       scrollTop='0'
@@ -291,18 +298,18 @@ class Index extends Taro.Component {
             {contentList.content.map((content,indexs) => {
               return (
                     <View className='box'>
-                      <View className='contentBox' style="background-color: darkkhaki;" onClick={this.navigateTo.bind("/pages/index/articleDetails/ArticleDetails")}>
+                      <View className='contentBox' style="background-color: darkkhaki;" onClick={this.navigateTo.bind(this,"/pages/index/articleDetails/ArticleDetails?currentTab=")}>
                         {content.content1}
                       </View>
                       <View className='dateBox' style="background-color: lavender;">{content.content2}</View>
                     </View>
-              )
+                  )
+              }
             }
-        }
               < MyPage
                 pageSize  = {pageSize}
                 currentPage  = {currentPage}
-              / >
+              />
             </View>
           </ScrollView>
         </AtTabsPane> )
