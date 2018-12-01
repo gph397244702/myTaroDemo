@@ -282,13 +282,13 @@ class Index extends Taro.Component {
             <View>
               <view class='sort-wrap'>
                 <view style="width:1%;height:38px;float: left;"></view>
-                <view class='sort-btn' data-index="" onClick={this.titleSort.bind(this)}>
+                <view class='sort-title' data-index="" onClick={this.titleSort.bind(this)}>
                   标题
                   <view className="titleImage">
                     <Image src={this.state.titleImage}></Image>
                   </view>
                 </view>
-                <view class='sort-btn' data-index="" onClick={this.dateSort.bind(this)}>
+                <view class='sort-date' data-index="" onClick={this.dateSort.bind(this)}>
                   日期
                   <view className="titleImage">
                     <Image src={this.state.dateImage}></Image>

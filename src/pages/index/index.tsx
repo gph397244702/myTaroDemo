@@ -63,15 +63,12 @@ export default  class Index extends Taro.Component {
     })
   }
 
-
   render () {
 	return (
 	 <View className=''>
-
 		 {this.state.current == 0 && <MyAtTabs>{this.state.currentTab}</MyAtTabs>}
 		 {this.state.current == 1 && <MySearch></MySearch>}
 		 {this.state.current == 2 && <Product></Product>}
-
 		<AtTabBar
 		  fixed
 		  color="#909399"
@@ -85,7 +82,6 @@ export default  class Index extends Taro.Component {
 		  ]}
 		  onClick={this.handleClick}
 		  current={this.state.current}
-
 		/>
 	  </View>
 

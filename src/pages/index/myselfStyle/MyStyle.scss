@@ -3,8 +3,8 @@
   height:90rpx;
   background-color:#fff;
 }
-.sort-btn{
-  width:49%;
+.sort-title{
+  width:69%;
   float:left;
   text-align: center;
   //-height:90rpx;
@@ -12,12 +12,28 @@
   color:#333;
   line-height: 34px;
 }
-.sort-btn Image {
+.sort-title Image {
   width: 9px!important;
   height: 18px!important;
   //margin-left: 6px!important;
 
 }
+.sort-date{
+  width:29%;
+  float:left;
+  text-align: center;
+  //-height:90rpx;
+  font-size: 28rpx;
+  color:#333;
+  line-height: 34px;
+}
+.sort-date Image {
+  width: 9px!important;
+  height: 18px!important;
+  //margin-left: 6px!important;
+
+}
+
 .titleImage > .taro-img{
    width: 0.52533rem!important;
     height: 1%!important;

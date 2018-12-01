@@ -91,11 +91,9 @@ export default  class ShopDetailScoll extends Taro.Component {
 
     return (
       <View className="detail-page">
-
       <View className="image-box-wrap">
         <View className="atIconClass" onClick={this.navigateTo.bind(this,'/pages/index/index?current=2')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon> </View>
         <View className="images-box">
-
           <view className='detailTitle'>商品详情</view>
           <ScrollView className='scrollview'
                       scrollY
