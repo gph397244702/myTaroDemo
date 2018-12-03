@@ -42,10 +42,14 @@
 }
 .box{
   display: inline-flex;
-  text-align: center;
+  //text-align: center;
   width:100%;
-  .contentBox{width: 221%;line-height: 1.26133rem;}
-  .dateBox{width: 100%; line-height: 1.26133rem;}
+  .contentBox{width: 251%;line-height: 1.26133rem;overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    padding-left: 0.2em;
+    text-align: left;}
+  .dateBox{width: 100%; line-height: 1.26133rem;text-align: center}
 }
 .sort-btn-min{
   width:1%;height:38px;float: left;

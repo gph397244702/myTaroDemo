@@ -60,8 +60,9 @@ class Index extends Taro.Component {
     let contentList = []
     let tabList = []
     let currentTab = parseInt(this.props.children)
-    console.log(isNaN(currentTab))
+    // console.log(isNaN(currentTab))
     //console.log("===========" + currentTab)
+    //获取标签请求
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/upload',
       data: {
@@ -74,18 +75,37 @@ class Index extends Taro.Component {
       }
     }).then(res => {
         const rest =  res.data
-        contentList = rest.contentList
-        contentList.map((item,index)=>{
-          tabList.push(item.title)
-        })
-        const pageSizes =  Math.round(contentList[0].content.length/10)==0?1:Math.round(contentList[0].content.length/10)
+        tabList = rest.tableList
+        //const pageSizes =  Math.round(contentList[0].content.length/10)==0?1:Math.round(contentList[0].content.length/10)
         this.setState({
           tabList:tabList,
-          contentList:contentList,
-          pageSize:pageSizes,
+          //contentList:contentList,
           currentTab:currentTab
         })
       })
+    //获取内容请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryContent'+currentTab,
+      data: {
+        titleFlag:1,
+        dateFlag:1,
+        currentPage:1
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      contentList = rest.content
+     // console.log(contentList)
+      const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
+      this.setState({
+        tabList:tabList,
+        pageSize:pageSizes,
+        contentList:contentList,
+        currentTab:currentTab
+      })
+    })
     this.state = {
       tabList:[],
       currentTab: currentTab,
@@ -101,8 +121,52 @@ class Index extends Taro.Component {
 
   //点击标签栏出发的事件
   handleClicks (value) {
-    this.setState({
-      currentTab: value
+     let  contentList = []
+     let tabList = []
+    //获取标签请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/upload',
+      data: {
+        titleFlag:1,
+        dateFlag:1,
+        currentPage:1
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      tabList = rest.tableList
+      //const pageSizes =  Math.round(contentList[0].content.length/10)==0?1:Math.round(contentList[0].content.length/10)
+      this.setState({
+        tabList:tabList,
+        //contentList:contentList,
+        currentTab:value
+      })
+    })
+    let urls = 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryContent'+value
+    Taro.request({
+      url: urls,
+      data: {
+        titleFlag:1,
+        dateFlag:1,
+        currentPage:1,
+        currentTab:value
+
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      contentList = rest.content
+      // console.log(contentList)
+      const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
+      this.setState({
+        pageSize:pageSizes,
+        contentList:contentList,
+        currentTab:value
+      })
     })
   }
 
@@ -125,7 +189,7 @@ class Index extends Taro.Component {
       }
     }).then(res => {
       const rest =  res.data
-      console.log(rest)
+      //console.log(rest)
       const  contentList=rest.contentList
       const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
       //contentList)
@@ -150,7 +214,7 @@ class Index extends Taro.Component {
         }
       }
       const lists =  list.sort(compare)
-      console.log(list.sort(compare))
+      // console.log(list.sort(compare))
      // console.log(titleImages)
       //console.log(titleFlag)
       this.setState({
@@ -199,7 +263,7 @@ class Index extends Taro.Component {
       }
     }).then(res => {
       const rest =  res.data
-      console.log(rest)
+      //console.log(rest)
       const  contentList=rest.contentList
       const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
       //contentList
@@ -224,7 +288,7 @@ class Index extends Taro.Component {
         }
       }
       const lists =  list.sort(compare)
-      console.log(list.sort(compare))
+      //log(list.sort(compare))
       // console.log(titleImages)
       //console.log(titleFlag)
       this.setState({
@@ -262,19 +326,21 @@ class Index extends Taro.Component {
     Taro.navigateTo({url:urls})
   }
   render () {
-	//const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
+	  //const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
     //console.log(tabList)
    //currentTab console.log(this.state.contentList.length)
-	//const contentList = this.state.contentList
+	 //const contentList = this.state.contentList
     const currentPage =  this.state.currentPage
     const pageSize =  this.state.pageSize
-    const currentTab =  this.state.currentTab
-    console.log( currentTab)
+    const currentTab =  parseInt(this.state.currentTab)
+    const contentList = this.state.contentList
+    console.log(contentList )
+    console.log( this.state.tabList)
 	return (
 
 	  <AtTabs current={currentTab} scroll  tabList={this.state.tabList} onClick={this.handleClicks.bind(this)}>
-      {this.state.contentList.map((contentList,index) => {
-        return ( <AtTabsPane  current={index} index={index}>
+      {this.state.tabList.map((item,index) => {
+        return( <AtTabsPane current={index} index={index}>
           <ScrollView className='scrollview'
                       scrollY
                       scrollTop='0'
@@ -295,27 +361,26 @@ class Index extends Taro.Component {
                   </view>
                 </view>
               </view>
-            {contentList.content.map((content,indexs) => {
-              return (
-                    <View className='box'>
-                      <View className='contentBox' style="background-color: darkkhaki;" onClick={this.navigateTo.bind(this,"/pages/index/articleDetails/ArticleDetails?currentTab=")}>
-                        {content.content1}
-                      </View>
-                      <View className='dateBox' style="background-color: lavender;">{content.content2}</View>
+              {contentList.map((item, index) => {
+                return (
+                  <View className='box'>
+                    <View className='contentBox' style="background-color: darkkhaki;"
+                          onClick={this.navigateTo.bind(this, "/pages/index/articleDetails/ArticleDetails?currentTab=")}>
+                      {item.content1}
                     </View>
-                  )
-              }
-            }
+                    <View className='dateBox' style="background-color: lavender;">{item.content2}</View>
+                  </View>
+                )
+              })}
               < MyPage
-                pageSize  = {pageSize}
-                currentPage  = {currentPage}
+                pageSize={pageSize}
+                currentPage={currentPage}
               />
             </View>
           </ScrollView>
-        </AtTabsPane> )
+        </AtTabsPane>)
       })}
       </AtTabs>
-
     )
   }
 }
