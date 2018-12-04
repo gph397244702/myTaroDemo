@@ -56,7 +56,7 @@ class Index extends Taro.Component {
   }
   constructor(props) {
     super(props);
-    //console.log(this.props.children)
+    console.log(props)
    // let contentList = []
     //let tabList = []
     let currentTab = parseInt(this.props.children)
@@ -126,28 +126,7 @@ class Index extends Taro.Component {
   //点击标签栏出发的事件
   handleClicks (value) {
      let  contentList = []
-     let tabList = []
     //获取标签请求
-    Taro.request({
-      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/upload',
-      data: {
-        titleFlag:1,
-        dateFlag:1,
-        currentPage:1
-      },
-      header: {
-        'content-type': 'application/json'
-      }
-    }).then(res => {
-      const rest =  res.data
-      tabList = rest.tableList
-      //const pageSizes =  Math.round(contentList[0].content.length/10)==0?1:Math.round(contentList[0].content.length/10)
-      this.setState({
-        tabList:tabList,
-        //contentList:contentList,
-        currentTab:value
-      })
-    })
     let urls = 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryContent'+value
     Taro.request({
       url: urls,
@@ -156,7 +135,6 @@ class Index extends Taro.Component {
         dateFlag:1,
         currentPage:1,
         currentTab:value
-
       },
       header: {
         'content-type': 'application/json'
@@ -323,25 +301,49 @@ class Index extends Taro.Component {
       })
     }
   }
-  navigateTo(url) {
+  navigateTo(item) {
     const currentTab =  this.state.currentTab
-    const urls = url + currentTab
+    const urls = "/pages/index/articleDetails/ArticleDetails?currentTab=" + currentTab + "&contentTitle ="+item.content1
     //console.log(urls)
     Taro.navigateTo({url:urls})
   }
+  onChanges (e) {
+    let  contentList = []
+    let value = this.state.currentTab
+    //获取标签请求
+    let urls = 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryContent'+value
+    Taro.request({
+      url: urls,
+      data: {
+        titleFlag:1,
+        dateFlag:1,
+        currentPage:e,
+        currentTab:value
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      contentList = rest.content
+      // console.log(contentList)
+      const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
+      this.setState({
+        pageSize:pageSizes,
+        contentList:contentList,
+        currentTab:value
+      })
+    })
+  }
+
   render () {
-	  //const tabList = [{ title: '标签页1' }, { title: '标签页2' }, { title: '标签页3' }]
-    //console.log(tabList)
-   //currentTab console.log(this.state.contentList.length)
-	 //const contentList = this.state.contentList
     const currentPage =  this.state.currentPage
     const pageSize =  this.state.pageSize
     const currentTab =  this.state.currentTab
     const contentList = this.state.contentList
-    console.log(contentList )
-    console.log( this.state.tabList)
+    //console.log(contentList )
+    //console.log( this.state.tabList)
 	return (
-
 	  <AtTabs current={currentTab} scroll  tabList={this.state.tabList} onClick={this.handleClicks.bind(this)}>
       {this.state.tabList.map((item,index) => {
         return( <AtTabsPane current={index} index={index}>
@@ -350,26 +352,26 @@ class Index extends Taro.Component {
                       scrollTop='0'
                       style="height:84vh">
             <View>
-              <view class='sort-wrap'>
-                <view style="width:1%;height:38px;float: left;"></view>
-                <view class='sort-title' data-index="" onClick={this.titleSort.bind(this)}>
+              <View className='sort-wrap'>
+                <View style="width:1vw;height:5vh;float: left;"></View>
+                <View className='sort-title' data-index="" onClick={this.titleSort.bind(this)}>
                   标题
-                  <view className="titleImage">
+                  <View className="titleImage">
                     <Image src={this.state.titleImage}></Image>
-                  </view>
-                </view>
-                <view class='sort-date' data-index="" onClick={this.dateSort.bind(this)}>
+                  </View>
+                </View>
+                <View className='sort-date' data-index="" onClick={this.dateSort.bind(this)}>
                   日期
-                  <view className="titleImage">
+                  <View className="titleImage">
                     <Image src={this.state.dateImage}></Image>
-                  </view>
-                </view>
-              </view>
+                  </View>
+                </View>
+              </View>
               {contentList.map((item, index) => {
                 return (
                   <View className='box'>
                     <View className='contentBox' style="background-color: darkkhaki;"
-                          onClick={this.navigateTo.bind(this, "/pages/index/articleDetails/ArticleDetails?currentTab=")}>
+                          onClick={this.navigateTo.bind(this, {item})}>
                       {item.content1}
                     </View>
                     <View className='dateBox' style="background-color: lavender;">{item.content2}</View>
@@ -380,6 +382,7 @@ class Index extends Taro.Component {
                 pageSize={pageSize}
                 currentPage={currentPage}
                 currentTab={currentTab}
+                onChanges={this.onChanges.bind(this)}
               />
             </View>
           </ScrollView>

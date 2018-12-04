@@ -5,9 +5,16 @@
   display: grid;
 }
 .content{
-  width: 35px;
-  margin-top: -20%;
-  margin-left: 5%;
+  width: 27vw;
+  margin-left: 4vw;
+  display: inline-flex;
+  .at-tag{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    width: 95%;
+  }
 }
 .historySearch{
   font-size: 0.7416rem;

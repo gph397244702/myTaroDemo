@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { Image ,ScrollView } from '@tarojs/components'
+import { Image ,ScrollView ,View} from '@tarojs/components'
 import { AtSearchBar,AtTag ,AtDivider,AtList,AtListItem,AtIcon} from 'taro-ui'
 import './Search.scss'
 
@@ -235,14 +235,14 @@ export default  class Search extends Taro.Component {
      const falg = 'false'
     return (
       <view className="myStyle">
-        <view onkeydown ={this.clickEnters.bind(this)}>
+        <View onkeydown ={this.clickEnters.bind(this)}>
       <AtSearchBar
         showActionButton
         value={this.state.value}
         onChange={this.onChange.bind(this)}
         onActionClick={this.onActionClick.bind(this)}
       />
-          <view  className={this.state.active} onBlur={this.onBlurs.bind(this,this.state,'')}>
+          <View  className={this.state.active} onBlur={this.onBlurs.bind(this,this.state,'')}>
             <ScrollView className='container'
                         scrollY
                         scrollWithAnimation
@@ -253,16 +253,16 @@ export default  class Search extends Taro.Component {
             >
             {this.state.newSearchStore.map((item,index)=>{
               const  indexs = index
-              return  indexs < 3? ( <div className="searchBox" onClick={this.onClickQuery.bind(this,this.state,{item})}>
-                <div className="searchBoxLeft">{item.content}</div><div className="searchBoxRight" style="color:red">{item.hits}
+              return  indexs < 3? ( <View className="searchBox" onClick={this.onClickQuery.bind(this,this.state,{item})}>
+                <View className="searchBoxLeft">{item.content}</View><View className="searchBoxRight" style="color:red">{item.hits}
                   <AtIcon value='arrow-up' size='20' color='#F00'></AtIcon>
-                </div></div>):
-                (<div className="searchBox" onClick={this.onClickQuery.bind(this,this.state,{item})}>
-                  <div className="searchBoxLeft">{item.content}</div><div className="searchBoxRight">{item.hits}</div></div>)
+                </View></View>):
+                (<View className="searchBox" onClick={this.onClickQuery.bind(this,this.state,{item})}>
+                  <View className="searchBoxLeft">{item.content}</View><View className="searchBoxRight">{item.hits}</View></View>)
             })}
             </ScrollView>
-          </view>
-        </view>
+          </View>
+        </View>
         <view className='hotSearch'>
           热搜
         </view>

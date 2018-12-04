@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
-import { Image ,ScrollView } from '@tarojs/components'
-import { AtSearchBar,AtTag ,AtDivider,AtList,AtListItem,AtIcon} from 'taro-ui'
+import { Image ,ScrollView ,View} from '@tarojs/components'
+import { AtSearchBar,AtTag ,AtDivider,AtList,AtListItem,AtIcon,AtButton ,AtButton} from 'taro-ui'
 import './ArticleDetails.scss'
 
 // #region 书写注意
@@ -18,16 +18,58 @@ export default  class ArticleDetails extends Taro.Component {
    constructor (props) {
      super(props)
      const currentTab =  props._$router.params.currentTab
+     const contentTitle =  props._$router.params.contentTitle
      //console.log(  props._$router.params.currentTab)
      //获取热搜
      this.state = {
        currentTab:currentTab,
        color:"white",
        fontSize:0.59733,
-       fontSizeStyle:"font-size: 0.6rem;"
+       fontSizeStyle:"font-size: 0.6rem;",
+       contentTitle:contentTitle,
+       articleContent:[],
+       articleTitle:[]
     }
   }
+  componentDidMount(){
+    let currentTab = this.state.currentTab
+    let contentTitle = this.state.contentTitle
+    console.log("============="+currentTab)
+    //获取详细内容请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
+      data: {
+        currentTab:currentTab,
+        contentTitle:contentTitle,
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      this.setState({
+        articleContent:rest,
+        currentTab:currentTab
+      })
+    })
+    //获取推荐文章内容
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/articleTitle',
+      data: {
+        currentTab:currentTab,
+       // contentTitle:contentTitle,
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      this.setState({
+        articleTitle:rest.article,
 
+      })
+    })
+  }
   goBack(url) {
      //console.log(url)
     const currentTab =  this.state.currentTab
@@ -35,8 +77,33 @@ export default  class ArticleDetails extends Taro.Component {
     //console.log("currentTabs   ===== " +currentTabs)
     Taro.navigateTo({url:currentTabs})
   }
-  onPrev(){}
-  onNext(){}
+  prevArticle(){
+
+  }
+  nextArticle(){}
+  toArticle(item){
+    let currentTab = this.state.currentTab
+    //let contentTitle = this.state.contentTitle
+    console.log(item)
+    //获取详细内容请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
+      data: {
+        currentTab:currentTab,
+        contentTitle:item.articleTitle,
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      this.setState({
+        articleContent:rest,
+        currentTab:currentTab
+      })
+    })
+
+  }
   whiteCircle(){
      this.setState({
        color:"white"
@@ -79,68 +146,46 @@ export default  class ArticleDetails extends Taro.Component {
      const falg = 'false'
     return (
       <div className={this.state.color}>
-          <view className='articleStyle'>
-            <view className='return' onClick={this.goBack.bind(this,'/pages/index/index?current=0&currentTab=')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon></view>
-            <view className='whiteCircle '  onClick={this.whiteCircle.bind(this)}></view>
-            <view className='redCircle ' onClick={this.redCircle.bind(this)}></view>
-            <view className='blackCircle ' onClick={this.blackCircle.bind(this)}></view>
-            <view className='subtractClass' onClick={this.subtractClass.bind(this)}><AtIcon value='subtract' size='25' color='black'></AtIcon></view>
-            <view className='addClass' onClick={this.addClass.bind(this)}><AtIcon value='add' size='25' color='black'></AtIcon></view>
+          <View className='articleStyle'>
+            <View className='return' onClick={this.goBack.bind(this,'/pages/index/index?current=0&currentTab=')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon></View>
+            <View className='whiteCircle '  onClick={this.whiteCircle.bind(this)}></View>
+            <View className='redCircle ' onClick={this.redCircle.bind(this)}></View>
+            <View className='blackCircle ' onClick={this.blackCircle.bind(this)}></View>
+            <View className='subtractClass' onClick={this.subtractClass.bind(this)}><AtIcon value='subtract' size='25' color='black'></AtIcon></View>
+            <View className='addClass' onClick={this.addClass.bind(this)}><AtIcon value='add' size='25' color='black'></AtIcon></View>
 
-          </view>
+          </View>
         <AtDivider height="50"/>
 
-        <view className='at-article' style='display: grid;'>
-          <view className='at-article__h1' style="text-align:center;">
-            金哲宏案改判无罪
-          </view>
-          <view className='at-article__info' style="margin-top:2vh;text-align:center;">
-            2018-11-30&nbsp;&nbsp;&nbsp;弘哥&nbsp;&nbsp;&nbsp;&nbsp;热度:325
-          </view>
-          <view className='at-article__content' style="margin-top:3vh;width:85vw;margin-left:6vw; ">
-            <view className='at-article__section'>
-              <view className='at-article__p' style={this.state.fontSizeStyle}>
-                金哲宏家属和辩护律师在法院门口
-                封面新闻消息，11月30日上午，封面新闻记者获悉，吉林省高级人民法院再审宣判金哲宏一案，金哲宏无罪释放。
-                宣判认为，原判事实不清，证据不足，无罪释放。审判长告诉金哲宏，可以申请国家赔偿。
-                1995年，吉林省永吉县一名20岁的少女遇害，金哲宏被锁定为杀人嫌犯，后4次被判处死缓，在监狱服刑至今。金哲宏案经历了3次一审，2次发回重审，4次被判死缓。
-                原标题：吉林金哲宏入狱23年4次被判死缓 今日再审宣判无罪
-              </view>
-            </view>
-          </view>
-          <view className='pageStyle'>
-            <view  style="margin-left:24vw">
-              <AtTag
-              name='上一章'
-              type='primary'
-              circle
-              onClick={this.onPrev.bind(this)}
-            >
-                上一章
-            </AtTag></view>
-            <view style="margin-left:10vw">
-              <AtTag
-                name='下一章'
-                type='primary'
-                circle
-                onClick={this.onNext.bind(this)}
-              >
-                下一章
-              </AtTag>
-            </view>
-          </view>
-          <view className='recommend'>
-              <view className='recommendTitle'>作者推荐</view>
-                <view className='recommendContent'>作dsfsd 荐</view>
-                <view className='recommendContent'>作者推荐胜多负少</view>
-                <view className='recommendContent'>作者推荐111111</view>
-                <view className='recommendContent'>作dsfsd 荐11111111</view>
-                <view className='recommendContent'>作者推荐1111111</view>
-                <view className='recommendContent'>作者推荐1111111</view>
-          </view>
-        </view>
-
-
+        <View className='at-article'>
+          <View className='at-article__h1' style="text-align:center;">
+            {this.state.articleContent.title}
+          </View>
+          <View className='at-article__info' style="margin-top:2vh;text-align:center;">
+            {this.state.articleContent.date}&nbsp;&nbsp;&nbsp;{this.state.articleContent.writer}&nbsp;&nbsp;&nbsp;&nbsp;热度:{this.state.articleContent.heat}
+          </View>
+          <View className='at-article__content' style="margin-top:3vh;width:85vw;margin-left:6vw; ">
+            <View className='at-article__section'>
+              <View className='at-article__p' style={this.state.fontSizeStyle}>
+                {this.state.articleContent.content}
+              </View>
+            </View>
+          </View>
+          <View className='pageStyle'>
+            <View className='prevStyle'>
+              <AtButton type='secondary' size='normal'onClick={this.prevArticle.bind(this)}>上一章 :{this.state.articleContent.prevtitle} </AtButton>
+            </View>
+            <View className='nextStyle'>
+              <AtButton type='secondary' size='normal' onClick={this.nextArticle.bind(this)}>下一章 : {this.state.articleContent.nexttitle}</AtButton>
+            </View>
+          </View>
+          <View className='recommend'>
+                <View className='recommendTitle'>作者推荐</View>
+            {this.state.articleTitle.map((item,index) => {
+              return ( <View className='recommendContent' onClick={this.toArticle.bind(this,item)}>{item.articleTitle}</View>)
+            })}
+          </View>
+        </View>
       </div>
 
 

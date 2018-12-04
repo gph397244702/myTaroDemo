@@ -84,7 +84,6 @@
 }
 .recommend{
   color: #666;
-  display: grid;
   margin: 0.53333rem 0.64rem 0;
 }
 .recommendTitle{
@@ -96,15 +95,43 @@
   margin: 0.33333rem 1.34rem 0;
   text-decoration: underline;
   color:#6190e8!important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
 }
 .white{
-
+  letter-spacing: 4px;
 }
 .green{
+  letter-spacing: 4px;
   background: #ccc;
 
 }
 .yellow{
+  letter-spacing: 4px;
   background: #eee684;
 
+}
+.prevStyle {
+  margin-top:3vh;
+  .at-button {
+    width:86vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 1.5em;
+    text-align: left;
+  }
+}
+.nextStyle{
+   margin-top:3vh;
+  .at-button {
+    width:86vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 1.5em;
+    text-align: left;
+  }
 }

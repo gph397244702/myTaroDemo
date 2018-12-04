@@ -29,6 +29,7 @@ export default class  MyPage extends Component {
 
   constructor(props) {
     super(props);
+    //console.log(props)
     const pageSize = props.pageSize
     const currentPage = props.currentPage
     this.state = {
@@ -37,11 +38,6 @@ export default class  MyPage extends Component {
     };
   }
   //点击标签栏出发的事件
-  handleClicks (value) {
-    this.setState({
-      current: value
-    })
-  }
   handleChange(value1){
     this.setState({
       currentPage: value1
@@ -49,6 +45,7 @@ export default class  MyPage extends Component {
   }
   //回到首页
   pageleftOne(){
+    this.props.onChanges(1)
     this.setState({
       currentPage: 1
     })
@@ -57,6 +54,7 @@ export default class  MyPage extends Component {
   pageleft(){
    const currentPage =  this.state.currentPage
     if(currentPage <=1) return
+    this.props.onChanges(currentPage-1)
     this.setState({
       currentPage: currentPage-1
     })
@@ -66,6 +64,7 @@ export default class  MyPage extends Component {
     const currentPage =  this.state.currentPage
     const pageSize =  this.state.pageSize
     if(currentPage >=pageSize) return
+    this.props.onChanges(currentPage+1)
     this.setState({
       currentPage: currentPage+1
     })
@@ -73,11 +72,15 @@ export default class  MyPage extends Component {
   //进入尾页
   pageRightLast(){
     const pageSize = this.state.pageSize
+    this.props.onChanges(pageSize)
     this.setState({
       currentPage: pageSize
     })
   }
+
   clickEnter(event){
+      //console.log(event.detail)
+    //const inputValue = event.detail.value
     const value = this.state.currentPage
     const pageSize =  this.state.pageSize
     const keyCode = event.keyCode
@@ -90,11 +93,10 @@ export default class  MyPage extends Component {
       }else if(value==0) {
         alert("当前输入页数不能为0")
         this.setState({
-          currentPage:1
+          currentPage: 1
         })
-      }
-        else {
-        //console.log(value)
+      } else {
+        this.props.onChanges(value)
         alert("当前跳转到" + value + "页")
       }
 
@@ -112,7 +114,6 @@ export default class  MyPage extends Component {
            name='|<'
            type='primary'
            active
-           onClick={this.pageleftOne.bind(this)}
          >
            {'|<'}
          </AtTag> :
@@ -156,7 +157,6 @@ export default class  MyPage extends Component {
               <AtTag
                 name={this.state.pageSize}
                 type='primary'
-
               >
                 {this.state.pageSize}
               </AtTag>
@@ -187,7 +187,6 @@ export default class  MyPage extends Component {
            name='>|'
            type='primary'
             active
-           onClick={this.pageRightLast.bind(this)}
          >
            {'>|'}
          </AtTag>:

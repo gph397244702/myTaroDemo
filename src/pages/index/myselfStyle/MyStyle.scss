@@ -2,12 +2,13 @@
 .sort-wrap{
   height:90rpx;
   background-color:#fff;
+  display: inline-flex;
 }
 .sort-title{
-  width:69%;
+  width:71vw;
   float:left;
   text-align: center;
-  //-height:90rpx;
+  margin-top: 2vh;
   font-size: 28rpx;
   color:#333;
   line-height: 34px;
@@ -19,10 +20,10 @@
 
 }
 .sort-date{
-  width:29%;
+  width:28vw;
   float:left;
   text-align: center;
-  //-height:90rpx;
+  margin-top: 2vh;
   font-size: 28rpx;
   color:#333;
   line-height: 34px;
@@ -34,11 +35,13 @@
 
 }
 
-.titleImage > .taro-img{
-   width: 0.52533rem!important;
-    height: 1%!important;
-    overflow: hidden;
-   top: 0.41333rem;
+.titleImage {
+  display: inline-flex;
+  .taro-img {
+  width: 0.52533rem !important;
+  height: 1% !important;
+  overflow: hidden;
+ }
 }
 .box{
   display: inline-flex;
