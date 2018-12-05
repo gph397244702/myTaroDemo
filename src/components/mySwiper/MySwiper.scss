@@ -1,12 +1,12 @@
-.activity image,.activity img{
-  width: 750px;
-  height: 400px;
-}
-.swiper {height: 755px;
+
+.swiper {
+    height: 755px;
     image,img {
     height: 90vh!important;
   }}
-.image-box{height:20.44267rem;}
-.slide-image {width: 80%;height: 30.33333rem!important;}
-.image-box-wrap{margin-top:13px!important;}
-.taro-img__mode-widthfix{height: 90%!important;}
+.swiper__wrapper {
+  .image-box{height:20.44267rem;}
+  .slide-image {height: 30.33333rem!important;}
+  .image-box-wrap{margin-top:13px!important;}
+  .taro-img__mode-widthfix{height: 90%!important;}
+}

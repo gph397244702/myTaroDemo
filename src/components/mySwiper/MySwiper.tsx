@@ -1,6 +1,6 @@
 
 import Taro, {  Config } from '@tarojs/taro'
-import { Swiper, SwiperItem,Image  } from '@tarojs/components'
+import { Swiper, SwiperItem,Image,View  } from '@tarojs/components'
 
 
 import PropTypes from 'prop-types';
@@ -34,11 +34,10 @@ import './MySwiper.scss'
         className='swiper'
         indicatorColor='#999'
         indicatorActiveColor='#333'
-        interval='1500'
+        interval='2000'
         duration='500'
         indicatorDots='true'
         autoplay='true'
-        circular
         >
 		{banner.map((imgs,index) => {
 		  return  (<SwiperItem key={index}>

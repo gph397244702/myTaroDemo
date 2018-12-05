@@ -1,25 +1,19 @@
 page {
   background: #fff;
 }
-
 .shop {
   padding-top: 90px;
   padding-bottom: 96px;
 }
-
-
 .goods {
   padding-top: 20px;
 }
-
 .goods_img {
   display: flex;
 }
-
 .goods_img_img {
   width: 100%;
 }
-
 
 .goods {
   margin: 30px 0;
@@ -32,14 +26,14 @@ page {
   display: flex;
   flex: 1;
   flex-basis: 50%;
-  //width: 50%;
+  width:45%;
   flex-direction: column;
    float:left;
    margin-left:20px;
 }
 
 .goods_img {
-  width: 345px;
+  width: 100%;
   height: 345px;
   min-height: 345px;
   margin: 30px auto 0;
@@ -70,10 +64,12 @@ page {
   text-align: center;
   max-height: 72px;
   overflow: hidden;
-  //text-overflow: ellipsis;
-  //line-clamp: 2;
 }
 .taro-img__widthfix{height: 85%}
 
 .goods_img_image > .taro-img__mode-widthfix{height: 76%!important;}
+.shop_floor > .pageBox{margin-top:3vh}
 
+.goods_img>.taro-img{
+  width: 12.52533rem!important;
+}

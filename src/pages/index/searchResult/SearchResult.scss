@@ -15,17 +15,6 @@
     text-align: left;
   }
 }
-.historySearch{
-  font-size: 0.7416rem;
-  margin-left:5%;
-  height: 5vh;
-}
-.deleteIcon{
-  margin-left: 88%!important;
-  width: 6%!important;
-  height: 3.5vh!important;
-  top: -1.17267rem;
-}
 .selectListNone{
   position: absolute;
   z-index: 1000;
@@ -57,7 +46,7 @@
   position: absolute;
   z-index: 1000;
   background: #f0f0f0;
-  top: 10.3%;
+  top: 5vh;
   width: 83%;
   left: 2%;
   .active{
@@ -79,4 +68,14 @@
 }
 .myStyle{
   .at-search-bar__container{border-radius: 0PX;}
+}
+.article-class{
+  margin-left:7vw;
+}
+.article-title{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  padding-left: 0.2em;
+  font-size:0.6rem;
 }

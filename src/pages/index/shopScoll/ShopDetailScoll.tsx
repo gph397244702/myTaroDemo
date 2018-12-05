@@ -39,22 +39,16 @@ export default  class ShopDetailScoll extends Taro.Component {
 
   constructor(props) {
     super(props);
+    const currentTab =  props._$router.params.currentTab
     this.state = {
       imgUrls: [Img,'',''],
       imgUrlslist:[Img,Imgs,Imgss],
-      index:0
+      index:0,
+      currentTab:currentTab
     };
   }
-  goToPage = (e) => {
 
-      Taro.navigateTo({
-        url: e.currentTarget.dataset.url,
-      })
 
-  }
-  commitUtls(){
-
-  }
   appendNextPageList () {
     const imgs = this.state.imgUrls
     //console.log(imgs)
@@ -85,16 +79,17 @@ export default  class ShopDetailScoll extends Taro.Component {
     }
   }
   navigateTo(url){
-    Taro.navigateTo({url:url})
+    const currentTab = this.state.currentTab
+    const urls = url+ "&currentTab="+ currentTab
+    Taro.navigateTo({url:urls})
   }
   render () {
-
     return (
       <View className="detail-page">
       <View className="image-box-wrap">
         <View className="atIconClass" onClick={this.navigateTo.bind(this,'/pages/index/index?current=2')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon> </View>
         <View className="images-box">
-          <view className='detailTitle'>商品详情</view>
+          <View className='detailTitle'>商品详情</View>
           <ScrollView className='scrollview'
                       scrollY
                       scrollWithAnimation

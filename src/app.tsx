@@ -26,7 +26,8 @@ class App extends Component {
 	  'pages/index/shop/ShopDetail',
       'pages/index/shopScoll/ShopDetailScoll',
       'pages/index/product/product',
-      '/pages/index/articleDetails/ArticleDetails'
+      '/pages/index/articleDetails/ArticleDetails',
+      '/pages/index/searchResult/SearchResult'
     ],
     window: {
       backgroundTextStyle: 'light',

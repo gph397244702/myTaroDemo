@@ -38,6 +38,8 @@ export default  class ShopDetail extends Taro.Component {
 
   constructor(props) {
     super(props);
+    const currentTab =  props._$router.params.currentTab
+    //console.log(currentTab)
     let imgs = []
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/productDetail',
@@ -57,13 +59,15 @@ export default  class ShopDetail extends Taro.Component {
       })
     })
     this.state = {
-	  imgUrls: []
+	    imgUrls: [],
+      currentTab:currentTab
     };
   }
   //点击标签栏进入商品页面
   navigateTo(url) {
-	  console.log(url)
-    Taro.navigateTo({url:url})
+    const currentTab = this.state.currentTab
+    const urls = url+ "&currentTab="+ currentTab
+    Taro.navigateTo({url:urls})
   }
   render () {
     return (

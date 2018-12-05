@@ -15,11 +15,11 @@ import './Search.scss'
 
 export default  class Search extends Taro.Component {
 
-   constructor () {
+   constructor (props) {
      let  histags = []
      let tags = []
      let searchStore = []
-     super(...arguments)
+     super(...props)
      //获取热搜
      Taro.request({
        url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/search',
@@ -228,13 +228,18 @@ export default  class Search extends Taro.Component {
       console.log(12312323123)
    }
 
-  onClicks(param){
-    console.log(param.name)
+  //热搜跳转到搜索结果页面
+  navigateTo(item) {
+     let urls='/pages/index/searchResult/SearchResult?current=1'
+    //const currentTab = this.state.currentTab
+    const tagTitle = item.tagsTitle?item.tagsTitle:item.oldValue
+     urls = urls+ "&tagName="+ tagTitle
+    console.log(urls)
+    Taro.navigateTo({url:urls})
   }
   render () {
-     const falg = 'false'
     return (
-      <view className="myStyle">
+      <View className="myStyle">
         <View onkeydown ={this.clickEnters.bind(this)}>
       <AtSearchBar
         showActionButton
@@ -263,54 +268,53 @@ export default  class Search extends Taro.Component {
             </ScrollView>
           </View>
         </View>
-        <view className='hotSearch'>
+        <View className='hotSearch'>
           热搜
-        </view>
+        </View>
         {this.state.tags.map((item,index) => {
           const  isOdd = index
           return isOdd < 3 ? (
-            (
-            <view className='content'>
+            (<View className='content'>
             <AtTag
               name={item.tagsTitle}
               type='primary'
               circle
                active
-              onClick={this.onClicks.bind(this)}
+              onClick={this.navigateTo.bind(this,item)}
             >
               {item.tagsTitle}
             </AtTag>
-          </view>):(<view className='content'>
+          </View>):(<View className='content'>
             <AtTag
               name={item.tagsTitle}
               type='primary'
               circle
-              onClick={this.onClicks.bind(this)}
+              onClick={this.navigateTo.bind(this,item)}
             >
               {item.tagsTitle}
             </AtTag>
-          </view>))
+          </View>))
         }
         <AtDivider height="50"/>
-        <view >
-          <view className='historySearch' onClick={this.delete.bind(this)}>
+        <View >
+          <View className='historySearch' >
           历史
-          <Image  src={require('../../../pic/icon/delete.png')} alt="" className= 'deleteIcon'/>
-          </view>
+              <Image  src={require('../../../pic/icon/delete.png')} onClick={this.delete.bind(this)} alt="" className= 'deleteIcon'/>
+          </View>
           {this.state.histags.map((item,index) => {
-            return (<view className='content'>
+            return (<View className='content'>
               <AtTag
                 name={item.oldValue}
                 type='primary'
                 circle
-                onClick={this.onClicks.bind(this)}
+                onClick={this.navigateTo.bind(this,item)}
               >
                 {item.newValue}
               </AtTag>
-            </view>)
+            </View>)
           })}
-        </view>
-      </view>
+        </View>
+      </View>
     )
   }
 }

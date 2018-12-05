@@ -18,14 +18,32 @@ export default  class ArticleDetails extends Taro.Component {
    constructor (props) {
      super(props)
      const currentTab =  props._$router.params.currentTab
+     //console.log(props._$router.params)
      const contentTitle =  props._$router.params.contentTitle
+     let fontSizeStyle = ''
+     let fontSizes = ''
+     let color = ''
      //console.log(  props._$router.params.currentTab)
+     if(!window.localStorage){
+       alert("浏览器不支持localstorage");
+       return ;
+     }else {
+       const storage=window.localStorage;
+       fontSizeStyle = storage["fontSizeStyle"];
+       fontSizes = storage["fontSizes"];
+       color = storage["colorStyle"]
+     }
+     console.log(fontSizeStyle)
+     fontSizeStyle =fontSizeStyle?fontSizeStyle:"font-size: 0.6rem;"
+     fontSizes = fontSizes?fontSizes:0.6
+     color = color?color:'white'
+     console.log(fontSizes)
      //获取热搜
      this.state = {
        currentTab:currentTab,
-       color:"white",
-       fontSize:0.59733,
-       fontSizeStyle:"font-size: 0.6rem;",
+       color:color,
+       fontSize:fontSizes,
+       fontSizeStyle:fontSizeStyle,
        contentTitle:contentTitle,
        articleContent:[],
        articleTitle:[]
@@ -34,7 +52,7 @@ export default  class ArticleDetails extends Taro.Component {
   componentDidMount(){
     let currentTab = this.state.currentTab
     let contentTitle = this.state.contentTitle
-    console.log("============="+currentTab)
+    //console.log("============="+currentTab)
     //获取详细内容请求
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
@@ -78,9 +96,47 @@ export default  class ArticleDetails extends Taro.Component {
     Taro.navigateTo({url:currentTabs})
   }
   prevArticle(){
-
+    let prevTitle = this.state.articleContent.prevtitle
+    let currentTab = this.state.currentTab
+    //获取详细内容请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
+      data: {
+        currentTab:currentTab,
+        contentTitle:prevTitle,
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      this.setState({
+        articleContent:rest,
+        currentTab:currentTab
+      })
+    })
   }
-  nextArticle(){}
+  nextArticle(){
+    let nextTitle = this.state.articleContent.nexttitle
+    let currentTab = this.state.currentTab
+    //获取详细内容请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
+      data: {
+        currentTab:currentTab,
+        contentTitle:nextTitle,
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      this.setState({
+        articleContent:rest,
+        currentTab:currentTab
+      })
+    })
+  }
   toArticle(item){
     let currentTab = this.state.currentTab
     //let contentTitle = this.state.contentTitle
@@ -105,26 +161,58 @@ export default  class ArticleDetails extends Taro.Component {
 
   }
   whiteCircle(){
+     let color ="white"
+    if(!window.localStorage){
+      alert("浏览器不支持localstorage");
+      return ;
+    }else {
+      const storage=window.localStorage;
+      storage["colorStyle"]=color ;
+    }
      this.setState({
-       color:"white"
+       color:color
      })
   }
   redCircle(){
+    let color ="green"
+    if(!window.localStorage){
+      alert("浏览器不支持localstorage");
+      return ;
+    }else {
+      const storage=window.localStorage;
+      storage["colorStyle"]=color ;
+    }
     this.setState({
-      color:"green"
+      color:color
     })
   }
   blackCircle(){
+    let color ="yellow"
+    if(!window.localStorage){
+      alert("浏览器不支持localstorage");
+      return ;
+    }else {
+      const storage=window.localStorage;
+      storage["colorStyle"]=color ;
+    }
     this.setState({
-      color:"yellow"
+      color:color
     })
   }
   //加大字体
   addClass(){
-      const fontSize =  this.state.fontSize
+      const fontSize =  parseFloat(this.state.fontSize)
      let fontSizes = parseFloat((fontSize +0.1).toFixed(1))
      if(fontSizes > 1) {return}
      const fontSizeStyle = "font-size: " +fontSizes +"rem;"
+    if(!window.localStorage){
+      alert("浏览器不支持localstorage");
+      return ;
+    }else {
+      const storage = window.localStorage;
+      storage["fontSizeStyle"] = fontSizeStyle;
+      storage["fontSizes"] = fontSizes;
+    }
       this.setState({
         fontSize:fontSizes,
         fontSizeStyle:fontSizeStyle
@@ -133,9 +221,18 @@ export default  class ArticleDetails extends Taro.Component {
   //改小字体
   subtractClass(){
     const fontSize =  this.state.fontSize
+    console.log(fontSize)
     let fontSizes = parseFloat((fontSize -0.1).toFixed(1))
-    if(fontSizes == 0.1) {return}
+    if(fontSizes == 0) {return}
     const fontSizeStyle = "font-size: " +fontSizes +"rem;"
+    if(!window.localStorage){
+      alert("浏览器不支持localstorage");
+      return ;
+    }else {
+      const storage = window.localStorage;
+      storage["fontSizeStyle"] = fontSizeStyle;
+      storage["fontSizes"] = fontSizes;
+    }
     this.setState({
       fontSize:fontSizes,
       fontSizeStyle:fontSizeStyle
@@ -173,10 +270,10 @@ export default  class ArticleDetails extends Taro.Component {
           </View>
           <View className='pageStyle'>
             <View className='prevStyle'>
-              <AtButton type='secondary' size='normal'onClick={this.prevArticle.bind(this)}>上一章 :{this.state.articleContent.prevtitle} </AtButton>
+              <AtButton onClick={this.prevArticle.bind(this)}>上一章 :{this.state.articleContent.prevtitle} </AtButton>
             </View>
             <View className='nextStyle'>
-              <AtButton type='secondary' size='normal' onClick={this.nextArticle.bind(this)}>下一章 : {this.state.articleContent.nexttitle}</AtButton>
+              <AtButton  size='normal' onClick={this.nextArticle.bind(this,)}>下一章 : {this.state.articleContent.nexttitle}</AtButton>
             </View>
           </View>
           <View className='recommend'>

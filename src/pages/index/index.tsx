@@ -3,7 +3,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { AtTabs, AtTabsPane,AtTabBar,AtList, AtListItem,AtInput,AtSwipeAction  } from 'taro-ui'
 import { connect } from '@tarojs/redux'
-import  MyAtTabs from './myselfStyle/MyStyle'
+import  AriticleTitle from './ariticleTitle/AriticleTitle'
 import  MySearch from './search/Search'
 import  Product from './product/product'
 
@@ -66,9 +66,9 @@ export default  class Index extends Taro.Component {
   render () {
 	return (
 	 <View className=''>
-		 {this.state.current == 0 && <MyAtTabs>{this.state.currentTab}</MyAtTabs>}
+		 {this.state.current == 0 && <AriticleTitle>{this.state.currentTab}</AriticleTitle>}
 		 {this.state.current == 1 && <MySearch></MySearch>}
-		 {this.state.current == 2 && <Product></Product>}
+		 {this.state.current == 2 && <Product>{this.state.currentTab}</Product>}
 		<AtTabBar
 		  fixed
 		  color="#909399"

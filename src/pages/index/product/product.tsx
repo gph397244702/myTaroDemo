@@ -2,6 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, ScrollView,Image } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
+import  MyPage from '../../../components/myPage/MyPage'
 import './product.scss'
 
 // #region 书写注意
@@ -28,19 +29,29 @@ export default class Index extends Taro.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+    //console.log(this.props, nextProps)
   }
 
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
   constructor(props) {
     super(props);
-    let tabList = []
+    let currentTab = parseInt(this.props.children)
+    this.state = {
+      productList:[],
+      currentTab: currentTab,
+      productTitle:[],
+      pageSize:1,
+      currentPage:1,
+    };
+  }
+
+  componentDidMount () {
+    let productList = []
+    let productTitle = []
+    let currentTab = this.state.currentTab
+    //console.log("============="+currentTab)
+    //获取标签请求
     Taro.request({
-      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/query',
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/productTitle',
       data: {
       },
       header: {
@@ -48,94 +59,105 @@ export default class Index extends Taro.Component {
       }
     }).then(res => {
       const rest =  res.data
-      tabList=rest.tabList
-      console.log(tabList)
-      //const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
-      //contentList)
+
+      productTitle = rest.productTitle
       this.setState({
-        tabList:tabList
+        productTitle:productTitle,
+        currentTab:currentTab
       })
     })
-    this.state = {
-      tabList:[]
-    };
+    //获取内容请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/productList',
+      data: {
+        currentPage:1
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      productList = rest.productList
+      const pageSizes =  Math.round(productList.length/10)==0?1:Math.round(productList.length/10)
+      this.setState({
+        pageSize:pageSizes,
+        productList:productList,
+      })
+    })
   }
   //点击标签栏进入详情页面
 
   navigateTo(url) {
-      console.log(url)
-    Taro.navigateTo({url:url})
+      const currentTab = this.state.currentTab
+      const urls = url+ "?currentTab="+ currentTab
+      Taro.navigateTo({url:urls})
   }
   handleClicks (value) {
     this.setState({
-      current: value
+      currentTab: value
     })
   }
-
+  //分页功能
+  onChanges(pages){
+      let productList= []
+     let currentTab =  this.state.currentTab
+    //获取内容请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/productList',
+      data: {
+        currentPage:pages,
+        currentTab:currentTab
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      productList = rest.productList
+      const pageSizes =  Math.round(productList.length/10)==0?1:Math.round(productList.length/10)
+      this.setState({
+        pageSize:pageSizes,
+        productList:productList,
+      })
+    })
+  }
   render () {
-    const tabflagList = [{ title: '汽车' }, { title: '衣服' }, { title: '食品' }]
+    const productTitle = this.state.productTitle
+    const currentPage =  this.state.currentPage
+    const pageSize =  this.state.pageSize
+    const currentTab =  this.state.currentTab
+    //console.log(productTitle)
 	return (
-    <AtTabs current={this.state.current}   tabList={tabflagList} onClick={this.handleClicks.bind(this)}>
-      <AtTabsPane  current={this.state.current} index={0} >
+    <AtTabs current={currentTab} scroll   tabList={productTitle} onClick={this.handleClicks.bind(this)}>
+      {productTitle.map((item,index) => {
+        return(
+      <AtTabsPane  current={index} index={index} >
       <ScrollView className='container'
           scrollY
           scrollWithAnimation
-          style='height:569px'
+          style='height:84vh'
         >
           <View className='shop_floor'>
-                {this.state.tabList.map((item, index) => {
-                  return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
+                {this.state.productList.map((item, index) => {
+                  return (
+                    <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
                     <View className='goods_img'>
                       <Image className='goods_img_image' src={item.src} mode='widthFix' />
                     </View>
                     <View className='goods_info'>
                       <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
                     </View>
-                  </View>
+                    </View>)
                 })}
+            < MyPage
+              pageSize={pageSize}
+              currentPage={currentPage}
+              currentTab={currentTab}
+              onChanges={this.onChanges.bind(this)}/>
           </View>
         </ScrollView>
-      </AtTabsPane>
-      <AtTabsPane  current={this.state.current} index={1} >
-        <ScrollView className='container'
-                    scrollY
-                    scrollWithAnimation
-                    style='height:658px'
-        >
-          <View className='shop_floor'>
-            {this.state.tabList.map((item, index) => {
-              return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
-                <View className='goods_img'>
-                  <Image className='goods_img_image' src={item.src} mode='widthFix'  />
-                </View>
-                <View className='goods_info'>
-                  <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
-                </View>
-              </View>
-            })}
-          </View>
-        </ScrollView>
-      </AtTabsPane>
-      <AtTabsPane  current={this.state.current} index={2} >
-        <ScrollView className='container'
-                    scrollY
-                    scrollWithAnimation
-                    style='height:658px'
-        >
-          <View className='shop_floor'>
-            {this.state.tabList.map((item, index) => {
-              return <View key={index} className='goods_item' onClick={this.navigateTo.bind(this,item.url)}>
-                <View className='goods_img'>
-                  <Image className='goods_img_image' src={item.src} mode='widthFix' />
-                </View>
-                <View className='goods_info'>
-                  <Text className='goods_name' onClick={this.navigateTo.bind(this,item.url)}>{item.name}</Text>
-                </View>
-              </View>
-            })}
-          </View>
-        </ScrollView>
-      </AtTabsPane>
+      </AtTabsPane>)
+      })}
     </AtTabs>
     )
   }
