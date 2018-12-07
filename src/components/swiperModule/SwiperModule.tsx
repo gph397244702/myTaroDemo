@@ -4,7 +4,7 @@ import { Swiper, SwiperItem,Image,View  } from '@tarojs/components'
 
 
 import PropTypes from 'prop-types';
-import './MySwiper.scss'
+import './SwiperModule.scss'
 
 // #region 书写注意
 //

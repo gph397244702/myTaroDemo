@@ -17,8 +17,8 @@ export default  class SearchResult extends Taro.Component {
 
    constructor (props) {
      super(props)
-     const currentTab =  props._$router.params.currentTab
-     const tagName =  props._$router.params.tagName
+     const currentTab =  ''
+     const tagName =  ''
      this.state = {
        currentTab:currentTab,
        searchStore:[],
@@ -100,7 +100,7 @@ export default  class SearchResult extends Taro.Component {
   onActionClick () {
     const inputVal = this.state.value
     let searchResult =[]
-    //获取标签请求
+    //获取搜索结果
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/searchResult',
       data: {
@@ -112,9 +112,10 @@ export default  class SearchResult extends Taro.Component {
     }).then(res => {
       const rest =  res.data
       searchResult = rest.searchResult
-      //console.log(searchResult)
+      console.log(searchResult)
       this.setState({
-        searchResult:searchResult
+        searchResult:searchResult,
+        active:"selectListNone"
       })
     })
   }
@@ -158,7 +159,7 @@ export default  class SearchResult extends Taro.Component {
   navigateTo(item){
        console.log(item.title)
       //const currentTable = this.state.currentTab
-       const urls = "/pages/index/articleDetails/ArticleDetails?currentTab=0&contentTitle ="+item.title
+       const urls = "/pages/index/articleDetails/ArticleDetails?currentTab=0&contentTitle ="+item.titleId
       console.log(urls)
       Taro.navigateTo({url:urls})
    }
@@ -208,7 +209,7 @@ export default  class SearchResult extends Taro.Component {
           {this.state.searchResult.map((item,index) => {
             return (
               <View className='at-row'>
-                <View className='at-col at-col-3 article-class'>
+                <View className='at-col at-col-2 article-class'>
                   <AtTag
                     name={item.title}
                     type='primary'
@@ -218,7 +219,7 @@ export default  class SearchResult extends Taro.Component {
                     {item.classs}
                   </AtTag>
                 </View>
-                <View className='at-col at-col-8 article-title'>{item.title}</View>
+                <View className='at-col at-col-9 article-title'>{item.title}</View>
               </View>)
           })}
         </ScrollView>

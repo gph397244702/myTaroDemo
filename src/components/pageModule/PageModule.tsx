@@ -1,8 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { AtTag,AtInput  } from 'taro-ui'
+import { View  } from '@tarojs/components'
 
-
-import './MyPage.scss'
+import './PageModule.scss'
 
 // #region 书写注意
 //
@@ -14,7 +14,7 @@ import './MyPage.scss'
 //
 // #endregion
 
-export default class  MyPage extends Component {
+export default class  PageModule extends Component {
 
     /**
    * 指定config的类型声明为: Taro.Config
@@ -27,14 +27,12 @@ export default class  MyPage extends Component {
     navigationBarTitleText: '首页'
   }
 
-  constructor(props) {
-    super(props);
-    //console.log(props)
-    const pageSize = props.pageSize
-    const currentPage = props.currentPage
+  constructor(propss) {
+    super(propss);
+    console.log(this.props)
     this.state = {
-      pageSize:pageSize,
-      currentPage:currentPage
+      pageSize:"",
+      currentPage:this.props.currentPage
     };
   }
   //点击标签栏出发的事件
@@ -62,7 +60,7 @@ export default class  MyPage extends Component {
   //进入下一页
   pageRight(){
     const currentPage =  this.state.currentPage
-    const pageSize =  this.state.pageSize
+    const pageSize =  this.props.pageSize
     if(currentPage >=pageSize) return
     this.props.onChanges(currentPage+1)
     this.setState({
@@ -71,7 +69,7 @@ export default class  MyPage extends Component {
   }
   //进入尾页
   pageRightLast(){
-    const pageSize = this.state.pageSize
+    const pageSize = this.props.pageSize
     this.props.onChanges(pageSize)
     this.setState({
       currentPage: pageSize
@@ -82,7 +80,7 @@ export default class  MyPage extends Component {
       //console.log(event.detail)
     //const inputValue = event.detail.value
     const value = this.state.currentPage
-    const pageSize =  this.state.pageSize
+    const pageSize =  this.props.pageSize
     const keyCode = event.keyCode
     if(keyCode == "13") {
       if (value > pageSize) {
@@ -104,11 +102,12 @@ export default class  MyPage extends Component {
   }
 
   render () {
+      //console.log("father============" +this.props.pageSize)
 	  const currentPage =  this.state.currentPage
-    const pageSize =  this.state.pageSize
+    const pageSize =  this.props.pageSize
 	  return (
-				<view className='pageBox'>
-          <view className = 'pageleftOne'>
+				<View className='pageBox'>
+          <View className = 'pageleftOne'>
             {currentPage ==1 ?
             <AtTag
            name='|<'
@@ -124,8 +123,8 @@ export default class  MyPage extends Component {
               >
               {'|<'}
               </AtTag>}
-       </view>
-       <view className = 'pageleft'>
+       </View>
+       <View className = 'pageleft'>
          {currentPage == 1 ?
            <AtTag
              name='<'
@@ -143,25 +142,26 @@ export default class  MyPage extends Component {
            {'<'}
            </AtTag>
          }
-       </view >
-          <view onkeydown ={this.clickEnter.bind(this)}>
+       </View >
+          <View className="inputValue" onkeydown ={this.clickEnter.bind(this)}>
           <AtInput
+            className="enterPage"
             name='value2'
             type='number'
             placeholder='请输入数字'
-            value={this.state.currentPage}
+            value={currentPage}
             onChange={this.handleChange.bind(this)}
           />
-          </view>
-          <view >
+          </View>
+          <View >
               <AtTag
-                name={this.state.pageSize}
+                name={pageSize}
                 type='primary'
               >
-                {this.state.pageSize}
+                {pageSize}
               </AtTag>
-          </view>
-       <view className = 'pageRight'>
+          </View>
+       <View className = 'pageRight'>
          {currentPage == pageSize ?
          <AtTag
            name='>'
@@ -180,8 +180,8 @@ export default class  MyPage extends Component {
            >
              {'>'}
            </AtTag>}
-       </view>
-       <view className = 'pageRightLast'>
+       </View>
+       <View className = 'pageRightLast'>
          {currentPage == pageSize ?
          <AtTag
            name='>|'
@@ -198,8 +198,8 @@ export default class  MyPage extends Component {
            >
              {'>|'}
            </AtTag>}
-       </view>
-        </view>
+       </View>
+        </View>
     )
   }
 }

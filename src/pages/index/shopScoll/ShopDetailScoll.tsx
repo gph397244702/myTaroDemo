@@ -8,6 +8,7 @@ import Imgs from '../../../pic/productImg/333.jpg'
 import Imgss from '../../../pic/productImg/444.jpg'
 
 import './ShopDetailScoll.scss'
+import index from "../../../reducers";
 
 // #region 书写注意
 //
@@ -29,27 +30,76 @@ export default  class ShopDetailScoll extends Taro.Component {
 
   componentWillReceiveProps (nextProps) {
     console.log(this.props, nextProps)
+    console.log(2222222222)
   }
 
-  componentWillUnmount () { }
+  componentDidMount(){
+	  //console.log("fffffffffff")
+    let imgUrls = []
+    //获取标签请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/productDetail',
+      data: {
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      Taro.showLoading({title: '加载中'})
+      //模拟1秒延迟
+      setTimeout(() => {
+        const rest =  res.data
+        imgUrls=rest.url
+        Taro.hideLoading({title: '加载中'})
+        this.setState({
+          imgUrls:[Img]
+        })
+      }, 1000)
+    })
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.imgUrls.length){return}
+    let imgUrls = []
+    //获取标签请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/productDetail',
+      data: {
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      Taro.showLoading({title: '加载中'})
+      //模拟1秒延迟
+      setTimeout(() => {
+        imgUrls = this.state.imgUrls
+        const rest =  res.data.url
+        console.log(imgUrls)
+        rest.map((item,index) => {
+          imgUrls.push(item)
+        })
+        console.log(imgUrls)
+        Taro.hideLoading({title: '加载中'})
+        this.setState({
+          imgUrls:imgUrls
+        })
+      }, 1000)
+    })
+  }
 
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   constructor(props) {
     super(props);
     const currentTab =  props._$router.params.currentTab
     this.state = {
-      imgUrls: [Img,'',''],
-      imgUrlslist:[Img,Imgs,Imgss],
+      imgUrls: [],
       index:0,
       currentTab:currentTab
     };
   }
 
 
-  appendNextPageList () {
+  /*appendNextPageList () {
     const imgs = this.state.imgUrls
     //console.log(imgs)
     const imgUrlslists = this.state.imgUrlslist
@@ -77,7 +127,7 @@ export default  class ShopDetailScoll extends Taro.Component {
         Taro.hideLoading({title: '加载中'})
       }, 1000)
     }
-  }
+  }*/
   navigateTo(url){
     const currentTab = this.state.currentTab
     const urls = url+ "&currentTab="+ currentTab
@@ -95,7 +145,6 @@ export default  class ShopDetailScoll extends Taro.Component {
                       scrollWithAnimation
                       lowerThreshold={10}
                       style='height: 85vh;'
-                      onScroll={this.appendNextPageList.bind(this)}
                       >
           {this.state.imgUrls.map((imgs,index) => {
             return (<Image  src={imgs} mode='widthFix' className='slide-image'  />)

@@ -4,7 +4,7 @@ import { AtIcon } from 'taro-ui'
 import Img from '../../../pic/productImg/222.jpg'
 import Imgs from '../../../pic/productImg/333.jpg'
 import Imgss from '../../../pic/productImg/444.jpg'
-import MySwiperStyle from  '../../../components/mySwiper/MySwiper'
+import MySwiperStyle from '../../../components/swiperModule/SwiperModule'
 import { PRODUCTURL } from '../../../constants/counter'
 
 import './ShopDetail.scss'

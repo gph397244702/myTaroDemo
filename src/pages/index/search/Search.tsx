@@ -230,7 +230,7 @@ export default  class Search extends Taro.Component {
 
   //热搜跳转到搜索结果页面
   navigateTo(item) {
-     let urls='/pages/index/searchResult/SearchResult?current=1'
+     let urls='/pages/index/index?current=1&SearchResult=1'
     //const currentTab = this.state.currentTab
     const tagTitle = item.tagsTitle?item.tagsTitle:item.oldValue
      urls = urls+ "&tagName="+ tagTitle

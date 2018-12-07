@@ -2,7 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, ScrollView,Image } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import  MyPage from '../../../components/myPage/MyPage'
+import  MyPage from '../../../components/pageModule/PageModule'
 import './product.scss'
 
 // #region 书写注意
@@ -78,7 +78,7 @@ export default class Index extends Taro.Component {
     }).then(res => {
       const rest =  res.data
       productList = rest.productList
-      const pageSizes =  Math.round(productList.length/10)==0?1:Math.round(productList.length/10)
+      const pageSizes =  Math.ceil(productList.length/10)==0?1:Math.ceil(productList.length/10)
       this.setState({
         pageSize:pageSizes,
         productList:productList,
@@ -114,7 +114,7 @@ export default class Index extends Taro.Component {
     }).then(res => {
       const rest =  res.data
       productList = rest.productList
-      const pageSizes =  Math.round(productList.length/10)==0?1:Math.round(productList.length/10)
+      const pageSizes =  Math.ceil(productList.length/10)==0?1:Math.ceil(productList.length/10)
       this.setState({
         pageSize:pageSizes,
         productList:productList,

@@ -2,7 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text,ScrollView ,Image} from '@tarojs/components'
 import { AtTabs, AtTabsPane,AtPagination,AtTag,AtInput  } from 'taro-ui'
-import  MyPage from '../../../components/myPage/MyPage'
+import  MyPage from '../../../components/pageModule/PageModule'
 import Imageurl1 from '../../../pic/icon/up.png'
 import Imageurl2 from '../../../pic/icon/down.png'
 
@@ -56,7 +56,6 @@ class Index extends Taro.Component {
   }
   constructor(props) {
     super(props);
-    console.log(props)
    // let contentList = []
     //let tabList = []
     let currentTab = parseInt(this.props.children)
@@ -64,7 +63,7 @@ class Index extends Taro.Component {
       tabList:[],
       currentTab: currentTab,
       contentList:[],
-      pageSize:[],
+      pageSize:"",
       currentPage:1,
       titleFlag:1,
       dateFlag:1,
@@ -77,9 +76,26 @@ class Index extends Taro.Component {
     let contentList = []
     let tabList = []
     let currentTab = this.state.currentTab
-    console.log("============="+currentTab)
-    //console.log(isNaN(currentTab))
-    //console.log("===========" + currentTab)
+    //获取内容请求
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryContent'+currentTab,
+      data: {
+        titleFlag:1,
+        dateFlag:1,
+        currentPage:1
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      contentList = rest.content
+      const pageSizes =  Math.ceil(contentList.length/10)==0?1:Math.ceil(contentList.length/10)
+      this.setState({
+        pageSize:pageSizes,
+        contentList:contentList,
+      })
+    })
     //获取标签请求
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/upload',
@@ -98,29 +114,7 @@ class Index extends Taro.Component {
         currentTab:currentTab
       })
     })
-    //获取内容请求
-    Taro.request({
-      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryContent'+currentTab,
-      data: {
-        titleFlag:1,
-        dateFlag:1,
-        currentPage:1
-      },
-      header: {
-        'content-type': 'application/json'
-      }
-    }).then(res => {
-      const rest =  res.data
-      contentList = rest.content
-      // console.log(contentList)
-      const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
-      this.setState({
-        tabList:tabList,
-        pageSize:pageSizes,
-        contentList:contentList,
-        currentTab:currentTab
-      })
-    })
+
   }
 
   //点击标签栏出发的事件
@@ -143,7 +137,7 @@ class Index extends Taro.Component {
       const rest =  res.data
       contentList = rest.content
       // console.log(contentList)
-      const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
+      const pageSizes =  Math.ceil(contentList.length/10)==0?1:Math.ceil(contentList.length/10)
       this.setState({
         pageSize:pageSizes,
         contentList:contentList,
@@ -156,11 +150,11 @@ class Index extends Taro.Component {
   titleSort(){
       let titleFlag = this.state.titleFlag
       let currentPage = this.state.currentPage
-
+      let currentTab = this.state.currentTab
      // const titleImage = this.state.titleImage
      //console.log(titleFlag)
     Taro.request({
-      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/upload',
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryContent'+currentTab,
       data: {
         titleFlag:titleFlag,
         currentPage:currentPage
@@ -172,45 +166,34 @@ class Index extends Taro.Component {
     }).then(res => {
       const rest =  res.data
       //console.log(rest)
-      const  contentList=rest.contentList
-      const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
-      //contentList)
+      const  contentList=rest.content
+      const pageSizes =  Math.ceil(contentList.length/10)==0?1:Math.ceil(contentList.length/10)
+      let titleImages =""
+      let titleFlags =""
+      if(titleFlag == 1){
+        titleImages  = Imageurl2
+        titleFlags =2;
+      }else{
+        titleImages  = Imageurl1
+        titleFlags = 1
+      }
       this.setState({
         contentList:contentList,
-        pageSize:pageSizes
+        pageSize:pageSizes,
+        titleImage:titleImages,
+        titleFlag:titleFlags
       })
     })
-    if(titleFlag == 1){
-      const titleImages  = Imageurl2
-      const titleFlag =2;
-      const list =  this.state.contentList
-      // console.log(list.sort(compare))
-     // console.log(titleImages)
-      //console.log(titleFlag)
-      this.setState({
-        titleImage:titleImages,
-        titleFlag:titleFlag,
-        contentList:list
-      })
-    }else{
-      const titleImage  = Imageurl1
-      const titleFlag = 1
-      const list =  this.state.contentList
-      this.setState({
-        titleImage:titleImage,
-        titleFlag:titleFlag,
-        contentList:list
-      })
-    }
   }
   //日期排序
   dateSort(){
     let dateFlag = this.state.dateFlag
     let currentPage = this.state.currentPage
+    let currentTab = this.state.currentTab
     // const titleImage = this.state.titleImage
     //console.log(titleFlag)
     Taro.request({
-      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/upload',
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryContent'+currentTab,
       data: {
         dateFlag:dateFlag,
         currentPage:currentPage
@@ -222,40 +205,28 @@ class Index extends Taro.Component {
     }).then(res => {
       const rest =  res.data
       //console.log(rest)
-      const  contentList=rest.contentList
-      const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
-      //contentList
+      const  contentList=rest.content
+      const pageSizes =  Math.ceil(contentList.length/10)==0?1:Math.ceil(contentList.length/10)
+      console.log(pageSizes)
+      let dateImage =""
+      if(dateFlag == 1){
+        dateImage  = Imageurl2
+        dateFlag =2
+      }else{
+        dateImage  = Imageurl1
+        dateFlag = 1;
+      }
       this.setState({
         contentList:contentList,
-        pageSize:pageSizes
+        pageSize:pageSizes,
+        dateImage:dateImage,
+        dateFlag:dateFlag
       })
     })
-    if(dateFlag == 1){
-      const dateImage  = Imageurl2
-      const dateFlag =2
-      const list =  this.state.contentList
-      //log(list.sort(compare))
-      // console.log(titleImages)
-      //console.log(titleFlag)
-      this.setState({
-        dateImage:dateImage,
-        dateFlag:dateFlag,
-        contentList:list
-      })
-    }else{
-      const dateImage  = Imageurl1
-      const dateFlag = 1;
-      const list =  this.state.contentList
-      this.setState({
-        dateImage:dateImage,
-        dateFlag:dateFlag,
-        contentList:list
-      })
-    }
   }
   navigateTo(item) {
     const currentTab =  this.state.currentTab
-    const urls = "/pages/index/articleDetails/ArticleDetails?currentTab=" + currentTab + "&contentTitle ="+item.content1
+    const urls = "/pages/index/articleDetails/ArticleDetails?currentTab=" + currentTab + "&contentTitle ="+item.id
     //console.log(urls)
     Taro.navigateTo({url:urls})
   }
@@ -279,7 +250,7 @@ class Index extends Taro.Component {
       const rest =  res.data
       contentList = rest.content
       // console.log(contentList)
-      const pageSizes =  Math.round(contentList.length/10)==0?1:Math.round(contentList.length/10)
+      const pageSizes =  Math.ceil(contentList.length/10)==0?1:Math.ceil(contentList.length/10)
       this.setState({
         pageSize:pageSizes,
         contentList:contentList,
@@ -291,10 +262,9 @@ class Index extends Taro.Component {
   render () {
     const currentPage =  this.state.currentPage
     const pageSize =  this.state.pageSize
+    console.log("pageSize=====================" + pageSize)
     const currentTab =  this.state.currentTab
     const contentList = this.state.contentList
-    //console.log(contentList )
-    //console.log( this.state.tabList)
 	return (
 	  <AtTabs current={currentTab} scroll  tabList={this.state.tabList} onClick={this.handleClicks.bind(this)}>
       {this.state.tabList.map((item,index) => {
@@ -302,7 +272,7 @@ class Index extends Taro.Component {
           <ScrollView className='scrollview'
                       scrollY
                       scrollTop='0'
-                      style="height:82vh">
+                      style="height:84vh">
             <View>
               <View className='sort-wrap'>
                 <View style="width:1vw;height:5vh;float: left;"></View>
@@ -333,7 +303,7 @@ class Index extends Taro.Component {
               })}
               </View>
               < MyPage
-                pageSize={pageSize}
+                pageSize={this.state.pageSize}
                 currentPage={currentPage}
                 currentTab={currentTab}
                 onChanges={this.onChanges.bind(this)}

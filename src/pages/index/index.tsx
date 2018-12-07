@@ -6,6 +6,7 @@ import { connect } from '@tarojs/redux'
 import  AriticleTitle from './ariticleTitle/AriticleTitle'
 import  MySearch from './search/Search'
 import  Product from './product/product'
+import  SearchResult from './searchResult/SearchResult'
 
 import './index.scss'
 
@@ -50,10 +51,13 @@ export default  class Index extends Taro.Component {
     const current =  props._$router.params.current==null?0:props._$router.params.current
     const currents = parseInt(current)
     const currentTab =  props._$router.params.currentTab==null?0:props._$router.params.currentTab
+    const SearchResult =  props._$router.params.SearchResult?props._$router.params.SearchResult:0
+    //console.log(SearchResult)
     //console.log("currentTab ==== " + currentTab)
     this.state = {
       current: currents,
-      currentTab:currentTab
+      currentTab:currentTab,
+      SearchResult:SearchResult
     }
   }
  // tab切换
@@ -67,8 +71,9 @@ export default  class Index extends Taro.Component {
 	return (
 	 <View className=''>
 		 {this.state.current == 0 && <AriticleTitle>{this.state.currentTab}</AriticleTitle>}
-		 {this.state.current == 1 && <MySearch></MySearch>}
+		 {this.state.current == 1 && this.state.SearchResult == 0 &&<MySearch></MySearch>}
 		 {this.state.current == 2 && <Product>{this.state.currentTab}</Product>}
+		 {this.state.SearchResult == 1 && <SearchResult></SearchResult>}
 		<AtTabBar
 		  fixed
 		  color="#909399"

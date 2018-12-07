@@ -81,7 +81,10 @@
   }
   .scrollview{
     .taro-img__widthfix{
-      width: 100%!important;
+      width: 97%!important;
+      .taro-img__mode-widthfix{
+        height: 100%;
+      }
     }
   }
 

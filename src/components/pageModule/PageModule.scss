@@ -1,0 +1,25 @@
+.pageBox{display: inline-flex;}
+.at-input{padding: 0}
+.at-input__input {
+  width: 122px;
+  -webkit-flex: 1;
+  flex: 1;
+  display: inline-block;
+  font-size: 0.68267rem;
+  line-height: 2;
+  vertical-align: middle;
+  text-align: center;
+}
+.enterPage{
+  .at-input__container{
+    .at-input__input{
+        height: 4vh!important;
+      border: 2px solid #e1e1d8;
+    }
+  }
+}
+.pageleftOne{margin-left:2vw}
+.pageleft{margin-left:2vw}
+.inputValue{margin-left:6vw}
+.pageRight{margin-left:6vw}
+.pageRightLast{margin-left:2vw}

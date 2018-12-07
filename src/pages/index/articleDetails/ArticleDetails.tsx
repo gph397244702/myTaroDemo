@@ -96,14 +96,14 @@ export default  class ArticleDetails extends Taro.Component {
     Taro.navigateTo({url:currentTabs})
   }
   prevArticle(){
-    let prevTitle = this.state.articleContent.prevtitle
+    let previd = this.state.articleContent.previd
     let currentTab = this.state.currentTab
     //获取详细内容请求
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
       data: {
         currentTab:currentTab,
-        contentTitle:prevTitle,
+        contentTitle:previd,
       },
       header: {
         'content-type': 'application/json'
@@ -117,14 +117,14 @@ export default  class ArticleDetails extends Taro.Component {
     })
   }
   nextArticle(){
-    let nextTitle = this.state.articleContent.nexttitle
+    let nextid = this.state.articleContent.nextid
     let currentTab = this.state.currentTab
     //获取详细内容请求
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
       data: {
         currentTab:currentTab,
-        contentTitle:nextTitle,
+        contentTitle:nextid,
       },
       header: {
         'content-type': 'application/json'
@@ -146,7 +146,7 @@ export default  class ArticleDetails extends Taro.Component {
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
       data: {
         currentTab:currentTab,
-        contentTitle:item.articleTitle,
+        contentTitle:item.articleid,
       },
       header: {
         'content-type': 'application/json'
