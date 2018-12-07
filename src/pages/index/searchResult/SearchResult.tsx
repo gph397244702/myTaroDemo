@@ -112,7 +112,7 @@ export default  class SearchResult extends Taro.Component {
     }).then(res => {
       const rest =  res.data
       searchResult = rest.searchResult
-      console.log(searchResult)
+      //console.log(searchResult)
       this.setState({
         searchResult:searchResult,
         active:"selectListNone"
@@ -157,9 +157,7 @@ export default  class SearchResult extends Taro.Component {
 
     //跳转到文章详情页面
   navigateTo(item){
-       console.log(item.title)
-      //const currentTable = this.state.currentTab
-       const urls = "/pages/index/articleDetails/ArticleDetails?currentTab=0&contentTitle ="+item.titleId
+      const urls = "/pages/index/articleDetails/ArticleDetails?current=1&searchResult=1&contentTitle="+item.titleId
       console.log(urls)
       Taro.navigateTo({url:urls})
    }
@@ -208,13 +206,13 @@ export default  class SearchResult extends Taro.Component {
         >
           {this.state.searchResult.map((item,index) => {
             return (
-              <View className='at-row'>
+              <View className='at-row' onClick={this.navigateTo.bind(this,item)}>
                 <View className='at-col at-col-2 article-class'>
                   <AtTag
                     name={item.title}
                     type='primary'
                     circle
-                    onClick={this.navigateTo.bind(this,item)}
+
                   >
                     {item.classs}
                   </AtTag>

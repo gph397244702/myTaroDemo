@@ -77,7 +77,9 @@
       }
     }
   .detailTitle{
-    line-height: 2.6;
+    display: inline-flex;
+    margin-right: 7vw;
+    font-size: 0.9rem;
   }
   .scrollview{
     .taro-img__widthfix{
@@ -88,4 +90,9 @@
     }
   }
 
-  .atIconClass{margin-left:3vw}
+  .atIconClass{
+    margin-left:3vw;text-align: right;
+    .at-icon-arrow-left{
+    float:left;
+  }
+  }

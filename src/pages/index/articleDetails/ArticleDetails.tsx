@@ -18,8 +18,10 @@ export default  class ArticleDetails extends Taro.Component {
    constructor (props) {
      super(props)
      const currentTab =  props._$router.params.currentTab
-     //console.log(props._$router.params)
      const contentTitle =  props._$router.params.contentTitle
+     const current =  props._$router.params.current
+     const searchResult =  props._$router.params.searchResult
+     //console.log("==================" +searchResult)
      let fontSizeStyle = ''
      let fontSizes = ''
      let color = ''
@@ -33,20 +35,22 @@ export default  class ArticleDetails extends Taro.Component {
        fontSizes = storage["fontSizes"];
        color = storage["colorStyle"]
      }
-     console.log(fontSizeStyle)
+     //console.log(fontSizeStyle)
      fontSizeStyle =fontSizeStyle?fontSizeStyle:"font-size: 0.6rem;"
      fontSizes = fontSizes?fontSizes:0.6
      color = color?color:'white'
-     console.log(fontSizes)
+     //console.log(fontSizes)
      //获取热搜
      this.state = {
+       searchResult:searchResult,
        currentTab:currentTab,
        color:color,
        fontSize:fontSizes,
        fontSizeStyle:fontSizeStyle,
        contentTitle:contentTitle,
        articleContent:[],
-       articleTitle:[]
+       articleTitle:[],
+       current:current
     }
   }
   componentDidMount(){
@@ -84,81 +88,50 @@ export default  class ArticleDetails extends Taro.Component {
       const rest =  res.data
       this.setState({
         articleTitle:rest.article,
-
       })
     })
   }
   goBack(url) {
      //console.log(url)
     const currentTab =  this.state.currentTab
-    const currentTabs = url  + currentTab
-    //console.log("currentTabs   ===== " +currentTabs)
-    Taro.navigateTo({url:currentTabs})
+    const searchResult =  this.state.searchResult
+    const current =  this.state.current
+    console.log(searchResult)
+    console.log(current)
+    let urls = url  +"current=" +current
+    if(currentTab){
+      urls = urls+"&currentTab="+currentTab
+    }
+    if(searchResult){
+      urls = urls+"&searchResult="+searchResult
+    }
+    Taro.navigateTo({url:urls})
   }
   prevArticle(){
     let previd = this.state.articleContent.previd
+    const searchResult =  this.state.searchResult
+    this.searchArticle(previd)
+  }
+  async searchArticle(articleId){
     let currentTab = this.state.currentTab
-    //获取详细内容请求
-    Taro.request({
-      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
-      data: {
-        currentTab:currentTab,
-        contentTitle:previd,
-      },
-      header: {
-        'content-type': 'application/json'
-      }
-    }).then(res => {
-      const rest =  res.data
-      this.setState({
-        articleContent:rest,
-        currentTab:currentTab
-      })
-    })
+    const searchResult =  this.state.searchResult
+    const current =  this.state.current
+    let url = "/pages/index/articleDetails/ArticleDetails?current="+current+"&contentTitle="+articleId
+    if(currentTab){
+      url = url+"&currentTab="+currentTab
+    }
+    if(searchResult){
+      url = url+"&searchResult="+searchResult
+    }
+    Taro.navigateTo({url:url})
   }
   nextArticle(){
     let nextid = this.state.articleContent.nextid
-    let currentTab = this.state.currentTab
-    //获取详细内容请求
-    Taro.request({
-      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
-      data: {
-        currentTab:currentTab,
-        contentTitle:nextid,
-      },
-      header: {
-        'content-type': 'application/json'
-      }
-    }).then(res => {
-      const rest =  res.data
-      this.setState({
-        articleContent:rest,
-        currentTab:currentTab
-      })
-    })
+    this.searchArticle(nextid)
   }
   toArticle(item){
-    let currentTab = this.state.currentTab
-    //let contentTitle = this.state.contentTitle
-    console.log(item)
-    //获取详细内容请求
-    Taro.request({
-      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/queryArticle',
-      data: {
-        currentTab:currentTab,
-        contentTitle:item.articleid,
-      },
-      header: {
-        'content-type': 'application/json'
-      }
-    }).then(res => {
-      const rest =  res.data
-      this.setState({
-        articleContent:rest,
-        currentTab:currentTab
-      })
-    })
-
+    let articleid =  item.articleid
+    this.searchArticle(articleid)
   }
   whiteCircle(){
      let color ="white"
@@ -244,16 +217,14 @@ export default  class ArticleDetails extends Taro.Component {
     return (
       <div className={this.state.color}>
           <View className='articleStyle'>
-            <View className='return' onClick={this.goBack.bind(this,'/pages/index/index?current=0&currentTab=')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon></View>
+            <View className='return' onClick={this.goBack.bind(this,'/pages/index/index?')}><AtIcon value='arrow-left' size='30' color='#F00'></AtIcon></View>
             <View className='whiteCircle '  onClick={this.whiteCircle.bind(this)}></View>
             <View className='redCircle ' onClick={this.redCircle.bind(this)}></View>
             <View className='blackCircle ' onClick={this.blackCircle.bind(this)}></View>
             <View className='subtractClass' onClick={this.subtractClass.bind(this)}><AtIcon value='subtract' size='25' color='black'></AtIcon></View>
             <View className='addClass' onClick={this.addClass.bind(this)}><AtIcon value='add' size='25' color='black'></AtIcon></View>
-
           </View>
         <AtDivider height="50"/>
-
         <View className='at-article'>
           <View className='at-article__h1' style="text-align:center;">
             {this.state.articleContent.title}
@@ -261,7 +232,7 @@ export default  class ArticleDetails extends Taro.Component {
           <View className='at-article__info' style="margin-top:2vh;text-align:center;">
             {this.state.articleContent.date}&nbsp;&nbsp;&nbsp;{this.state.articleContent.writer}&nbsp;&nbsp;&nbsp;&nbsp;热度:{this.state.articleContent.heat}
           </View>
-          <View className='at-article__content' style="margin-top:3vh;width:85vw;margin-left:6vw; ">
+          <View className='at-article__content' style="margin-top:2vh;width:100vw;margin-left:1vw; ">
             <View className='at-article__section'>
               <View className='at-article__p' style={this.state.fontSizeStyle}>
                 {this.state.articleContent.content}

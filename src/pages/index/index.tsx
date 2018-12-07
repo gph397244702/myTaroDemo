@@ -51,29 +51,29 @@ export default  class Index extends Taro.Component {
     const current =  props._$router.params.current==null?0:props._$router.params.current
     const currents = parseInt(current)
     const currentTab =  props._$router.params.currentTab==null?0:props._$router.params.currentTab
-    const SearchResult =  props._$router.params.SearchResult?props._$router.params.SearchResult:0
+    const searchResult =  props._$router.params.searchResult?props._$router.params.searchResult:0
     //console.log(SearchResult)
     //console.log("currentTab ==== " + currentTab)
     this.state = {
       current: currents,
       currentTab:currentTab,
-      SearchResult:SearchResult
+      searchResult:searchResult
     }
   }
  // tab切换
   handleClick = (e) => {
-    this.setState({
-      current: e
-    })
+    const urls = "/pages/index/index?current="+e
+    Taro.navigateTo({url:urls})
+
   }
 
   render () {
 	return (
 	 <View className=''>
 		 {this.state.current == 0 && <AriticleTitle>{this.state.currentTab}</AriticleTitle>}
-		 {this.state.current == 1 && this.state.SearchResult == 0 &&<MySearch></MySearch>}
+		 {this.state.current == 1 && this.state.searchResult == 0 &&<MySearch></MySearch>}
 		 {this.state.current == 2 && <Product>{this.state.currentTab}</Product>}
-		 {this.state.SearchResult == 1 && <SearchResult></SearchResult>}
+		 {this.state.current == 1 && this.state.searchResult == 1 && <SearchResult></SearchResult>}
 		<AtTabBar
 		  fixed
 		  color="#909399"

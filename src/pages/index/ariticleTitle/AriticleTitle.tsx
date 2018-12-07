@@ -226,7 +226,8 @@ class Index extends Taro.Component {
   }
   navigateTo(item) {
     const currentTab =  this.state.currentTab
-    const urls = "/pages/index/articleDetails/ArticleDetails?currentTab=" + currentTab + "&contentTitle ="+item.id
+    console.log(item)
+    const urls = "/pages/index/articleDetails/ArticleDetails?current=0&currentTab=" + currentTab + "&contentTitle="+item.id
     //console.log(urls)
     Taro.navigateTo({url:urls})
   }
@@ -294,7 +295,7 @@ class Index extends Taro.Component {
                 return (
                   <View className='at-row'>
                     <View className='at-col at-col-9 article-content'
-                          onClick={this.navigateTo.bind(this, {item})}>
+                          onClick={this.navigateTo.bind(this, item)}>
                       {item.content1}
                     </View>
                     <View className='at-col at-col-3 article-date'>{item.content2}</View>
