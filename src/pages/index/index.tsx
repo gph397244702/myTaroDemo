@@ -35,13 +35,16 @@ export default  class Index extends Component {
   }
 
     config: Config = {
+
     navigationBarTitleText: '首页'
   }
 
   constructor(...props) {
+
     super(...props);
   }
   componentWillMount () {
+    console.log(this)
     //console.log(this.$router)
     const current = this.$router.params.current ? this.$router.params.current:0
     const currents = parseInt(current)

@@ -34,6 +34,9 @@ export default class Index extends Component {
 
   constructor(...props) {
     super(...props);
+
+  }
+  componentWillMount(){
     let currentTab = parseInt(this.props.children)
     this.state = {
       productList:[],
@@ -43,7 +46,6 @@ export default class Index extends Component {
       currentPage:1,
     };
   }
-
   componentDidMount () {
     let productList = []
     let productTitle = []

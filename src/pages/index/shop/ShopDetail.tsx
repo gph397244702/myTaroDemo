@@ -29,10 +29,14 @@ export default  class ShopDetail extends Component {
     super(...props);
 
   }
-
   componentWillMount () {
     const currentTab =  this.$router.params.currentTab
-    //console.log(currentTab)
+    this.state = {
+      imgUrls: [],
+      currentTab:currentTab
+    };
+  }
+  componentDidMount(){
     let imgs = []
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/productDetail',
@@ -51,12 +55,7 @@ export default  class ShopDetail extends Component {
         imgUrls:imgs
       })
     })
-    this.state = {
-      imgUrls: [],
-      currentTab:currentTab
-    };
   }
-
   componentDidShow () { }
 
   componentDidHide () { }

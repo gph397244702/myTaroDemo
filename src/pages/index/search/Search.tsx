@@ -15,67 +15,68 @@ import './Search.scss'
 
 export default  class Search extends Component {
 
+
    constructor (...props) {
-     let  histags = []
-     let tags = []
-     let searchStore = []
      super(...props)
-     //获取热搜
-     Taro.request({
-       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/search',
-       data: {
-       },
-       header: {
-         'content-type': 'application/json'
-       }
-     }).then(res => {
-       const rest =  res.data
-      // console.log(rest)
-       tags = rest.tags
-       //contentList)
-       this.setState({
-         tags:tags
-       })
-     })
-     //获取搜索下拉框数据
-     Taro.request({
-       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/searchStore',
-       data: {
-       },
-       header: {
-         'content-type': 'application/json'
-       }
-     }).then(res => {
-       const rest =  res.data
-       //console.log(rest)
-       searchStore = rest.searchStore
-       //contentList)
-       this.setState({
-         searchStore:searchStore
-       })
-     })
-     if(!window.localStorage){
-       console.log("浏览器支持localstorage")
-       return
-     }else{
-       const storage=window.localStorage;
-       //写入a字段
-       histags =storage["histags"]
-       console.log(histags)
-       //storage["histags"]=[]
-       histags = histags ? JSON.parse(histags):[]
-       console.log(histags)
-     }
-     this.state = {
-       value: '',
-       tags:[],
-       searchStore:[],
-       newSearchStore:[],
-       histags:histags,
-       active:'selectListNone'
-    }
   }
   componentWillMount() {
+    this.state = {
+      value: '',
+      tags:[],
+      searchStore:[],
+      newSearchStore:[],
+      histags:[],
+      active:'selectListNone'
+    }
+  }
+  componentDidMount(){
+    let  histags = []
+    let tags = []
+    let searchStore = []
+    //获取热搜
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/search',
+      data: {
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      // console.log(rest)
+      tags = rest.tags
+      //contentList)
+      this.setState({
+        tags:tags
+      })
+    })
+    //获取搜索下拉框数据
+    Taro.request({
+      url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/searchStore',
+      data: {
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then(res => {
+      const rest =  res.data
+      //console.log(rest)
+      searchStore = rest.searchStore
+      //contentList)
+      this.setState({
+        searchStore:searchStore
+      })
+    })
+    if(!window.localStorage){
+      console.log("浏览器支持localstorage")
+      return
+    }else{
+      const storage=window.localStorage;
+      //写入a字段
+      histags =storage["histags"]
+      console.log(histags)
+      histags = histags ? JSON.parse(histags):[]
+    }
   }
   onChange (value) {
     Taro.request({
@@ -237,7 +238,7 @@ export default  class Search extends Component {
     //console.log(urls)
     Taro.navigateTo({url:urls})
   }
-  render () {
+  render(){
     return (
       <View className="myStyle">
         <View onkeydown ={this.clickEnters.bind(this)}>
@@ -316,6 +317,9 @@ export default  class Search extends Component {
         </View>
       </View>
     )
+  }
+      </View>
+  )
   }
 }
 

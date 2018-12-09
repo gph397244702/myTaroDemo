@@ -52,12 +52,16 @@ class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
     config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '新闻'
   }
   constructor(...props) {
     super(...props);
+
+  }
+  componentWillMount(){
     let currentTab = parseInt(this.props.children)
-    console.log(currentTab)
+    console.log(this.props.children)
+    //console.log(currentTab)
     this.state = {
       tabList:[],
       currentTab: currentTab,
@@ -70,8 +74,8 @@ class Index extends Component {
       dateImage :Imageurl1
     };
   }
-
   componentDidMount(){
+    console.log(this.props.children)
     let contentList = []
     let tabList = []
     let currentTab = this.state.currentTab

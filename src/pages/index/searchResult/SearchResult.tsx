@@ -13,23 +13,25 @@ import './SearchResult.scss'
 //
 // #endregion
 
-export default  class SearchResult extends Taro.Component {
+export default  class SearchResult extends Component {
 
   config: Config = {
     navigationBarTitleText: '搜索结果'
   }
-   constructor (props) {
-     super(props)
-     const currentTab =  ''
-     const tagName =  ''
-     this.state = {
-       currentTab:currentTab,
-       searchStore:[],
-       tagName:tagName,
-       active:'selectListNone',
-       searchResult:[],
-       value:'',
-       newSearchStore:[]
+   constructor (...props) {
+     super(...props)
+  }
+  componentWillMount(){
+    const currentTab =  ''
+    const tagName =  ''
+    this.state = {
+      currentTab:currentTab,
+      searchStore:[],
+      tagName:tagName,
+      active:'selectListNone',
+      searchResult:[],
+      value:'',
+      newSearchStore:[]
     }
   }
   componentDidMount(){
@@ -47,7 +49,6 @@ export default  class SearchResult extends Taro.Component {
     }).then(res => {
       const rest =  res.data
       searchResult = rest.searchResult
-     console.log(searchResult)
       this.setState({
         searchResult:searchResult
       })

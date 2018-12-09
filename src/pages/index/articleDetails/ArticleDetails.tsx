@@ -22,7 +22,6 @@ export default  class ArticleDetails extends Component {
      super(...props)
 
   }
-
   componentWillMount(){
     const currentTab =  this.$router.params.currentTab
     const contentTitle =  this.$router.params.contentTitle
