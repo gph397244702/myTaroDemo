@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import Taro,{ Component, Config } from '@tarojs/taro'
 import { Image ,ScrollView ,View} from '@tarojs/components'
 import { AtSearchBar,AtTag ,AtDivider,AtList,AtListItem,AtIcon,AtButton ,AtButton} from 'taro-ui'
 import './ArticleDetails.scss'
@@ -13,44 +13,51 @@ import './ArticleDetails.scss'
 //
 // #endregion
 
-export default  class ArticleDetails extends Taro.Component {
+export default  class ArticleDetails extends Component {
 
-   constructor (props) {
-     super(props)
-     const currentTab =  props._$router.params.currentTab
-     const contentTitle =  props._$router.params.contentTitle
-     const current =  props._$router.params.current
-     const searchResult =  props._$router.params.searchResult
-     //console.log("==================" +searchResult)
-     let fontSizeStyle = ''
-     let fontSizes = ''
-     let color = ''
-     //console.log(  props._$router.params.currentTab)
-     if(!window.localStorage){
-       alert("浏览器不支持localstorage");
-       return ;
-     }else {
-       const storage=window.localStorage;
-       fontSizeStyle = storage["fontSizeStyle"];
-       fontSizes = storage["fontSizes"];
-       color = storage["colorStyle"]
-     }
-     //console.log(fontSizeStyle)
-     fontSizeStyle =fontSizeStyle?fontSizeStyle:"font-size: 0.6rem;"
-     fontSizes = fontSizes?fontSizes:0.6
-     color = color?color:'white'
-     //console.log(fontSizes)
-     //获取热搜
-     this.state = {
-       searchResult:searchResult,
-       currentTab:currentTab,
-       color:color,
-       fontSize:fontSizes,
-       fontSizeStyle:fontSizeStyle,
-       contentTitle:contentTitle,
-       articleContent:[],
-       articleTitle:[],
-       current:current
+  config: Config = {
+    navigationBarTitleText: '文章详情'
+  }
+   constructor (...props) {
+     super(...props)
+
+  }
+
+  componentWillMount(){
+    const currentTab =  this.$router.params.currentTab
+    const contentTitle =  this.$router.params.contentTitle
+    const current =  this.$router.params.current
+    const searchResult =  this.$router.params.searchResult
+    //console.log("==================" +searchResult)
+    let fontSizeStyle = ''
+    let fontSizes = ''
+    let color = ''
+    //console.log(  props._$router.params.currentTab)
+    if(!window.localStorage){
+      alert("浏览器不支持localstorage");
+      return ;
+    }else {
+      const storage=window.localStorage;
+      fontSizeStyle = storage["fontSizeStyle"];
+      fontSizes = storage["fontSizes"];
+      color = storage["colorStyle"]
+    }
+    //console.log(fontSizeStyle)
+    fontSizeStyle =fontSizeStyle?fontSizeStyle:"font-size: 0.6rem;"
+    fontSizes = fontSizes?fontSizes:0.6
+    color = color?color:'white'
+    //console.log(fontSizes)
+    //获取热搜
+    this.state = {
+      searchResult:searchResult,
+      currentTab:currentTab,
+      color:color,
+      fontSize:fontSizes,
+      fontSizeStyle:fontSizeStyle,
+      contentTitle:contentTitle,
+      articleContent:[],
+      articleTitle:[],
+      current:current
     }
   }
   componentDidMount(){

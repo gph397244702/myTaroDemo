@@ -16,7 +16,7 @@ import './product.scss'
 // #endregion
 
 
-export default class Index extends Taro.Component {
+export default class Index extends Component {
     /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -25,15 +25,15 @@ export default class Index extends Taro.Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
     config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '商品'
   }
 
   componentWillReceiveProps (nextProps) {
     //console.log(this.props, nextProps)
   }
 
-  constructor(props) {
-    super(props);
+  constructor(...props) {
+    super(...props);
     let currentTab = parseInt(this.props.children)
     this.state = {
       productList:[],

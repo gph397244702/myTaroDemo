@@ -1,4 +1,4 @@
-import Taro, { Config} from '@tarojs/taro'
+import Taro, {Component, Config} from '@tarojs/taro'
 import { View, Button,Image} from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import Img from '../../../pic/productImg/222.jpg'
@@ -18,27 +18,20 @@ import './ShopDetail.scss'
 // ref: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/20796
 //
 // #endregion
-export default  class ShopDetail extends Taro.Component {
+export default  class ShopDetail extends Component {
 
 
 
 	config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '商品详情'
+  }
+  constructor(...props) {
+    super(...props);
+
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
-  }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  constructor(props) {
-    super(props);
-    const currentTab =  props._$router.params.currentTab
+  componentWillMount () {
+    const currentTab =  this.$router.params.currentTab
     //console.log(currentTab)
     let imgs = []
     Taro.request({
@@ -59,10 +52,16 @@ export default  class ShopDetail extends Taro.Component {
       })
     })
     this.state = {
-	    imgUrls: [],
+      imgUrls: [],
       currentTab:currentTab
     };
   }
+
+  componentDidShow () { }
+
+  componentDidHide () { }
+
+
   //点击标签栏进入商品页面
   navigateTo(url) {
     const currentTab = this.state.currentTab

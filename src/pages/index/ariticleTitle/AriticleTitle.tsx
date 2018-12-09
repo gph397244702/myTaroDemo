@@ -42,7 +42,7 @@ interface Index {
   props: IProps;
 }
 
-class Index extends Taro.Component {
+class Index extends Component {
 
     /**
    * 指定config的类型声明为: Taro.Config
@@ -54,11 +54,10 @@ class Index extends Taro.Component {
     config: Config = {
     navigationBarTitleText: '首页'
   }
-  constructor(props) {
-    super(props);
-   // let contentList = []
-    //let tabList = []
+  constructor(...props) {
+    super(...props);
     let currentTab = parseInt(this.props.children)
+    console.log(currentTab)
     this.state = {
       tabList:[],
       currentTab: currentTab,
@@ -207,7 +206,7 @@ class Index extends Taro.Component {
       //console.log(rest)
       const  contentList=rest.content
       const pageSizes =  Math.ceil(contentList.length/10)==0?1:Math.ceil(contentList.length/10)
-      console.log(pageSizes)
+      //console.log(pageSizes)
       let dateImage =""
       if(dateFlag == 1){
         dateImage  = Imageurl2
@@ -226,7 +225,7 @@ class Index extends Taro.Component {
   }
   navigateTo(item) {
     const currentTab =  this.state.currentTab
-    console.log(item)
+    //console.log(item)
     const urls = "/pages/index/articleDetails/ArticleDetails?current=0&currentTab=" + currentTab + "&contentTitle="+item.id
     //console.log(urls)
     Taro.navigateTo({url:urls})
@@ -263,7 +262,7 @@ class Index extends Taro.Component {
   render () {
     const currentPage =  this.state.currentPage
     const pageSize =  this.state.pageSize
-    console.log("pageSize=====================" + pageSize)
+    //console.log("pageSize=====================" + pageSize)
     const currentTab =  this.state.currentTab
     const contentList = this.state.contentList
 	return (

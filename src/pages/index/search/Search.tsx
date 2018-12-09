@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import Taro,{ Component, Config } from '@tarojs/taro'
 import { Image ,ScrollView ,View} from '@tarojs/components'
 import { AtSearchBar,AtTag ,AtDivider,AtList,AtListItem,AtIcon} from 'taro-ui'
 import './Search.scss'
@@ -13,9 +13,9 @@ import './Search.scss'
 //
 // #endregion
 
-export default  class Search extends Taro.Component {
+export default  class Search extends Component {
 
-   constructor (props) {
+   constructor (...props) {
      let  histags = []
      let tags = []
      let searchStore = []
@@ -76,7 +76,7 @@ export default  class Search extends Taro.Component {
     }
   }
   componentWillMount() {
-}
+  }
   onChange (value) {
     Taro.request({
       url: 'https://www.easy-mock.com/mock/5bfe130e4cb7421a8c76d793/example/searchStore',

@@ -19,6 +19,9 @@
   height: 1352px;
   position: relative;
   overflow: hidden;
+  .swiper-container{
+    height:86vh;
+  }
   .share-btn {
     position: absolute;
     top: 40px;
@@ -48,7 +51,6 @@
 
 .detail-page {
   padding-bottom: 120px;
-  background-color: #4c5264;
   .container {
     padding: 0 35px;
     padding-top: 20px;
@@ -77,7 +79,7 @@
   }
 }
 .taro-img{
-  width:259px;
+  width: 100%;
 }
 
 .swiper__wrapper{

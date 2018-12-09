@@ -1,5 +1,5 @@
 
-import Taro, {  Config } from '@tarojs/taro'
+import Taro, {Component,  Config } from '@tarojs/taro'
 import { Swiper, SwiperItem,Image,View  } from '@tarojs/components'
 
 
@@ -17,7 +17,7 @@ import './SwiperModule.scss'
 // #endregion
 
 
-  export default  class Index extends Taro.Component {
+  export default  class Index extends Component {
 
 
     static propTypes = {
@@ -36,8 +36,10 @@ import './SwiperModule.scss'
         indicatorActiveColor='#333'
         interval='2000'
         duration='500'
+        indicatorColor="#030303"
         indicatorDots='true'
         autoplay='true'
+        current={0}
         >
 		{banner.map((imgs,index) => {
 		  return  (<SwiperItem key={index}>

@@ -20,19 +20,25 @@ import index from "../../../reducers";
 //
 // #endregion
 
-export default  class ShopDetailScoll extends Taro.Component {
+export default  class ShopDetailScoll extends Component {
 
 
 
 	config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '商品详情'
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
-    console.log(2222222222)
+  constructor(...props) {
+    super(...props);
   }
-
+  componentWillMount(){
+    const currentTab =  this.$router.params.currentTab
+    this.state = {
+      imgUrls: [],
+      index:0,
+      currentTab:currentTab
+    };
+  }
   componentDidMount(){
 	  //console.log("fffffffffff")
     let imgUrls = []
@@ -88,15 +94,7 @@ export default  class ShopDetailScoll extends Taro.Component {
   }
 
 
-  constructor(props) {
-    super(props);
-    const currentTab =  props._$router.params.currentTab
-    this.state = {
-      imgUrls: [],
-      index:0,
-      currentTab:currentTab
-    };
-  }
+
 
 
   /*appendNextPageList () {

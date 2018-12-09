@@ -21,7 +21,7 @@ import './index.scss'
 // #endregion
 
 
-export default  class Index extends Taro.Component {
+export default  class Index extends Component {
 
     /**
    * 指定config的类型声明为: Taro.Config
@@ -38,20 +38,15 @@ export default  class Index extends Taro.Component {
     navigationBarTitleText: '首页'
   }
 
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  constructor(props) {
-    super(props);
-    //console.log(props._$router.params.current==null)
-    const current =  props._$router.params.current==null?0:props._$router.params.current
+  constructor(...props) {
+    super(...props);
+  }
+  componentWillMount () {
+    //console.log(this.$router)
+    const current = this.$router.params.current ? this.$router.params.current:0
     const currents = parseInt(current)
-    const currentTab =  props._$router.params.currentTab==null?0:props._$router.params.currentTab
-    const searchResult =  props._$router.params.searchResult?props._$router.params.searchResult:0
+    const currentTab = this.$router.params.currentTab ? this.$router.params.currentTab:0
+    const searchResult = this.$router.params.searchResult ? this.$router.params.searchResult:0
     //console.log(SearchResult)
     //console.log("currentTab ==== " + currentTab)
     this.state = {
@@ -60,6 +55,12 @@ export default  class Index extends Taro.Component {
       searchResult:searchResult
     }
   }
+
+  componentDidShow () { }
+
+  componentDidHide () { }
+
+
  // tab切换
   handleClick = (e) => {
     const urls = "/pages/index/index?current="+e

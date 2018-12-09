@@ -15,6 +15,9 @@ import './SearchResult.scss'
 
 export default  class SearchResult extends Taro.Component {
 
+  config: Config = {
+    navigationBarTitleText: '搜索结果'
+  }
    constructor (props) {
      super(props)
      const currentTab =  ''
