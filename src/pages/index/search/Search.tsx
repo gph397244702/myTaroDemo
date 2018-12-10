@@ -274,8 +274,8 @@ export default  class Search extends Component {
         </View>
         {this.state.tags.map((item,index) => {
           const  isOdd = index
-          return isOdd < 3 ? (
-            (<View className='content'>
+          return  (isOdd < 3 ?
+            <View className='content'>
             <AtTag
               name={item.tagsTitle}
               type='primary'
@@ -285,7 +285,7 @@ export default  class Search extends Component {
             >
               {item.tagsTitle}
             </AtTag>
-          </View>):(<View className='content'>
+          </View>:<View className='content'>
             <AtTag
               name={item.tagsTitle}
               type='primary'
@@ -294,8 +294,8 @@ export default  class Search extends Component {
             >
               {item.tagsTitle}
             </AtTag>
-          </View>))
-        }
+          </View>)
+        })
         }
         <AtDivider height="50"/>
         <View >
@@ -316,10 +316,8 @@ export default  class Search extends Component {
             </View>)
           })}
         </View>
-
       </View>
-  )
-  }
+
 }
 
 
