@@ -296,11 +296,12 @@ export default  class Search extends Component {
             </AtTag>
           </View>))
         }
+        }
         <AtDivider height="50"/>
         <View >
           <View className='historySearch' >
           历史
-              <Image  src={require('../../../pic/icon/delete.png')} onClick={this.delete.bind(this)} alt="" className= 'deleteIcon'/>
+              <Image  src={require('../../../pic/icon/delete.png')} onClick={this.delete.bind(this)} className= 'deleteIcon'/>
           </View>
           {this.state.histags.map((item,index) => {
             return (<View className='content'>
@@ -315,9 +316,7 @@ export default  class Search extends Component {
             </View>)
           })}
         </View>
-      </View>
-    )
-  }
+
       </View>
   )
   }
