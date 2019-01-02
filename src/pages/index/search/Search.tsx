@@ -30,7 +30,8 @@ export default  class Search extends Component {
     }
   }
   componentDidMount(){
-    let  histags = []
+
+     let  histags = []
     let tags = []
     let searchStore = []
     //获取热搜

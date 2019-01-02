@@ -1,4 +1,4 @@
-import '@tarojs/async-await'
+  import '@tarojs/async-await'
 import Taro, { Component, Config } from '@tarojs/taro'
 
 import Index from './pages/index'
@@ -6,11 +6,6 @@ import Index from './pages/index'
 
 import './app.scss'
 
-if (process.env.TARO_ENV === "weapp") {
-  require("taro-ui/dist/weapp/css/index.css")
-} else if (process.env.TARO_ENV === "h5") {
-  require("taro-ui/dist/h5/css/index.css")
-}
 class App extends Component {
 
   /**
@@ -27,7 +22,8 @@ class App extends Component {
       'pages/index/shopScoll/ShopDetailScoll',
       'pages/index/product/product',
       '/pages/index/articleDetails/ArticleDetails',
-      '/pages/index/searchResult/SearchResult'
+      '/pages/index/searchResult/SearchResult',
+      '/pages/index/ariticleTitle/AriticleTitle'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -45,7 +41,6 @@ class App extends Component {
 
   componentDidHide () {}
 
-  componentCatchError () {}
 
   componentDidCatchError () {}
 

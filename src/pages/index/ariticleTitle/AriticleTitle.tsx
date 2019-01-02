@@ -1,4 +1,3 @@
-import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text,ScrollView ,Image} from '@tarojs/components'
 import { AtTabs, AtTabsPane,AtPagination,AtTag,AtInput  } from 'taro-ui'
@@ -8,7 +7,7 @@ import Imageurl2 from '../../../pic/icon/down.png'
 
 
 import './AriticleTitle.scss'
-import index from "../../../reducers";
+
 
 // #region 书写注意
 //
@@ -20,29 +19,7 @@ import index from "../../../reducers";
 //
 // #endregion
 
-type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
-
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
-
-type PageOwnProps = {}
-
-type PageState = {}
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
-
-interface Index {
-  props: IProps;
-}
-
-class Index extends Component {
+export default class AriticleTitle extends Component {
 
     /**
    * 指定config的类型声明为: Taro.Config
@@ -51,17 +28,14 @@ class Index extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-    config: Config = {
-    navigationBarTitleText: '新闻'
-  }
+
   constructor(...props) {
     super(...props);
-
   }
   componentWillMount(){
     let currentTab = parseInt(this.props.children)
-    console.log(this.props.children)
-    //console.log(currentTab)
+    //console.log(this.props.children)
+    console.log(Imageurl1)
     this.state = {
       tabList:[],
       currentTab: currentTab,
@@ -74,8 +48,8 @@ class Index extends Component {
       dateImage :Imageurl1
     };
   }
-  componentDidMount(){
-    console.log(this.props.children)
+  componentDidMount (){
+    console.log(333333)
     let contentList = []
     let tabList = []
     let currentTab = this.state.currentTab
@@ -110,6 +84,7 @@ class Index extends Component {
     }).then(res => {
       const rest =  res.data
       tabList = rest.tableList
+      console.log(tabList)
       //const pageSizes =  Math.round(contentList[0].content.length/10)==0?1:Math.round(contentList[0].content.length/10)
       this.setState({
         tabList:tabList,
@@ -175,10 +150,10 @@ class Index extends Component {
       let titleFlags =""
       if(titleFlag == 1){
         titleImages  = Imageurl2
-        titleFlags =2;
+        titleFlag = 2;
       }else{
         titleImages  = Imageurl1
-        titleFlags = 1
+        titleFlag = 1
       }
       this.setState({
         contentList:contentList,
@@ -269,6 +244,7 @@ class Index extends Component {
     //console.log("pageSize=====================" + pageSize)
     const currentTab =  this.state.currentTab
     const contentList = this.state.contentList
+    console.log(this.state.tabList)
 	return (
 	  <AtTabs current={currentTab} scroll  tabList={this.state.tabList} onClick={this.handleClicks.bind(this)}>
       {this.state.tabList.map((item,index) => {
@@ -296,7 +272,7 @@ class Index extends Component {
               <View className="at-table">
               {contentList.map((item, index) => {
                 return (
-                  <View className='at-row'>
+                  <View className='at-row article'>
                     <View className='at-col at-col-9 article-content'
                           onClick={this.navigateTo.bind(this, item)}>
                       {item.content1}
@@ -320,12 +296,3 @@ class Index extends Component {
     )
   }
 }
-
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
-
-export default Index as ComponentClass<PageOwnProps, PageState>

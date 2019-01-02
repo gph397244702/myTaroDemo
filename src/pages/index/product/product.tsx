@@ -47,6 +47,7 @@ export default class Index extends Component {
     };
   }
   componentDidMount () {
+      console.log()
     let productList = []
     let productTitle = []
     let currentTab = this.state.currentTab

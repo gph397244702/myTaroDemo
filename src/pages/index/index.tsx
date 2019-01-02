@@ -1,8 +1,6 @@
-import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
-import { AtTabs, AtTabsPane,AtTabBar,AtList, AtListItem,AtInput,AtSwipeAction  } from 'taro-ui'
-import { connect } from '@tarojs/redux'
+import { View } from '@tarojs/components'
+import { AtTabBar  } from 'taro-ui'
 import  AriticleTitle from './ariticleTitle/AriticleTitle'
 import  MySearch from './search/Search'
 import  Product from './product/product'
@@ -30,32 +28,28 @@ export default  class Index extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
-   static options = {
-    addGlobalClass: true
-  }
-
-    config: Config = {
-
-    navigationBarTitleText: '首页'
-  }
 
   constructor(...props) {
     super(...props);
+    this.state = {
+      current: "",
+      currentTab:"",
+      searchResult:""
+    }
   }
   componentWillMount () {
     console.log(this)
-    //console.log(this.$router)
+    console.log("dianji")
     const current = this.$router.params.current ? this.$router.params.current:0
     const currents = parseInt(current)
     const currentTab = this.$router.params.currentTab ? this.$router.params.currentTab:0
     const searchResult = this.$router.params.searchResult ? this.$router.params.searchResult:0
-    //console.log(SearchResult)
-    //console.log("currentTab ==== " + currentTab)
-    this.state = {
+    console.log("currentTab ==== " + current)
+    this.setState({
       current: currents,
       currentTab:currentTab,
       searchResult:searchResult
-    }
+    })
   }
 
   componentDidShow () { }
@@ -64,31 +58,34 @@ export default  class Index extends Component {
 
 
  // tab切换
-  handleClick = (e) => {
-    const urls = "/pages/index/index?current="+e
-    Taro.navigateTo({url:urls})
+  handleClick (e)  {
+    // const urls = "/pages/index/index?current="+e
+    // console.log(urls)
+    // Taro.navigateTo({url:urls})
+    this.setState({
+      current:e
+    })
 
   }
 
   render () {
 	return (
-	 <View className=''>
+	 <View>
 		 {this.state.current == 0 && <AriticleTitle>{this.state.currentTab}</AriticleTitle>}
 		 {this.state.current == 1 && this.state.searchResult == 0 &&<MySearch></MySearch>}
 		 {this.state.current == 2 && <Product>{this.state.currentTab}</Product>}
 		 {this.state.current == 1 && this.state.searchResult == 1 && <SearchResult></SearchResult>}
 		<AtTabBar
 		  fixed
-		  color="#909399"
-          current={this.state.current}
-          iconSize="25"
-          fontSize="12"
+		  color='#909399'
+          iconSize='25'
+          fontSize='12'
 		  tabList={[
 			{ title: '新闻', iconType: 'bullet-list', text: 'new' },
 			{ title: '搜索', iconType: 'search' },
 			{ title: '商品', iconType: 'shopping-cart' }
 		  ]}
-		  onClick={this.handleClick}
+		  onClick={this.handleClick.bind(this)}
 		  current={this.state.current}
 		/>
 	  </View>
